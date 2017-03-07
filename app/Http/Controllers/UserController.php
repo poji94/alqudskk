@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserRequest;
+use App\RoleUser;
+use App\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -13,9 +16,12 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    // Getting all the data from user table
     public function index()
     {
-        return view('user.index');
+        $users = User::all();
+        return view('user.index', compact('users'));
     }
 
     /**
@@ -23,9 +29,12 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    //List out the data required for user role for input selection in creating user
     public function create()
     {
-        return view('user.create');
+        $roleUser = RoleUser::lists('name', 'id')->all();
+        return view('user.create', compact('roleUser'));
     }
 
     /**
@@ -34,9 +43,13 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+
+    //Storing the data input from create()
+    public function store(UserRequest $request)
     {
-        //
+        $input = $request -> all();
+        User::create($input);
+        return redirect('/user');
     }
 
     /**

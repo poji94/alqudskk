@@ -11,6 +11,8 @@ class User extends Authenticatable
      *
      * @var array
      */
+
+    //setting mass assignment
     protected $fillable = [
         'name', 'email', 'password', 'role_user_id', 'phone_number'
     ];
@@ -24,7 +26,13 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    //setting relationship
     public function roleUser() {
-        return $this->hasOne('App\RoleUser', 'id');
+        return $this->belongsTo('App\RoleUser', 'role_user_id');
+    }
+
+    //setting the password attribute to be encrypted all the time
+    public function setPasswordAttribute($value) {
+        $this->attributes['password'] = bcrypt($value);
     }
 }
