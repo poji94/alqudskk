@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UserRequest;
+use App\Http\Requests\UserStoreRequest;
+use App\Http\Requests\UserUpdateRequest;
 use App\RoleUser;
 use App\User;
 use Illuminate\Http\Request;
@@ -45,11 +46,11 @@ class UserController extends Controller
      */
 
     //Storing the data input from create()
-    public function store(UserRequest $request)
+    public function store(UserStoreRequest $request)
     {
         $input = $request -> all();
         User::create($input);
-        return redirect('/user');
+        return redirect(route('user.index'));
     }
 
     /**
@@ -71,7 +72,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        return view('user.edit');
+        $user = User::find($id);
+        $roleUser = RoleUser::lists('name', 'id')->all();
+        return view('user.edit', compact('user', 'roleUser'));
     }
 
     /**
@@ -81,9 +84,17 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserUpdateRequest $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        $input = $request -> all();
+        if(!trim($request->password)) {
+            $input = $request->except('password');
+        }
+
+        $user->update($input);
+        return redirect(route('user.index'));
     }
 
     /**
