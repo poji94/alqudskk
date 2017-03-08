@@ -24,7 +24,7 @@ class UserStoreRequest extends Request
      * @return array
      */
 
-    //rules validation for the usercontroller.create
+    //rules validation for the UserController.create -> UserController.store
     public function rules()
     {
         return [

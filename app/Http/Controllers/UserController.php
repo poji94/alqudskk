@@ -70,6 +70,8 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    //list out data required with preset value with certain id
     public function edit($id)
     {
         $user = User::find($id);
@@ -84,6 +86,8 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    //Updating the data input from edit()
     public function update(UserUpdateRequest $request, $id)
     {
         $user = User::findOrFail($id);
@@ -105,6 +109,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
+        return redirect(route('user.index'));
     }
 }

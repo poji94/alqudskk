@@ -21,6 +21,8 @@ class UserUpdateRequest extends Request
      *
      * @return array
      */
+
+    //rules validation for the UserController.edit -> UserController.update
     public function rules()
     {
         return [

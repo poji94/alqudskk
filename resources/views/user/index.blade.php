@@ -26,7 +26,11 @@
                 <td>{{$user->created_at->diffForHumans()}}</td>
                 <td>{{$user->updated_at->diffForHumans()}}</td>
                 <td><button type="button" onclick="location.href='{{route('user.edit', $user->id)}}'">Edit</button></td>
-                <td><button type="button" onclick="location.href='{{route('user.destroy', $user->id)}}'">Delete</button></td>
+                <td>
+                    {!!  Form::open(['method' => 'DELETE', 'action' => ['UserController@destroy', $user->id]])!!}
+                        {!! Form::submit('Delete', ['class' => 'btn btn-danger col-sm-6']) !!}
+                    {!! Form::close() !!}
+                </td>
             </tr>
         @endforeach
     @endif
