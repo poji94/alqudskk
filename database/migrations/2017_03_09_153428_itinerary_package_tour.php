@@ -12,7 +12,7 @@ class ItineraryTour extends Migration
      */
     public function up()
     {
-        Schema::create('itinerary_tour', function (Blueprint $table) {
+        Schema::create('itinerary_package_tour', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('tour_id')->unsigned()->nullable()->index();
             $table->integer('itinerary_id')->unsigned()->nullable()->index();
@@ -27,6 +27,6 @@ class ItineraryTour extends Migration
      */
     public function down()
     {
-        Schema::drop('itinerary_tour');
+        Schema::drop('itinerary_package_tour');
     }
 }
