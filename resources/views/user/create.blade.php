@@ -31,4 +31,5 @@
 {!! Form::close() !!}
 
 <button type="button" onclick="location.href='{{route('user.index')}}'">Cancel</button>
+
 @include('includes.form_error')
