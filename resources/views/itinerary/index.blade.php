@@ -1,6 +1,11 @@
 @extends('layouts.master')
 
-<h1>Users</h1>
+<h1>Itinerary</h1>
+
+<button type="button" onclick="location.href='{{route('user.index')}}'">User</button>
+<button type="button" onclick="location.href='{{route('packagetour.index')}}'">Tour package</button>
+
+
 <table class="table">
     <thead>
     <tr>

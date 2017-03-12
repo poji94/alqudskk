@@ -21,3 +21,4 @@ Route::get('/home', 'HomeController@index');
 
 Route::resource('/user', 'UserController');
 Route::resource('/itinerary', 'ItineraryController');
+Route::resource('/packagetour', 'PackageTourController');

@@ -2,27 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UserStoreRequest;
-use App\Http\Requests\UserUpdateRequest;
-use App\RoleUser;
-use App\User;
+use App\Http\Requests\PackageTourRequest;
+use App\Itinerary;
+use App\PackageTour;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
-class UserController extends Controller
+class PackageTourController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
-    // Getting all the data from user table
     public function index()
     {
-        $users = User::all();
-        return view('user.index', compact('users'));
+        $packagetours = PackageTour::all();
+        return view('packagetour.index', compact('packagetours'));
     }
 
     /**
@@ -30,12 +27,10 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
-    //List out the data required for user role for input selection in creating user
     public function create()
     {
-        $roleUser = RoleUser::lists('name', 'id')->all();
-        return view('user.create', compact('roleUser'));
+        $itineraries = Itinerary::lists('name', 'id')->all();
+        return view('packagetour.create', compact('itineraries'));
     }
 
     /**
@@ -44,13 +39,13 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-
-    //Storing the data input from create()
-    public function store(UserStoreRequest $request)
+    public function store(PackageTourRequest $request)
     {
         $input = $request -> all();
-        User::create($input);
-        return redirect(route('user.index'));
+        PackageTour::create($input);
+        $packagetour = PackageTour::whereName($input['name'])->first();
+        $packagetour->itineraries()->sync([$input['itinerary_id']]);
+        return redirect(route('packagetour.index'));
     }
 
     /**
@@ -70,13 +65,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
-    //list out data required with preset value with certain id
     public function edit($id)
     {
-        $user = User::findOrFail($id);
-        $roleUser = RoleUser::lists('name', 'id')->all();
-        return view('user.edit', compact('user', 'roleUser'));
+        $packagetour = PackageTour::findOrFail($id);
+        $itinerariesAssoc = $packagetour->itineraries;
+        $itineraries = Itinerary::lists('name', 'id')->all();
+        return view('packagetour.edit', compact('packagetour', 'itineraries', 'itinerariesAssoc'));
     }
 
     /**
@@ -86,33 +80,26 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
-    //Updating the data input from edit()
-    public function update(UserUpdateRequest $request, $id)
+    public function update(PackageTourRequest $request, $id)
     {
-        $user = User::findOrFail($id);
-
+        $packagetour = PackageTour::findOrFail($id);
         $input = $request -> all();
-        if(!trim($request->password)) {
-            $input = $request->except('password');
-        }
-
-        $user->update($input);
-        return redirect(route('user.index'));
+        $packagetour->update($input);
+        $packagetour->itineraries()->sync([$input['itinerary_id']]);
+        return redirect(route('packagetour.index'));
     }
-
+    
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
-    //Destroying the data
     public function destroy($id)
     {
-        $user = User::findOrFail($id);
-        $user->delete();
-        return redirect(route('user.index'));
+        $packagetour = PackageTour::findOrFail($id);
+        $packagetour->delete();
+        $packagetour->itineraries()->detach();
+        return redirect(route('packagetour.index'));
     }
 }

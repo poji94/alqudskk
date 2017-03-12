@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ItineraryRequest;
 use App\Itinerary;
 use Illuminate\Http\Request;
 
@@ -41,7 +42,7 @@ class ItineraryController extends Controller
      */
 
     //store the itinerary from the create() process
-    public function store(Request $request)
+    public function store(ItineraryRequest $request)
     {
         $input = $request -> all();
         Itinerary::create($input);
@@ -69,7 +70,7 @@ class ItineraryController extends Controller
     //edit the itinerary by showing edit form
     public function edit($id)
     {
-        $itinerary = Itinerary::find($id);
+        $itinerary = Itinerary::findOrFail($id);
         return view('itinerary.edit', compact('itinerary'));
     }
 
@@ -82,7 +83,7 @@ class ItineraryController extends Controller
      */
 
     //store the itinerary from the create() process
-    public function update(Request $request, $id)
+    public function update(ItineraryRequest $request, $id)
     {
         $itinerary = Itinerary::findOrFail($id);
         $input = $request -> all();
