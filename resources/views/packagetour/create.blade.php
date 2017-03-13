@@ -36,8 +36,8 @@
     {{--<input type="button" id="add-itinerary" value="Add Itinerary">--}}
 {{--</p>--}}
 <div class="form group">
-    {!! Form::label('count', 'Number of itineraries') !!}
-    {!! Form::number('count', null, ['class'=>'form-control']) !!}
+    {!! Form::label('itineraries_number', 'Number of itineraries') !!}
+    {!! Form::number('itineraries_number', null, ['class'=>'form-control']) !!}
 </div>
 <div class="form-group">
     {!! Form::label('duration', 'Duration') !!}

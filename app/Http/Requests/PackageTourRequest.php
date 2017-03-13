@@ -26,7 +26,7 @@ class PackageTourRequest extends Request
         return [
             'name' => 'required | min:5 | max:20',
             'description' => 'required | max:300',
-            'count' => 'required',
+            'itineraries_number' => 'required',
             'duration' => 'required',
             'price' => 'required',
         ];

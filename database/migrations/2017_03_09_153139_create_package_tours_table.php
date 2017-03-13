@@ -16,6 +16,7 @@ class CreatePackageToursTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->text('description');
+            $table->integer('itineraries_number');
             $table->string('duration');
             $table->integer('price');
             $table->timestamps();

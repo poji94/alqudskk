@@ -43,13 +43,13 @@ class PackageTourController extends Controller
 //        return $request->all();
         //        return $count;
 
-        $input = $request -> all();
+        $input = $request->all();
         PackageTour::create($input);
-        $count = $input['count'];
+//        $itineraries_no = $input['itineraries_no'];
 //        PackageTourController::createItineraries($input['name'], $count);
         $packagetour = PackageTour::whereName($input['name'])->orderBy('created_at', 'desc')->first();
         $itineraries = Itinerary::lists('name', 'id')->all();
-        return view('packagetour.createItinerary', compact('itineraries', 'packagetour', 'count'));
+        return view('packagetour.createItinerary', compact('itineraries', 'packagetour'));
 
 //        return redirect(route('packagetour.index'));
 //        $packagetour = PackageTour::whereName($input['name'])->orderBy('created_at', 'desc')->first();
@@ -79,7 +79,7 @@ class PackageTourController extends Controller
         $input = $request->all();
         $packagetour = PackageTour::findOrFail($input['id']);
         $packagetour->itineraries()->detach();
-        for($i = 0; $i < $input['count']; $i++) {
+        for($i = 0; $i < $packagetour->itineraries_number; $i++) {
             $packagetour->itineraries()->attach($input['itinerary_id' . $i]);
         }
         return redirect(route('packagetour.index'));
@@ -105,9 +105,8 @@ class PackageTourController extends Controller
     public function edit($id)
     {
         $packagetour = PackageTour::findOrFail($id);
-        $itinerariesAssoc = $packagetour->itineraries;
         $itineraries = Itinerary::lists('name', 'id')->all();
-        return view('packagetour.edit', compact('packagetour', 'itineraries', 'itinerariesAssoc'));
+        return view('packagetour.edit', compact('packagetour', 'itineraries'));
     }
 
     /**
@@ -122,8 +121,8 @@ class PackageTourController extends Controller
         $packagetour = PackageTour::findOrFail($id);
         $input = $request -> all();
         $packagetour->update($input);
-        $packagetour->itineraries()->sync([$input['itinerary_id']]);
-        return redirect(route('packagetour.index'));
+        $itineraries = Itinerary::lists('name', 'id')->all();
+        return view('packagetour.createItinerary', compact('itineraries', 'packagetour'));
     }
 
     /**

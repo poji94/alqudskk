@@ -9,18 +9,9 @@
     {!! Form::label('description', 'Description') !!}
     {!! Form::text('description', null, ['class'=>'form-control']) !!}
 </div>
-<div class="form-group">
-    @php
-        $count = 0;
-    @endphp
-    @foreach($packagetour->itineraries as $itinerary)
-            {!! Form::label('itinerary_id' . $count, 'Itinerary') !!}
-            {!! Form::select('itinerary_id' . $count, [''=>'Choose Options'] + $itineraries, $itinerary->pivot->itinerary_id, ['class'=>'form-control']) !!}
-            <br>
-        @php
-            $count += 1;
-        @endphp
-    @endforeach
+<div class="form group">
+    {!! Form::label('itineraries_number', 'Number of itineraries') !!}
+    {!! Form::number('itineraries_number', null, ['class'=>'form-control']) !!}
 </div>
 <div class="form-group">
     {!! Form::label('duration', 'Duration') !!}
