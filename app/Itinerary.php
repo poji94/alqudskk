@@ -11,4 +11,17 @@ class Itinerary extends Model
     public function packagesTours() {
         return $this->belongsToMany('App\PackageTour');
     }
+
+    public function places() {
+        return $this->morphToMany('App\PlaceTourism', 'tourismable');
+    }
+
+    public function types() {
+        return $this->morphToMany('App\TypeVacation', 'typeable');
+    }
+
+    public function medias() {
+        return $this->morphMany('App\Media', 'imageable');
+    }
+
 }

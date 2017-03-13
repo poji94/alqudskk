@@ -11,4 +11,12 @@ class PackageTour extends Model
     public function itineraries() {
         return $this->belongsToMany('App\Itinerary');
     }
+
+    public function places() {
+        return $this->morphToMany('App\PlaceTourism', 'tourismable');
+    }
+
+    public function types() {
+        return $this->morphToMany('App\TypeVacaton', 'typeable');
+    }
 }

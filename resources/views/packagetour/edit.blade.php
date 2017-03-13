@@ -10,6 +10,11 @@
     {!! Form::text('description', null, ['class'=>'form-control']) !!}
 </div>
 <div class="form group">
+    {!! Form::label('itineraries_change', 'Changes in itineraries?') !!}
+    {!! Form::checkbox('itineraries_change', 'itineraries_change') !!}
+    {!! Form::label('Yes', '') !!}
+</div>
+<div class="form group">
     {!! Form::label('itineraries_number', 'Number of itineraries') !!}
     {!! Form::number('itineraries_number', null, ['class'=>'form-control']) !!}
 </div>

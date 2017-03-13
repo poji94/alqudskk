@@ -44,12 +44,11 @@ class PackageTourController extends Controller
         //        return $count;
 
         $input = $request->all();
-        PackageTour::create($input);
+        $packagetour = PackageTour::create($input);
 //        $itineraries_no = $input['itineraries_no'];
 //        PackageTourController::createItineraries($input['name'], $count);
-        $packagetour = PackageTour::whereName($input['name'])->orderBy('created_at', 'desc')->first();
         $itineraries = Itinerary::lists('name', 'id')->all();
-        return view('packagetour.createItinerary', compact('itineraries', 'packagetour'));
+        return view('packagetour.createItineraries', compact('itineraries', 'packagetour'));
 
 //        return redirect(route('packagetour.index'));
 //        $packagetour = PackageTour::whereName($input['name'])->orderBy('created_at', 'desc')->first();
@@ -122,7 +121,7 @@ class PackageTourController extends Controller
         $input = $request -> all();
         $packagetour->update($input);
         $itineraries = Itinerary::lists('name', 'id')->all();
-        return view('packagetour.createItinerary', compact('itineraries', 'packagetour'));
+        return view('packagetour.createItineraries', compact('itineraries', 'packagetour'));
     }
 
     /**

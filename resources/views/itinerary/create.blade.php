@@ -10,6 +10,14 @@
     {!! Form::text('description', null, ['class'=>'form-control']) !!}
 </div>
 <div class="form-group">
+    {!! Form::label('place_tourism','Location') !!}
+    {!! Form::select('place_tourism', [''=>'Choose Options'] + $placetourism, null, ['class'=>'form-control']) !!}
+</div>
+<div class="form-group">
+    {!! Form::label('type_vacation','Type of vacation') !!}
+    {!! Form::select('type_vacation', [''=>'Choose Options'] + $typevacation, null, ['class'=>'form-control']) !!}
+</div>
+<div class="form-group">
     {!! Form::label('duration', 'Duration') !!}
     {!! Form::text('duration', null, ['class'=>'form-control']) !!}
 </div>

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ItineraryRequest;
 use App\Itinerary;
+use App\PlaceTourism;
+use App\TypeVacation;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -20,7 +22,8 @@ class ItineraryController extends Controller
     public function index()
     {
         $itineraries = Itinerary::all();
-        return view('itinerary.index', compact('itineraries'));    }
+        return view('itinerary.index', compact('itineraries'));
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -31,7 +34,9 @@ class ItineraryController extends Controller
     //create an itinerary by showing create form
     public function create()
     {
-        return view('itinerary.create');
+        $placetourism = PlaceTourism::lists('name', 'id')->all();
+        $typevacation = TypeVacation::lists('name', 'id')->all();
+        return view('itinerary.create', compact('placetourism', 'typevacation'));
     }
 
     /**
@@ -45,7 +50,11 @@ class ItineraryController extends Controller
     public function store(ItineraryRequest $request)
     {
         $input = $request -> all();
-        Itinerary::create($input);
+        $itinerary = Itinerary::create($input);
+        $placetourism = PlaceTourism::findOrFail($input['place_tourism']);
+        $typevacation = TypeVacation::findOrFail($input['type_vacation']);
+        $itinerary->places()->save($placetourism);
+        $itinerary->types()->save($typevacation);
         return redirect(route('itinerary.index'));
     }
 
@@ -71,7 +80,15 @@ class ItineraryController extends Controller
     public function edit($id)
     {
         $itinerary = Itinerary::findOrFail($id);
-        return view('itinerary.edit', compact('itinerary'));
+        foreach ($itinerary->places as $place) {
+            $place_tourism = $place->pivot->place_tourism_id;
+        }
+        foreach ($itinerary->types as $type) {
+            $type_vacation = $type->pivot->type_vacation_id;
+        }
+        $placetourism = PlaceTourism::lists('name', 'id')->all();
+        $typevacation = TypeVacation::lists('name', 'id')->all();
+        return view('itinerary.edit', compact('itinerary', 'placetourism', 'place_tourism', 'typevacation', 'type_vacation'));
     }
 
     /**
@@ -88,6 +105,12 @@ class ItineraryController extends Controller
         $itinerary = Itinerary::findOrFail($id);
         $input = $request -> all();
         $itinerary->update($input);
+        $placetourism = PlaceTourism::findOrFail($input['place_tourism']);
+        $typevacation = TypeVacation::findOrFail($input['type_vacation']);
+        $itinerary->places()->detach();
+        $itinerary->places()->save($placetourism);
+        $itinerary->types()->detach();
+        $itinerary->types()->save($typevacation);
         return redirect(route('itinerary.index'));
     }
 
@@ -103,6 +126,8 @@ class ItineraryController extends Controller
     {
         $itinerary = Itinerary::findOrFail($id);
         $itinerary->delete();
+        $itinerary->places()->detach();
+        $itinerary->types()->detach();
         return redirect(route('itinerary.index'));
     }
 }
