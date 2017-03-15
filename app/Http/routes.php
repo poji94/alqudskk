@@ -29,3 +29,5 @@ Route::get('/packagetour/createItineraries', 'PackageTourController@createItiner
 Route::patch('/packagetour', 'PackageTourController@storeItineraries')->name('packageTour.storeItineraries');
 
 Route::resource('/reservation', 'ReservationController');
+Route::get('/reservation/createReservationVacation', 'ReservationController@createReservationVacation')->name('reservation.createReservationVacation');
+Route::patch('/reservation', 'ReservationController@storeReservationVacation')->name('reservation.storeReservationVacation');

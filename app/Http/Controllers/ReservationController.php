@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Itinerary;
+use App\PackageTour;
 use App\Reservation;
 use App\ReservationStatus;
 use App\ReservationType;
@@ -44,9 +46,22 @@ class ReservationController extends Controller
         $input = $request -> all();
         $reservation = Reservation::create($input);
         $reservation->update(['user_id'=>Auth::user()->id, 'reservation_status_id'=>1]);
-        return redirect(route('reservation.index'));
+        $packagetours = PackageTour::lists('name', 'id')->all();
+        $itineraries = Itinerary::lists('name', 'id')->all();
+        return view('reservation.createReservationVacation', compact('reservation', 'packagetours', 'itineraries'));
     }
 
+    public function storeReservationVacation(Request $request)
+    {
+        $input = $request->all();
+        $reservation = Reservation::findOrFail($input['id']);
+        $reservation->reserveVacations()->delete();
+        if($reservation->reservation_type_id == 2) {
+            $packagetour = PackageTour::findOrFail($input['package_tour_id']);
+            $reservation->reserveVacations()->save($packagetour);
+        }
+        return redirect(route('reservation.index'));
+    }
     /**
      * Display the specified resource.
      *

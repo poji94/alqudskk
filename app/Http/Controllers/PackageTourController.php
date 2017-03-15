@@ -64,14 +64,6 @@ class PackageTourController extends Controller
                 $packagetour->types()->save($type);
             }
         }
-//        foreach($packagetour->itineraries as $itinerary) {
-//            foreach ($itinerary->places as $place) {
-//                $packagetour->places()->save($place);
-//            }
-//            foreach ($itinerary->types as $type) {
-//                $packagetour->types()->save($type);
-//            }
-//        }
         return redirect(route('packagetour.index'));
     }
 
