@@ -17,6 +17,6 @@ class PackageTour extends Model
     }
 
     public function types() {
-        return $this->morphToMany('App\TypeVacaton', 'typeable');
+        return $this->morphToMany('App\TypeVacation', 'typeable');
     }
 }

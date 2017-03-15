@@ -11,7 +11,6 @@
     <tr>
         <th>ID</th>
         <th>Name</th>
-        <th>Email</th>
         <th>Duration</th>
         <th>Price</th>
         <th>Created</th>

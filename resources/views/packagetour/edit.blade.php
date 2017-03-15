@@ -10,6 +10,20 @@
     {!! Form::text('description', null, ['class'=>'form-control']) !!}
 </div>
 <div class="form group">
+    {!! Form::label('place_tourism','Location:  ') !!}
+    @foreach($packagetour->places as $place)
+        {!! Form::label('place_tourism', $place->name, ['class'=>'form-control']) !!}
+        ,
+    @endforeach
+</div>
+<div class="form group">
+    {!! Form::label('type_vacation','Type of vacation:  ') !!}
+    @foreach($packagetour->types as $type)
+        {!! Form::label('type_vacation', $type->name, ['class'=>'form-control']) !!}
+        ,
+    @endforeach
+</div>
+<div class="form group">
     {!! Form::label('itineraries_change', 'Changes in itineraries?') !!}
     {!! Form::checkbox('itineraries_change', 'itineraries_change') !!}
     {!! Form::label('Yes', '') !!}
