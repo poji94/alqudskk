@@ -31,6 +31,10 @@ class User extends Authenticatable
         return $this->belongsTo('App\RoleUser', 'role_user_id');
     }
 
+    public function reservations() {
+        return $this->hasMany('App\Reservation', 'id');
+    }
+
     //setting the password attribute to be encrypted all the time
     public function setPasswordAttribute($value) {
         $this->attributes['password'] = bcrypt($value);

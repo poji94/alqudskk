@@ -21,7 +21,11 @@ class Reservation extends Model
         return $this->belongsTo('App\ReservationStatus', 'reservation_status_id');
     }
 
-    public function reserveVacations() {
-        return $this->morphMany('App\ReservationVacation', 'reservable');
+    public function packageTour() {
+        return $this->morphedByMany('App\PackageTour', 'reservable');
+    }
+
+    public function itineraries() {
+        return $this->morphedByMany('App\Itinerary', 'reservable');
     }
 }

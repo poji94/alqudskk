@@ -24,4 +24,7 @@ class Itinerary extends Model
         return $this->morphMany('App\Media', 'imageable');
     }
 
+    public function reserves() {
+        return $this->morphToMany('App\Reservation', 'reservable');
+    }
 }

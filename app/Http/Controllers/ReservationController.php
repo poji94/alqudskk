@@ -55,10 +55,11 @@ class ReservationController extends Controller
     {
         $input = $request->all();
         $reservation = Reservation::findOrFail($input['id']);
-        $reservation->reserveVacations()->delete();
+        $reservation->packageTour()->detach();
+        $reservation->itineraries()->detach();
         if($reservation->reservation_type_id == 2) {
             $packagetour = PackageTour::findOrFail($input['package_tour_id']);
-            $reservation->reserveVacations()->save($packagetour);
+            $packagetour->reserves()->save($reservation);
         }
         return redirect(route('reservation.index'));
     }
@@ -81,7 +82,8 @@ class ReservationController extends Controller
      */
     public function edit($id)
     {
-        //
+        $reservation = Reservation::findOrFail($id);
+        return view('reservation.edit', compact('reservation'));
     }
 
     /**
@@ -93,7 +95,12 @@ class ReservationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $input = $request -> all();
+        $reservation = Reservation::findOrFail($id);
+        $reservation->update($input);
+        $packagetours = PackageTour::lists('name', 'id')->all();
+        $itineraries = Itinerary::lists('name', 'id')->all();
+        return view('reservation.createReservationVacation', compact('reservation', 'packagetours', 'itineraries'));
     }
 
     /**
@@ -104,6 +111,10 @@ class ReservationController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $reservation = Reservation::findOrFail($id);
+        $reservation->delete();
+        $reservation->packageTour()->detach();
+        $reservation->itineraries()->detach();
+        return redirect(route('reservation.index'));
     }
 }

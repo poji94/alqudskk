@@ -19,4 +19,8 @@ class PackageTour extends Model
     public function types() {
         return $this->morphToMany('App\TypeVacation', 'typeable');
     }
+
+    public function reserves() {
+        return $this->morphToMany('App\Reservation', 'reservable');
+    }
 }
