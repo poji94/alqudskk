@@ -4,6 +4,7 @@
 
 <button type="button" onclick="location.href='{{route('user.index')}}'">User</button>
 <button type="button" onclick="location.href='{{route('itinerary.index')}}'">Itinerary</button>
+<button type="button" onclick="location.href='{{route('reservation.index')}}'">Reservation</button>
 
 <table class="table">
     <thead>

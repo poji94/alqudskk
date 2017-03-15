@@ -4,7 +4,7 @@
 
 <button type="button" onclick="location.href='{{route('user.index')}}'">User</button>
 <button type="button" onclick="location.href='{{route('packagetour.index')}}'">Tour package</button>
-
+<button type="button" onclick="location.href='{{route('reservation.index')}}'">Reservation</button>
 
 <table class="table">
     <thead>
