@@ -29,7 +29,8 @@ class PackageTourController extends Controller
      */
     public function create()
     {
-        return view('packagetour.create');
+        $itineraries = Itinerary::lists('name', 'id')->all();
+        return view('packagetour.create', compact('itineraries'));
     }
 
     /**
@@ -42,21 +43,10 @@ class PackageTourController extends Controller
     {
         $input = $request->all();
         $packagetour = PackageTour::create($input);
-        $itineraries = Itinerary::lists('name', 'id')->all();
-        return view('packagetour.createItineraries', compact('itineraries', 'packagetour'));
-    }
-
-    public function storeItineraries(Request $request)
-    {
-        $input = $request->all();
-        $packagetour = PackageTour::findOrFail($input['id']);
-        $packagetour->itineraries()->detach();
+        $packagetour->itineraries()->sync($request['itinerary_id']);
         $packagetour->places()->detach();
         $packagetour->types()->detach();
-        for($i = 0; $i < $packagetour->itineraries_number; $i++) {
-            $packagetour->itineraries()->attach($input['itinerary_id' . $i]);
-            $itinerary = Itinerary::findOrFail($input['itinerary_id'. $i]);
-            echo $itinerary->places;
+        foreach($packagetour->itineraries as $itinerary) {
             foreach($itinerary->places as $place) {
                 $packagetour->places()->save($place);
             }
@@ -66,6 +56,7 @@ class PackageTourController extends Controller
         }
         return redirect(route('packagetour.index'));
     }
+
 
     /**
      * Display the specified resource.
@@ -86,9 +77,11 @@ class PackageTourController extends Controller
      */
     public function edit($id)
     {
+        //i used to control the count multi input field - for this case, itineraries
+        $i = 0;
         $packagetour = PackageTour::findOrFail($id);
         $itineraries = Itinerary::lists('name', 'id')->all();
-        return view('packagetour.edit', compact('packagetour', 'itineraries'));
+        return view('packagetour.edit', compact('packagetour', 'itineraries', 'i'));
     }
 
     /**
@@ -103,8 +96,18 @@ class PackageTourController extends Controller
         $packagetour = PackageTour::findOrFail($id);
         $input = $request -> all();
         $packagetour->update($input);
-        $itineraries = Itinerary::lists('name', 'id')->all();
-        return view('packagetour.createItineraries', compact('itineraries', 'packagetour'));
+        $packagetour->itineraries()->sync($request['itinerary_id']);
+        $packagetour->places()->detach();
+        $packagetour->types()->detach();
+        foreach($packagetour->itineraries as $itinerary) {
+            foreach($itinerary->places as $place) {
+                $packagetour->places()->save($place);
+            }
+            foreach($itinerary->types as $type) {
+                $packagetour->types()->save($type);
+            }
+        }
+        return redirect(route('packagetour.index'));
     }
 
     /**

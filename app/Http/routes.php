@@ -24,9 +24,6 @@ Route::resource('/user', 'UserController');
 Route::resource('/itinerary', 'ItineraryController');
 
 Route::resource('/packagetour', 'PackageTourController');
-Route::get('/packagetour/createItineraries', 'PackageTourController@createItineraries')->name('packageTour.createItineraries');
-//Route::get('/packagetour/editItineraries', 'PackageTourController@editItineraries')->name('packageTour.editItineraries');
-Route::patch('/packagetour', 'PackageTourController@storeItineraries')->name('packageTour.storeItineraries');
 
 Route::resource('/reservation', 'ReservationController');
 Route::get('/reservation/createReservationVacation', 'ReservationController@createReservationVacation')->name('reservation.createReservationVacation');

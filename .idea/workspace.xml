@@ -2,20 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ed4918bf-51db-4868-8d79-3ad32460c4d0" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/ReservationVacation.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/database/migrations/2017_03_15_010521_create_reservation_vacations_table.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/resources/views/packagetour/createItineraries.blade.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/resources/views/packagetour/editItineraries.blade.php" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/ReservationController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/ReservationController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Itinerary.php" afterPath="$PROJECT_DIR$/app/Itinerary.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/PackageTour.php" afterPath="$PROJECT_DIR$/app/PackageTour.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/PlaceTourism.php" afterPath="$PROJECT_DIR$/app/PlaceTourism.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Reservation.php" afterPath="$PROJECT_DIR$/app/Reservation.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/ReservationStatus.php" afterPath="$PROJECT_DIR$/app/ReservationStatus.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/ReservationType.php" afterPath="$PROJECT_DIR$/app/ReservationType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/RoleUser.php" afterPath="$PROJECT_DIR$/app/RoleUser.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/TypeVacation.php" afterPath="$PROJECT_DIR$/app/TypeVacation.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/User.php" afterPath="$PROJECT_DIR$/app/User.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/reservation/edit.blade.php" afterPath="$PROJECT_DIR$/resources/views/reservation/edit.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/PackageTourController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/PackageTourController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Requests/PackageTourRequest.php" afterPath="$PROJECT_DIR$/app/Http/Requests/PackageTourRequest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/routes.php" afterPath="$PROJECT_DIR$/app/Http/routes.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/migrations/2017_03_09_153139_create_package_tours_table.php" afterPath="$PROJECT_DIR$/database/migrations/2017_03_09_153139_create_package_tours_table.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/packagetour/create.blade.php" afterPath="$PROJECT_DIR$/resources/views/packagetour/create.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/packagetour/edit.blade.php" afterPath="$PROJECT_DIR$/resources/views/packagetour/edit.blade.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -33,43 +28,43 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="ReservationController.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ReservationController.php">
+      <file leaf-file-name="PackageTourController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/PackageTourController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="428">
-              <caret line="116" column="0" lean-forward="false" selection-start-line="116" selection-start-column="0" selection-end-line="116" selection-end-column="0" />
+            <state relative-caret-position="309">
+              <caret line="32" column="64" lean-forward="false" selection-start-line="32" selection-start-column="64" selection-end-line="32" selection-end-column="64" />
               <folding>
-                <element signature="e#40#58#0#PHP" expanded="true" />
+                <element signature="e#40#81#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="PackageTourRequest.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Http/Requests/PackageTourRequest.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="153">
+              <caret line="12" column="7" lean-forward="true" selection-start-line="12" selection-start-column="7" selection-end-line="12" selection-end-column="7" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="edit.blade.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/reservation/edit.blade.php">
+        <entry file="file://$PROJECT_DIR$/resources/views/packagetour/edit.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="24" column="0" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+            <state relative-caret-position="173">
+              <caret line="38" column="0" lean-forward="false" selection-start-line="38" selection-start-column="0" selection-end-line="55" selection-end-column="13" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PackageTourController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/PackageTourController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="117" column="0" lean-forward="false" selection-start-line="117" selection-start-column="0" selection-end-line="122" selection-end-column="52" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="create.blade.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/reservation/create.blade.php">
+      <file leaf-file-name="create.blade.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/resources/views/packagetour/create.blade.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="255">
-              <caret line="15" column="6" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="27" selection-end-column="31" />
+              <caret line="30" column="39" lean-forward="true" selection-start-line="30" selection-start-column="39" selection-end-line="30" selection-end-column="39" />
               <folding />
             </state>
           </provider>
@@ -97,7 +92,6 @@
       <list>
         <option value="$PROJECT_DIR$/database/migrations/2017_03_09_153428_itinerary_tour.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/Auth/AuthController.php" />
-        <option value="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" />
         <option value="$PROJECT_DIR$/database/migrations/2017_03_09_152937_create_itineraries_table.php" />
         <option value="$PROJECT_DIR$/database/migrations/2017_03_09_153428_itinerary_package_tour.php" />
         <option value="$PROJECT_DIR$/database/migrations/2017_03_11_070920_create_itinerary_package_tours_table.php" />
@@ -110,17 +104,13 @@
         <option value="$PROJECT_DIR$/resources/packagetour/edit.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/UserController.php" />
         <option value="$PROJECT_DIR$/resources/views/layouts/master.blade.php" />
-        <option value="$PROJECT_DIR$/database/migrations/2017_03_09_153139_create_package_tours_table.php" />
-        <option value="$PROJECT_DIR$/app/Http/Requests/PackageTourRequest.php" />
         <option value="$PROJECT_DIR$/resources/views/packagetour/createItinerary.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/packagetour/create.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/packagetour/editItineraries.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/itinerary/create.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/itinerary/edit.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/ItineraryController.php" />
         <option value="$PROJECT_DIR$/database/migrations/2017_03_13_135811_create_media_table.php" />
         <option value="$PROJECT_DIR$/app/Media.php" />
-        <option value="$PROJECT_DIR$/resources/views/packagetour/edit.blade.php" />
         <option value="$PROJECT_DIR$/database/migrations/2017_03_15_010350_create_reservations_table.php" />
         <option value="$PROJECT_DIR$/database/migrations/2017_03_15_010422_create_reservation_types_table.php" />
         <option value="$PROJECT_DIR$/database/migrations/2017_03_15_010450_create_reservation_statuses_table.php" />
@@ -131,8 +121,6 @@
         <option value="$PROJECT_DIR$/resources/views/reservation/create.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/reservation/index.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/reservation/createReservationVacation.blade.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/PackageTourController.php" />
-        <option value="$PROJECT_DIR$/app/Http/routes.php" />
         <option value="$PROJECT_DIR$/app/ReservationVacation.php" />
         <option value="$PROJECT_DIR$/database/migrations/2017_03_15_141542_create_reservables_table.php" />
         <option value="$PROJECT_DIR$/app/Itinerary.php" />
@@ -146,6 +134,13 @@
         <option value="$PROJECT_DIR$/app/ReservationStatus.php" />
         <option value="$PROJECT_DIR$/resources/views/reservation/edit.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/ReservationController.php" />
+        <option value="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" />
+        <option value="$PROJECT_DIR$/app/Http/Requests/PackageTourRequest.php" />
+        <option value="$PROJECT_DIR$/app/Http/routes.php" />
+        <option value="$PROJECT_DIR$/database/migrations/2017_03_09_153139_create_package_tours_table.php" />
+        <option value="$PROJECT_DIR$/resources/views/packagetour/edit.blade.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/PackageTourController.php" />
+        <option value="$PROJECT_DIR$/resources/views/packagetour/create.blade.php" />
       </list>
     </option>
   </component>
@@ -476,7 +471,7 @@
     <property name="nodejs_interpreter_path" value="C:/Program Files/nodejs/node" />
     <property name="js.eslint.eslintPackage" value="" />
     <property name="js-jscs-nodeInterpreter" value="C:\Program Files\nodejs\node.exe" />
-    <property name="SearchEverywhereHistoryKey" value="reservation&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/app/Http/Controllers/ReservationController.php&#10;reser&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/app/Reservation.php&#10;re&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/app/Http/Controllers/ReservationController.php&#10;crea&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/resources/views/packagetour/createItineraries.blade.php&#10;edi&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/resources/views/packagetour/editItineraries.blade.php&#10;edit&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/resources/views/packagetour/editItineraries.blade.php&#10;packa&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/app/Http/Controllers/PackageTourController.php&#10;pa&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/app/Http/Controllers/PackageTourController.php&#10;pack&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/app/PackageTour.php&#10;pac&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/app/Http/Requests/PackageTourRequest.php&#10;e&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/resources/views/packagetour/edit.blade.php&#10;cre&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/resources/views/packagetour/createItinerary.blade.php&#10;cr&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/resources/views/packagetour/create.blade.php&#10;iti&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/app/Http/Controllers/ItineraryController.php&#10;edit.&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/resources/views/itinerary/edit.blade.php&#10;route&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/app/Http/routes.php&#10;index&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/resources/views/user/index.blade.php&#10;itinerary/in&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/resources/views/itinerary/index.blade.php&#10;user&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/app/Http/Controllers/UserController.php&#10;userc&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/app/Http/Controllers/UserController.php&#10;users&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/app/Http/Requests/UserStoreRequest.php&#10;userr&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/app/Http/Requests/UserRequest.php&#10;us&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/app/Http/Controllers/UserController.php&#10;in&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/resources/views/user/index.blade.php&#10;userco&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/app/Http/Controllers/UserController.php" />
+    <property name="SearchEverywhereHistoryKey" value="packagetours&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/database/migrations/2017_03_09_153139_create_package_tours_table.php&#10;reservation&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/app/Http/Controllers/ReservationController.php&#10;reser&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/app/Reservation.php&#10;re&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/app/Http/Controllers/ReservationController.php&#10;crea&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/resources/views/packagetour/createItineraries.blade.php&#10;edi&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/resources/views/packagetour/editItineraries.blade.php&#10;edit&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/resources/views/packagetour/editItineraries.blade.php&#10;packa&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/app/Http/Controllers/PackageTourController.php&#10;pa&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/app/Http/Controllers/PackageTourController.php&#10;pack&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/app/PackageTour.php&#10;pac&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/app/Http/Requests/PackageTourRequest.php&#10;e&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/resources/views/packagetour/edit.blade.php&#10;cre&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/resources/views/packagetour/createItinerary.blade.php&#10;cr&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/resources/views/packagetour/create.blade.php&#10;iti&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/app/Http/Controllers/ItineraryController.php&#10;edit.&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/resources/views/itinerary/edit.blade.php&#10;route&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/app/Http/routes.php&#10;index&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/resources/views/user/index.blade.php&#10;itinerary/in&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/resources/views/itinerary/index.blade.php&#10;user&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/app/Http/Controllers/UserController.php&#10;userc&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/app/Http/Controllers/UserController.php&#10;users&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/app/Http/Requests/UserStoreRequest.php&#10;userr&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/app/Http/Requests/UserRequest.php&#10;us&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/app/Http/Controllers/UserController.php&#10;in&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/resources/views/user/index.blade.php&#10;userco&#9;FILE&#9;file://C:/xampp/htdocs/alqudskk/app/Http/Controllers/UserController.php" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -566,12 +561,12 @@
       <workItem from="1489314350893" duration="36063000" />
       <workItem from="1489389732310" duration="15433000" />
       <workItem from="1489471699450" duration="19033000" />
-      <workItem from="1489586682204" duration="3562000" />
+      <workItem from="1489586682204" duration="16249000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="106830000" />
+    <option name="totallyTimeSpent" value="119517000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -587,7 +582,7 @@
     <editor active="true" />
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20801815" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2647504" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3297546" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -652,68 +647,16 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/app/Http/Controllers/PackageTourController.php</url>
-          <line>4</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
       <option name="time" value="3" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Foundation/Bus/DispatchesJobs.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="6" lean-forward="false" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Controller.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="12" column="53" lean-forward="true" selection-start-line="12" selection-start-column="53" selection-end-line="12" selection-end-column="53" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/database/migrations/2017_03_09_153139_create_package_tours_table.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="18" column="47" lean-forward="true" selection-start-line="18" selection-start-column="29" selection-end-line="18" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/layouts/master.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Requests/PackageTourRequest.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="394">
-          <caret line="28" column="45" lean-forward="false" selection-start-line="28" selection-start-column="45" selection-end-line="28" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/database/migrations/2017_03_09_152602_create_tourismables_table.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="267">
           <caret line="18" column="47" lean-forward="false" selection-start-line="18" selection-start-column="47" selection-end-line="18" selection-end-column="47" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/packagetour/create.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-62">
-          <caret line="20" column="51" lean-forward="false" selection-start-line="20" selection-start-column="51" selection-end-line="20" selection-end-column="51" />
         </state>
       </provider>
     </entry>
@@ -729,6 +672,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -760,13 +704,6 @@
           <folding>
             <element signature="e#40#79#0#PHP" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/packagetour/edit.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="19" column="56" lean-forward="false" selection-start-line="19" selection-start-column="56" selection-end-line="19" selection-end-column="56" />
         </state>
       </provider>
     </entry>
@@ -892,14 +829,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" column="109" lean-forward="false" selection-start-line="2" selection-start-column="85" selection-end-line="2" selection-end-column="109" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="32" column="51" lean-forward="false" selection-start-line="32" selection-start-column="51" selection-end-line="32" selection-end-column="51" />
           <folding />
         </state>
       </provider>
@@ -1032,14 +961,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/PackageTourController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="117" column="0" lean-forward="false" selection-start-line="117" selection-start-column="0" selection-end-line="122" selection-end-column="52" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/reservation/edit.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="408">
@@ -1050,11 +971,85 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ReservationController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="428">
-          <caret line="116" column="0" lean-forward="false" selection-start-line="116" selection-start-column="0" selection-end-line="116" selection-end-column="0" />
+        <state relative-caret-position="173">
+          <caret line="101" column="61" lean-forward="true" selection-start-line="101" selection-start-column="61" selection-end-line="101" selection-end-column="61" />
           <folding>
-            <element signature="e#40#58#0#PHP" expanded="true" />
+            <element signature="e#40#58#0#PHP" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2017_03_09_152937_create_itineraries_table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="445">
+          <caret line="33" column="20" lean-forward="false" selection-start-line="33" selection-start-column="20" selection-end-line="33" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/user/edit.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="26" column="0" lean-forward="false" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/migrations/2017_03_09_153139_create_package_tours_table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Requests/PackageTourRequest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="12" column="7" lean-forward="true" selection-start-line="12" selection-start-column="7" selection-end-line="12" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/PackageTourController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="309">
+          <caret line="32" column="64" lean-forward="false" selection-start-line="32" selection-start-column="64" selection-end-line="32" selection-end-column="64" />
+          <folding>
+            <element signature="e#40#81#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/packagetour/edit.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="173">
+          <caret line="38" column="0" lean-forward="false" selection-start-line="38" selection-start-column="0" selection-end-line="55" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/packagetour/create.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="30" column="39" lean-forward="true" selection-start-line="30" selection-start-column="39" selection-end-line="30" selection-end-column="39" />
+          <folding />
         </state>
       </provider>
     </entry>
