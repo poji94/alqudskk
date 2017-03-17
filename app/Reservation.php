@@ -28,4 +28,8 @@ class Reservation extends Model
     public function itineraries() {
         return $this->morphedByMany('App\Itinerary', 'reservable');
     }
+
+    public function getPriceAttribute($value) {
+        return 'RM' . $value;
+    }
 }

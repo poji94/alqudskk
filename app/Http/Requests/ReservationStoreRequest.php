@@ -25,7 +25,6 @@ class ReservationStoreRequest extends Request
     {
         return [
             'reservation_type_id' => 'required',
-
         ];
     }
 }

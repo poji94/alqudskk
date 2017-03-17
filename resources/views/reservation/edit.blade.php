@@ -2,47 +2,67 @@
 
 <script src="{{asset('/js/jquery.js')}}"></script>
 
-{!! Form::open(['method'=>'POST', 'action'=> 'ReservationController@store', 'files' => true]) !!}
+{!! Form::model($reservation, ['method'=>'PATCH', 'action'=> ['ReservationController@update', $reservation->id], 'files' => true]) !!}
 <div class="form-group">
     {!! Form::label('reservation_type_id_label', 'Type of Reservation:  ') !!}
 
-    {!! Form::radio('reservation_type_id', 1, false, ['class'=>'form-control', 'id'=>'ground']) !!}
-    {!! Form::label('reservation_type_id', 'Ground') !!}
-
-    {!! Form::radio('reservation_type_id', 2, false, ['class'=>'form-control', 'id'=>'full_boat']) !!}
-    {!! Form::label('reservation_type_id', 'Full Boat') !!}
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#add-itinerary").hide();
-            $("#package-tour-form").hide();
-            $("#ground").click(function(){
-                $("#add-itinerary").slideDown();
-                $("#package-tour-form").slideUp();
+    @if($reservation->reservation_type_id == 1)
+        {!! Form::radio('reservation_type_id', $reservation->reservation_type_id, true, ['class'=>'form-control', 'id'=>'ground']) !!}
+        {!! Form::label('reservation_type_id', $reservation->reserveType->name) !!}
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#add-itinerary").show();
+                $("#package-tour-form").hide();
             });
-            $("#full_boat").click(function(){
-                $("#package-tour-form").slideDown();
-                $("#add-itinerary").slideUp();
+        </script>
+    @elseif($reservation->reservation_type_id == 2)
+        {!! Form::radio('reservation_type_id', $reservation->reservation_type_id, true, ['class'=>'form-control', 'id'=>'full_boat']) !!}
+        {!! Form::label('reservation_type_id', $reservation->reserveType->name) !!}
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#add-itinerary").hide();
+                $("#package-tour-form").show();
             });
-
-        });
-    </script>
+        </script>
+    @endif
 </div>
 <div class="form-group">
     {!! Form::label('reservation_start', 'Start date') !!}
-    {!! Form::date('reservation_start', \Carbon\Carbon::now(), ['class'=>'form-control']) !!}
+    {!! Form::date('reservation_start', null, ['class'=>'form-control']) !!}
 </div>
+<div class="form-group">
+    {!! Form::label('reservation_end', 'Estimated end date') !!}
+    {!! Form::date('reservation_end', null, ['class'=>'form-control', 'readonly']) !!}
+</div>
+
 <div class="form-group" id="itinerary-form">
     {!! Form::label('itinerary_id', 'Itinerary') !!}
     {!! Form::select('itinerary_id[]', $itineraries, null, ['class'=>'form-control', 'multiple'=>'multiple']) !!}
     <input type="button" id="remove-itinerary" value="Remove">
 </div>
+@foreach($reservation->itineraries as $itinerary)
+    <div class="form-group" id="itinerary-form{{$i}}">
+        {!! Form::label('itinerary_id', 'Itinerary') !!}
+        {!! Form::select('itinerary_id[]', $itineraries, $itinerary->id, ['class'=>'form-control', 'multiple'=>'multiple']) !!}
+        <input type="button" id="remove-itinerary{{$i}}" value="Remove">
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#remove-itinerary" + "<?php echo $i ?>").click(function () {
+                    $(this).closest("div").remove();
+                });
+            });
+        </script>
+    </div>
+    @php
+        $i++;
+    @endphp
+@endforeach
 <p>
     <input type="button" id="add-itinerary" value="Add Itinerary">
     <script type="text/javascript">
         $(document).ready(function () {
             $("#itinerary-form").hide();
-            var itineraryFormIndex = 0;
+            var itineraryFormIndex = "<?php echo $i ?>";
             $("#add-itinerary").click(function(){
                 itineraryFormIndex++;
                 $(this).parent().before($("#itinerary-form").clone().attr("id", "itinerary-form" + itineraryFormIndex));
@@ -58,14 +78,18 @@
         });
     </script>
 </p>
+@foreach($reservation->packageTour as $packagetour)
 <div class="form-group" id="package-tour-form">
     {!! Form::label('packagetour_id', 'Tour Package') !!}
-    {!! Form::select('packagetour_id', [''=>'Choose Options'] + $packagetours, null, ['class'=>'form-control']) !!}
-    <input type="button" id="remove-package-tour" value="Remove">
+    {!! Form::select('packagetour_id', [''=>'Choose Options'] + $packagetours, $packagetour->id, ['class'=>'form-control']) !!}
 </div>
-
+@endforeach
 <div class="form-group">
-    {!! Form::submit('Create Reservation', ['class'=>'btn btn-primary']) !!}
+    {!! Form::label('price', 'Price') !!}
+    {!! Form::text('price', $reservation->price, ['class'=>'form-control', 'readonly']) !!}
+</div>
+<div class="form-group">
+    {!! Form::submit('Edit Reservation', ['class'=>'btn btn-primary']) !!}
 </div>
 {!! Form::close() !!}
 

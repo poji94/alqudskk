@@ -61,7 +61,6 @@
 <div class="form-group" id="package-tour-form">
     {!! Form::label('packagetour_id', 'Tour Package') !!}
     {!! Form::select('packagetour_id', [''=>'Choose Options'] + $packagetours, null, ['class'=>'form-control']) !!}
-    <input type="button" id="remove-package-tour" value="Remove">
 </div>
 
 <div class="form-group">

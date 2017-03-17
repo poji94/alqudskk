@@ -96,10 +96,11 @@ class ReservationController extends Controller
      */
     public function edit($id)
     {
+        $i = 0;
         $reservation = Reservation::findOrFail($id);
         $itineraries = Itinerary::lists('name', 'id')->all();
         $packagetours = PackageTour::lists('name', 'id')->all();
-        return view('reservation.edit', compact('reservation'));
+        return view('reservation.edit', compact('reservation', 'itineraries', 'packagetours', 'i'));
     }
 
     /**
@@ -111,12 +112,34 @@ class ReservationController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $sumPrice = 0;
         $input = $request -> all();
         $reservation = Reservation::findOrFail($id);
         $reservation->update($input);
-        $packagetours = PackageTour::lists('name', 'id')->all();
-        $itineraries = Itinerary::lists('name', 'id')->all();
-        return view('reservation.createReservationVacation', compact('reservation', 'packagetours', 'itineraries'));
+        if($input['reservation_type_id'] == 1) {                                                //if reservation type is ground
+            $reservation->itineraries()->sync($input['itinerary_id']);
+            $itineraries = Itinerary::findOrFail($input['itinerary_id']);
+            $tempAddDays = 0;
+            foreach ($itineraries as $itinerary) {
+                $sumPrice += $itinerary->price;
+
+                $duration = $itinerary->duration;
+                $trimDuration = $duration[0];
+                $tempAddDays += $trimDuration;
+            }
+            $reservationEnd = Carbon::parse($reservation->reservation_start)->addDays($tempAddDays)->toDateString();
+            $reservation->update(['price' => $sumPrice, 'reservation_end'=>$reservationEnd]);
+        }
+        else if($input['reservation_type_id'] == 2 ) {
+            $reservation->packageTour()->sync([$input['packagetour_id']]);                  //since package tour only receive string instead of array, must create an array bracket
+            $packagetour = PackageTour::findOrFail($input['packagetour_id']);
+
+            $duration = $packagetour->duration;
+            $trimDuration = $duration[0];
+            $reservationEnd = Carbon::parse($reservation->reservation_start)->addDays($trimDuration)->toDateString();
+            $reservation->update(['price' => $packagetour->price, 'reservation_end'=>$reservationEnd]);
+        }
+        return redirect(route('reservation.index'));
     }
 
     /**
