@@ -41,7 +41,7 @@
                 $("#remove-itinerary" + itineraryFormIndex).click(function () {
                     $(this).closest("div").remove();
                 });
-                $("#itinerary-form" + itineraryFormIndex).show();
+                $("#itinerary-form" + itineraryFormIndex).slideDown();
             });
         });
     </script>

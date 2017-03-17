@@ -43,7 +43,7 @@ class PackageTourController extends Controller
     {
         $input = $request->all();
         $packagetour = PackageTour::create($input);
-        $packagetour->itineraries()->sync($request['itinerary_id']);
+        $packagetour->itineraries()->sync($input['itinerary_id']);
         $packagetour->places()->detach();
         $packagetour->types()->detach();
         foreach($packagetour->itineraries as $itinerary) {
@@ -96,7 +96,7 @@ class PackageTourController extends Controller
         $packagetour = PackageTour::findOrFail($id);
         $input = $request -> all();
         $packagetour->update($input);
-        $packagetour->itineraries()->sync($request['itinerary_id']);
+        $packagetour->itineraries()->sync($input['itinerary_id']);
         $packagetour->places()->detach();
         $packagetour->types()->detach();
         foreach($packagetour->itineraries as $itinerary) {
