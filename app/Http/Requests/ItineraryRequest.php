@@ -26,11 +26,20 @@ class ItineraryRequest extends Request
      */
     public function rules()
     {
-        return [
+        $rules =  [
             'name' => 'required | min:5 | max:20',
             'description' => 'required | max:300',
             'duration' => 'required',
             'price' => 'required',
+            'media_id' => 'array',
         ];
+
+        $medias = $this->file('media_id');
+        if(!empty($medias)) {
+            foreach ($medias as $key=>$media) {
+                $rules[ sprintf('media_id.%d', $key)] = 'image';
+            }
+        }
+        return $rules;
     }
 }

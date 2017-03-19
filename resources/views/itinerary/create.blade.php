@@ -1,5 +1,7 @@
 @extends('layouts.master')
 
+<script src="{{asset('/js/jquery.js')}}"></script>
+
 {!! Form::open(['method'=>'POST', 'action'=> 'ItineraryController@store', 'files' => true]) !!}
 <div class="form-group">
     {!! Form::label('name', 'Name') !!}
@@ -25,6 +27,32 @@
     {!! Form::label('price', 'Price') !!}
     {!! Form::number('price', null, ['class'=>'form-control']) !!}
 </div>
+<div class="form-group" id="media-form">
+    {!! Form::label('media_id', 'Media') !!}
+    {!! Form::file('media_id_reference', array('multiple'=>'multiple', 'accept'=>'image/*')) !!}
+    <input type="button" id="remove-media" value="Remove">
+</div>
+<p>
+    <input type="button" id="add-media" value="Add media">
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#media-form").hide();
+            var mediaFormIndex = 0;
+            $("#add-media").click(function(){
+                mediaFormIndex++;
+                $(this).parent().before($("#media-form").clone().attr("id", "media-form" + mediaFormIndex));
+                $("#media-form" + mediaFormIndex +" :input").each(function () {
+                    $(this).attr("name", "media_id[]");
+                    $(this).attr("id", $(this).attr("id") + mediaFormIndex);
+                });
+                $("#remove-media" + mediaFormIndex).click(function () {
+                    $(this).closest("div").remove();
+                });
+                $("#media-form" + mediaFormIndex).slideDown();
+            });
+        });
+    </script>
+</p>
 <div class="form-group">
     {!! Form::submit('Create Itinerary', ['class'=>'btn btn-primary']) !!}
 </div>

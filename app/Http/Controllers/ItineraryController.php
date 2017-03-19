@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ItineraryRequest;
 use App\Itinerary;
+use App\Media;
 use App\PlaceTourism;
 use App\TypeVacation;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Input;
 
 class ItineraryController extends Controller
 {
@@ -55,6 +57,15 @@ class ItineraryController extends Controller
         $typevacation = TypeVacation::findOrFail($input['type_vacation']);
         $itinerary->places()->save($placetourism);
         $itinerary->types()->save($typevacation);
+        if($medias = $request->file('media_id')) {
+            $i = 0;
+            foreach($medias as $media) {
+                $name = 'photo_' . $itinerary->name . '_' . $i . '.' . $media->getClientOriginalExtension();
+                $media->move('media', $name);
+                $itinerary->medias()->create(['path' => $name]);
+                $i++;
+            }
+        }
         return redirect(route('itinerary.index'));
     }
 
@@ -79,6 +90,7 @@ class ItineraryController extends Controller
     //edit the itinerary by showing edit form
     public function edit($id)
     {
+        $i = 0;
         $itinerary = Itinerary::findOrFail($id);
         foreach ($itinerary->places as $place) {
             $place_tourism = $place->pivot->place_tourism_id;
@@ -105,12 +117,27 @@ class ItineraryController extends Controller
         $itinerary = Itinerary::findOrFail($id);
         $input = $request -> all();
         $itinerary->update($input);
+
         $placetourism = PlaceTourism::findOrFail($input['place_tourism']);
         $typevacation = TypeVacation::findOrFail($input['type_vacation']);
         $itinerary->places()->detach();
-        $itinerary->places()->save($placetourism);
         $itinerary->types()->detach();
+        $itinerary->places()->save($placetourism);
         $itinerary->types()->save($typevacation);
+
+        foreach($itinerary->medias as $media) {
+            unlink(public_path(). $media->path);
+        }
+        $itinerary->medias()->delete();
+        if($files = $request->file('media_id')) {
+                $i = 0;
+            foreach($files as $file) {
+                $name = 'photo_' . $itinerary->name . '_' . $i . '.' . $file->getClientOriginalExtension();
+                $file->move('media', $name);
+                $itinerary->medias()->create(['path' => $name]);
+                $i++;
+            }
+        }
         return redirect(route('itinerary.index'));
     }
 
@@ -128,6 +155,10 @@ class ItineraryController extends Controller
         $itinerary->delete();
         $itinerary->places()->detach();
         $itinerary->types()->detach();
+        foreach($itinerary->medias as $media) {
+            unlink(public_path(). $media->path);
+        }
+        $itinerary->medias()->delete();
         return redirect(route('itinerary.index'));
     }
 }
