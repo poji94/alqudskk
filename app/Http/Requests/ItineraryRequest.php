@@ -26,6 +26,7 @@ class ItineraryRequest extends Request
      */
     public function rules()
     {
+        //change the style of typing due to set validation on each image files.
         $rules =  [
             'name' => 'required | min:5 | max:20',
             'description' => 'required | max:300',
@@ -34,6 +35,7 @@ class ItineraryRequest extends Request
             'media_id' => 'array',
         ];
 
+        //each image must validated as image file before accepted
         $medias = $this->file('media_id');
         if(!empty($medias)) {
             foreach ($medias as $key=>$media) {

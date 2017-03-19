@@ -23,6 +23,7 @@ class ItineraryController extends Controller
     //getting all the data from itinerary data table
     public function index()
     {
+        //getting all object of itineraries
         $itineraries = Itinerary::all();
         return view('itinerary.index', compact('itineraries'));
     }
@@ -36,6 +37,7 @@ class ItineraryController extends Controller
     //create an itinerary by showing create form
     public function create()
     {
+        //list out all placetourism and typevacation
         $placetourism = PlaceTourism::lists('name', 'id')->all();
         $typevacation = TypeVacation::lists('name', 'id')->all();
         return view('itinerary.create', compact('placetourism', 'typevacation'));
@@ -51,6 +53,7 @@ class ItineraryController extends Controller
     //store the itinerary from the create() process
     public function store(ItineraryRequest $request)
     {
+        //creating itinerary object, tagging placetourism and typevacation and also relate itineraries with pictures
         $input = $request -> all();
         $itinerary = Itinerary::create($input);
         $placetourism = PlaceTourism::findOrFail($input['place_tourism']);
@@ -90,7 +93,7 @@ class ItineraryController extends Controller
     //edit the itinerary by showing edit form
     public function edit($id)
     {
-        $i = 0;
+        //getting the placetourism and typevacation and itineraries of particular object
         $itinerary = Itinerary::findOrFail($id);
         foreach ($itinerary->places as $place) {
             $place_tourism = $place->pivot->place_tourism_id;
@@ -114,6 +117,7 @@ class ItineraryController extends Controller
     //store the itinerary from the create() process
     public function update(ItineraryRequest $request, $id)
     {
+        //get again the object of particular itineraries, tagging typevacation and placetourism and relate with pictures
         $itinerary = Itinerary::findOrFail($id);
         $input = $request -> all();
         $itinerary->update($input);
@@ -151,6 +155,7 @@ class ItineraryController extends Controller
     //delete the itinerary from itinerary data table
     public function destroy($id)
     {
+        //delete everything relate to the particular object of itineraries
         $itinerary = Itinerary::findOrFail($id);
         $itinerary->delete();
         $itinerary->places()->detach();

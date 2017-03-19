@@ -18,6 +18,7 @@ class PackageTourController extends Controller
      */
     public function index()
     {
+        //get all objects of packagetour
         $packagetours = PackageTour::all();
         return view('packagetour.index', compact('packagetours'));
     }
@@ -29,6 +30,7 @@ class PackageTourController extends Controller
      */
     public function create()
     {
+        //list out all itineraries
         $itineraries = Itinerary::lists('name', 'id')->all();
         return view('packagetour.create', compact('itineraries'));
     }
@@ -41,6 +43,7 @@ class PackageTourController extends Controller
      */
     public function store(PackageTourRequest $request)
     {
+        //creating the packagetour object, sync with associate itineraries, typevacation and placetourism
         $input = $request->all();
         $packagetour = PackageTour::create($input);
         $packagetour->itineraries()->sync($input['itinerary_id']);
@@ -78,6 +81,8 @@ class PackageTourController extends Controller
     public function edit($id)
     {
         //i used to control the count multi input field - for this case, itineraries
+        //list out the itineraries
+        //call out the particular packagetour
         $i = 0;
         $packagetour = PackageTour::findOrFail($id);
         $itineraries = Itinerary::lists('name', 'id')->all();
@@ -93,6 +98,9 @@ class PackageTourController extends Controller
      */
     public function update(PackageTourRequest $request, $id)
     {
+        //call out the particular packagetour object
+        //update the information and sync with associate itineraries
+        //update the typevacation and placetourism
         $packagetour = PackageTour::findOrFail($id);
         $input = $request -> all();
         $packagetour->update($input);
@@ -118,6 +126,7 @@ class PackageTourController extends Controller
      */
     public function destroy($id)
     {
+        //delete everything relate to particular packagetour
         $packagetour = PackageTour::findOrFail($id);
         $packagetour->delete();
         $packagetour->itineraries()->detach();

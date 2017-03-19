@@ -23,6 +23,7 @@ class ReservationController extends Controller
      */
     public function index()
     {
+        //list out all reservation objects
         $reservations = Reservation::all();
         return view('reservation.index', compact('reservations'));
     }
@@ -34,6 +35,7 @@ class ReservationController extends Controller
      */
     public function create()
     {
+        //list the itineraries and packagetours
         $itineraries = Itinerary::lists('name', 'id')->all();
         $packagetours = PackageTour::lists('name', 'id')->all();
         return view('reservation.create', compact('itineraries', 'packagetours'));
@@ -47,11 +49,15 @@ class ReservationController extends Controller
      */
     public function store(ReservationStoreRequest $request)
     {
+        //create the reservation instance object
+        //initialize the sumPrice - for sum all the itineraries price
+        //automate the user_id, reservation_status_id to pending, associate the itineraries/packagetour, durations
+        //Note: reservation_type_id == 1 - Ground. Else (2) is full boat
         $sumPrice = 0;
         $input = $request -> all();
         $reservation = Reservation::create($input);
-        $reservation->update(['user_id'=>Auth::user()->id, 'reservation_status_id'=>1]);            //automatically set user as logged in user and pending status reservation
-        if($input['reservation_type_id'] == 1) {                                                //if reservation type is ground
+        $reservation->update(['user_id'=>Auth::user()->id, 'reservation_status_id'=>1]);
+        if($input['reservation_type_id'] == 1) {
             $reservation->itineraries()->sync($input['itinerary_id']);
             $itineraries = Itinerary::findOrFail($input['itinerary_id']);
             $tempAddDays = 0;
@@ -96,6 +102,8 @@ class ReservationController extends Controller
      */
     public function edit($id)
     {
+        //call the particular reservation
+        //list out the itineraries and packagetours
         $i = 0;
         $reservation = Reservation::findOrFail($id);
         $itineraries = Itinerary::lists('name', 'id')->all();
@@ -112,6 +120,8 @@ class ReservationController extends Controller
      */
     public function update(Request $request, $id)
     {
+        //pretty much similar to the store reservation
+        //this updates the particular reservation
         $sumPrice = 0;
         $input = $request -> all();
         $reservation = Reservation::findOrFail($id);
@@ -150,6 +160,7 @@ class ReservationController extends Controller
      */
     public function destroy($id)
     {
+        //delete everything related to particular reservation
         $reservation = Reservation::findOrFail($id);
         $reservation->delete();
         $reservation->packageTour()->detach();

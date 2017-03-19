@@ -21,6 +21,7 @@ class UserController extends Controller
     // Getting all the data from user table
     public function index()
     {
+        //list out all user objects
         $users = User::all();
         return view('user.index', compact('users'));
     }
@@ -34,6 +35,7 @@ class UserController extends Controller
     //List out the data required for user role for input selection in creating user
     public function create()
     {
+        //list all the role users
         $roleUser = RoleUser::lists('name', 'id')->all();
         return view('user.create', compact('roleUser'));
     }
@@ -48,6 +50,7 @@ class UserController extends Controller
     //Storing the data input from create()
     public function store(UserStoreRequest $request)
     {
+        //create the user object
         $input = $request -> all();
         User::create($input);
         return redirect(route('user.index'));
@@ -74,6 +77,8 @@ class UserController extends Controller
     //list out data required with preset value with certain id
     public function edit($id)
     {
+        //call the particular user object
+        //list out the role user
         $user = User::findOrFail($id);
         $roleUser = RoleUser::lists('name', 'id')->all();
         return view('user.edit', compact('user', 'roleUser'));
@@ -90,6 +95,8 @@ class UserController extends Controller
     //Updating the data input from edit()
     public function update(UserUpdateRequest $request, $id)
     {
+        //call the particular user
+        //update the users
         $user = User::findOrFail($id);
 
         $input = $request -> all();
@@ -111,6 +118,7 @@ class UserController extends Controller
     //Destroying the data
     public function destroy($id)
     {
+        //delete everything related to user object
         $user = User::findOrFail($id);
         $user->delete();
         return redirect(route('user.index'));

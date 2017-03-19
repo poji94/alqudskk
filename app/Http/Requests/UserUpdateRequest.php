@@ -25,6 +25,7 @@ class UserUpdateRequest extends Request
     //rules validation for the UserController.edit -> UserController.update
     public function rules()
     {
+        //password is not required if some users have no intention to change password
         return [
             'name' => 'required | min:5 | max:20',
             'email' => 'required | email',

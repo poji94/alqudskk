@@ -26,11 +26,12 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    //setting relationship
+    //one-to-one relationship user <-> roleUser
     public function roleUser() {
         return $this->belongsTo('App\RoleUser', 'role_user_id');
     }
 
+    //one-to-many inverse relationship user <-> reservations
     public function reservations() {
         return $this->hasMany('App\Reservation', 'id');
     }
