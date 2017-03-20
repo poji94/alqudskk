@@ -21,8 +21,6 @@ class CreateUsersTable extends Migration
             $table->string('phone_number');
             $table->rememberToken();
             $table->timestamps();
-
-            $table->foreign('role_user_id')->references('id')->on('role_users');
         });
     }
 

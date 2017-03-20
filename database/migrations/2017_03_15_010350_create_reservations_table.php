@@ -21,10 +21,6 @@ class CreateReservationsTable extends Migration
             $table->integer('price');
             $table->integer('reservation_status_id');
             $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('reservation_type_id')->references('id')->on('reservation_types');
-            $table->foreign('reservation_status_id')->references('id')->on('reservation_statuses');
         });
     }
 
