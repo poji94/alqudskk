@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ed4918bf-51db-4868-8d79-3ad32460c4d0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" afterPath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/migrations/2017_03_15_010350_create_reservations_table.php" afterPath="$PROJECT_DIR$/database/migrations/2017_03_15_010350_create_reservations_table.php" />
-    </list>
+    <list default="true" id="ed4918bf-51db-4868-8d79-3ad32460c4d0" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -283,12 +279,12 @@
       <workItem from="1489586682204" duration="33574000" />
       <workItem from="1489770340368" duration="1251000" />
       <workItem from="1489856868230" duration="24846000" />
-      <workItem from="1490021885169" duration="1198000" />
+      <workItem from="1490021885169" duration="1219000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="164137000" />
+    <option name="totallyTimeSpent" value="164158000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
