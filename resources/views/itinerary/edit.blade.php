@@ -32,6 +32,18 @@
     {!! Form::file('media_id_reference', array('multiple'=>'multiple', 'accept'=>'image/*')) !!}
     <input type="button" id="remove-media" value="Remove">
 </div>
+@foreach($itinerary->medias as $media)
+    <div class="form-group" id="media-form">
+        {!! Form::label('media_id', 'Media') !!}
+        {!! Form::file('media_id[]', array('multiple'=>'multiple', 'accept'=>'image/*')) !!}
+        <input type="button" id="remove-media" value="Remove">
+        <script>
+            $("#remove-media" + mediaFormIndex).click(function () {
+                $(this).closest("div").remove();
+            });
+        </script>
+    </div>
+@endforeach
 <p>
     <input type="button" id="add-media" value="Add Media">
     <script type="text/javascript">

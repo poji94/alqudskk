@@ -17,7 +17,8 @@ class CreatePackageToursTable extends Migration
             $table->string('name');
             $table->text('description');
             $table->string('duration');
-            $table->integer('price');
+            $table->integer('price_children');
+            $table->integer('price_adult');
             $table->timestamps();
         });
     }

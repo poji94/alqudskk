@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
+use App\Reservation;
 use App\RoleUser;
 use App\User;
 use Illuminate\Http\Request;
@@ -119,8 +120,13 @@ class UserController extends Controller
     public function destroy($id)
     {
         //delete everything related to user object
+        //also delete associated reservations
         $user = User::findOrFail($id);
         $user->delete();
+        $reservations = Reservation::where('user_id', $user->id)->get();
+        foreach($reservations as $reservation) {
+            $reservation->delete();
+        }
         return redirect(route('user.index'));
     }
 }
