@@ -28,7 +28,7 @@ class UserUpdateRequest extends Request
         //password is not required if some users have no intention to change password
         return [
             'name' => 'required | min:5 | max:20',
-            'email' => 'required | email',
+            'email' => 'required | email | unique:users',
             'password' =>  'confirmed',
             'role_user_id' => 'required',
             'phone_number' => 'required | numeric | digits_between:10,13',

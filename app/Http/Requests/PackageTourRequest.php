@@ -24,7 +24,7 @@ class PackageTourRequest extends Request
     public function rules()
     {
         return [
-            'name' => 'required | min:5 | max:20',
+            'name' => 'required | min:5 | max:20 | unique:package_tours',
             'description' => 'required | max:300',
             'duration' => 'required',
             'price' => 'required',

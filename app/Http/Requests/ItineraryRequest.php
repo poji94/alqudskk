@@ -28,7 +28,7 @@ class ItineraryRequest extends Request
     {
         //change the style of typing due to set validation on each image files.
         $rules =  [
-            'name' => 'required | min:5 | max:20',
+            'name' => 'required | min:5 | max:20 | unique:itineraries',
             'description' => 'required | max:300',
             'duration' => 'required',
             'price' => 'required',
