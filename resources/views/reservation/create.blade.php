@@ -62,6 +62,14 @@
     {!! Form::label('packagetour_id', 'Tour Package') !!}
     {!! Form::select('packagetour_id', [''=>'Choose Options'] + $packagetours, null, ['class'=>'form-control']) !!}
 </div>
+<div class="form-group">
+    {!! Form::label('children_no', 'Number of children') !!}
+    {!! Form::number('children_no', 0, ['class'=>'form-control']) !!}
+</div>
+<div class="form-group">
+    {!! Form::label('adult_no', 'Price per adult') !!}
+    {!! Form::number('adult_no', 0, ['class'=>'form-control']) !!}
+</div>
 
 <div class="form-group">
     {!! Form::submit('Create Reservation', ['class'=>'btn btn-primary']) !!}

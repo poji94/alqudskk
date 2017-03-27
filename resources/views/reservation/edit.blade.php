@@ -89,6 +89,15 @@
     {!! Form::text('price', $reservation->price, ['class'=>'form-control', 'readonly']) !!}
 </div>
 <div class="form-group">
+    {!! Form::label('children_no', 'Number of children') !!}
+    {!! Form::number('children_no', null, ['class'=>'form-control']) !!}
+</div>
+<div class="form-group">
+    {!! Form::label('adult_no', 'Price per adult') !!}
+    {!! Form::number('adult_no', null, ['class'=>'form-control']) !!}
+</div>
+
+<div class="form-group">
     {!! Form::submit('Edit Reservation', ['class'=>'btn btn-primary']) !!}
 </div>
 {!! Form::close() !!}

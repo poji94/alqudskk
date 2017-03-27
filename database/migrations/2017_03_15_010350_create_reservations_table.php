@@ -18,6 +18,8 @@ class CreateReservationsTable extends Migration
             $table->integer('reservation_type_id');
             $table->string('reservation_start');
             $table->string('reservation_end');
+            $table->integer('children_no');
+            $table->integer('adult_no');
             $table->integer('price');
             $table->integer('reservation_status_id');
             $table->timestamps();
