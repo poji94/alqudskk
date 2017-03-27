@@ -11,8 +11,6 @@
     <tr>
         <th>ID</th>
         <th>Name</th>
-        <th>Duration</th>
-        <th>Price</th>
         <th>Created</th>
         <th>Updated</th>
         <th colspan="2">Action</th>
@@ -24,8 +22,6 @@
             <tr>
                 <td>{{$itinerary->id}}</td>
                 <td>{{$itinerary->name}}</td>
-                <td>{{$itinerary->duration}}</td>
-                <td>{{$itinerary->price}}</td>
                 <td>{{$itinerary->created_at->diffForHumans()}}</td>
                 <td>{{$itinerary->updated_at->diffForHumans()}}</td>
                 <td><button type="button" onclick="location.href='{{route('itinerary.edit', $itinerary->id)}}'">Edit</button></td>

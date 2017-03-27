@@ -27,7 +27,8 @@ class PackageTourRequest extends Request
             'name' => 'required | min:5 | max:20 | unique:package_tours',
             'description' => 'required | max:300',
             'duration' => 'required',
-            'price' => 'required',
+            'price_children' => 'required',
+            'price_adult' => 'required',
         ];
     }
 }

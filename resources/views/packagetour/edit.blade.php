@@ -60,8 +60,12 @@
     {!! Form::text('duration', null, ['class'=>'form-control']) !!}
 </div>
 <div class="form-group">
-    {!! Form::label('price', 'Price') !!}
-    {!! Form::number('price', null, ['class'=>'form-control']) !!}
+    {!! Form::label('price_children', 'Price per child') !!}
+    {!! Form::number('price_children', null, ['class'=>'form-control']) !!}
+</div>
+<div class="form-group">
+    {!! Form::label('price_adult', 'Price per adult') !!}
+    {!! Form::number('price_adult', null, ['class'=>'form-control']) !!}
 </div>
 <div class="form-group">
     {!! Form::submit('Edit Tour Package', ['class'=>'btn btn-primary']) !!}

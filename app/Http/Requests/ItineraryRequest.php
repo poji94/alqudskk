@@ -31,7 +31,8 @@ class ItineraryRequest extends Request
             'name' => 'required | min:5 | max:20 | unique:itineraries',
             'description' => 'required | max:300',
             'duration' => 'required',
-            'price' => 'required',
+            'price_children' => 'required',
+            'price_adult' => 'required',
             'media_id' => 'array',
         ];
 

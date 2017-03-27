@@ -11,8 +11,6 @@
     <tr>
         <th>ID</th>
         <th>Name</th>
-        <th>Duration</th>
-        <th>Price</th>
         <th>Created</th>
         <th>Updated</th>
         <th colspan="2">Action</th>
@@ -24,8 +22,6 @@
             <tr>
                 <td>{{$packagetour->id}}</td>
                 <td>{{$packagetour->name}}</td>
-                <td>{{$packagetour->duration}}</td>
-                <td>{{$packagetour->price}}</td>
                 <td>{{$packagetour->created_at->diffForHumans()}}</td>
                 <td>{{$packagetour->updated_at->diffForHumans()}}</td>
                 <td><button type="button" onclick="location.href='{{route('packagetour.edit', $packagetour->id)}}'">Edit</button></td>
