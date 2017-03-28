@@ -40,4 +40,9 @@ class User extends Authenticatable
     public function setPasswordAttribute($value) {
         $this->attributes['password'] = bcrypt($value);
     }
+
+    //set the initial character of the name becomes capital letter
+    public function getNameAttribute($value) {
+        return ucfirst($value);
+    }
 }

@@ -66,6 +66,30 @@
                             </div>
                         </div>
 
+                        <div class="form-group{{ $errors->has('phone_number') ? ' has-error' : '' }}">
+                            <label for="phone-number" class="col-md-4 control-label">Phone Number</label>
+
+                            <div class="col-md-6">
+                                <input id="phone-number" type="text" class="form-control" name="phone_number" onkeypress="return isNumber(event)">
+                                <script type="text/javascript">
+                                    function isNumber(evt) {
+                                        evt = (evt) ? evt : window.event;
+                                        var charCode = (evt.which) ? evt.which : evt.keyCode;
+                                        if ( (charCode > 31 && charCode < 48) || charCode > 57) {
+                                            return false;
+                                        }
+                                        return true;
+                                    }
+                                </script>
+
+                                @if ($errors->has('phone_number'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('phone_number') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">
