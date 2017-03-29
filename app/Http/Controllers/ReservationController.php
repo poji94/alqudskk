@@ -28,6 +28,11 @@ class ReservationController extends Controller
         return view('reservation.index', compact('reservations'));
     }
 
+    public function getUserReservation()
+    {
+        $reservations = Reservation::where('user_id', Auth::user()->id)->get();
+        return view('reservation.index', compact('reservations'));
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -82,7 +87,12 @@ class ReservationController extends Controller
             $reservationEnd = Carbon::parse($reservation->reservation_start)->addDays($trimDuration)->toDateString();
             $reservation->update(['price' => $sumPrice, 'reservation_end'=>$reservationEnd]);
         }
-        return redirect(route('reservation.index'));
+        if(Auth::user()->role_user_id == 3) {
+            return redirect(route('reservation.getUserReservation'));
+        }
+        else {
+            return redirect(route('reservation.index'));
+        }
     }
 
     /**
@@ -120,7 +130,7 @@ class ReservationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ReservationStoreRequest $request, $id)
     {
         //pretty much similar to the store reservation
         //this updates the particular reservation
@@ -153,7 +163,12 @@ class ReservationController extends Controller
             $reservationEnd = Carbon::parse($reservation->reservation_start)->addDays($trimDuration)->toDateString();
             $reservation->update(['price' => $packagetour->$sumPrice, 'reservation_end'=>$reservationEnd]);
         }
-        return redirect(route('reservation.index'));
+        if(Auth::user()->role_user_id == 3) {
+            return redirect(route('reservation.getUserReservation'));
+        }
+        else {
+            return redirect(route('reservation.index'));
+        }
     }
 
     /**
@@ -169,6 +184,11 @@ class ReservationController extends Controller
         $reservation->delete();
         $reservation->packageTour()->detach();
         $reservation->itineraries()->detach();
-        return redirect(route('reservation.index'));
+        if(Auth::user()->role_user_id == 3) {
+            return redirect(route('reservation.getUserReservation'));
+        }
+        else {
+            return redirect(route('reservation.index'));
+        }
     }
 }

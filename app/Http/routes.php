@@ -11,6 +11,8 @@
 |
 */
 
+use Illuminate\Support\Facades\Auth;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -26,3 +28,4 @@ Route::resource('/itinerary', 'ItineraryController');
 Route::resource('/packagetour', 'PackageTourController');
 
 Route::resource('/reservation', 'ReservationController');
+Route::get('/userReservation', 'ReservationController@getUserReservation')->name('reservation.getUserReservation');

@@ -12,7 +12,11 @@
                     <div class="panel-heading">Reservations</div>
 
                     <div class="panel-body">
-                        List of reservations made
+                        @if(Auth::user()->role_user_id == 3)
+                            My reservations
+                        @else
+                            List of reservations made
+                        @endif
                         <table class="table">
                             <thead>
                             <tr>
