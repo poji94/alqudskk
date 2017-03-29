@@ -20,37 +20,66 @@
             <!-- Right Side Of Navbar -->
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="{{ url('/') }}">Home</a></li>
-                <li><a href="{{ url('/itinerary') }}">Itinerary</a></li>
-                <li><a href="{{ url('/packagetour') }}">Tour Package</a></li>
-                <li><a href="{{ url('/reservation') }}">Reservation</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        Itinerary<span class="caret"></span>
+                    </a>
+
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="{{ url('/itinerary') }}">View all itineraries</a></li>
+                        <li><a href="{{ url('/itinerary/create') }}">Add itinerary</a></li>
+                        <li><a href="">button 3</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        Tour Package<span class="caret"></span>
+                    </a>
+
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="">button 1</a></li>
+                        <li><a href="">button 2</a></li>
+                        <li><a href="">button 3</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        Reservation<span class="caret"></span>
+                    </a>
+
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="">button 1</a></li>
+                        <li><a href="">button 2</a></li>
+                        <li><a href="">button 3</a></li>
+                    </ul>
+                </li>
                 <!-- Authentication Links -->
                 @if (Auth::guest())
                     <li><a href="{{ url('/login') }}">Login</a></li>
                     <li><a href="{{ url('/register') }}">Register</a></li>
                 @else
                     @if(Auth::user()->role_user_id == 1)
-                        <li><a href="{{ url('/user') }}">User</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{ Auth::user()->name }} <span class="caret"></span>
+                                User<span class="caret"></span>
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
-                            </ul>
-                        </li>
-                    @else
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{ Auth::user()->name }} <span class="caret"></span>
-                            </a>
-
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
+                                <li><a href="{{url('/user')}}">View all users</a></li>
+                                <li><a href="{{url('/user/create')}}">Add User</a></li>
                             </ul>
                         </li>
                     @endif
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            {{ Auth::user()->name }} <span class="caret"></span>
+                        </a>
 
+                        <ul class="dropdown-menu" role="menu">
+                            {{--<li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>--}}
+                            <li><a href="{{ url('/logout') }}">Logout</a></li>
+                        </ul>
+                    </li>
                 @endif
             </ul>
         </div>

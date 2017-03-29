@@ -1,44 +1,54 @@
-@extends('layouts.master')
+@extends('layouts.app')
 
-<h1>Users</h1>
+@section('head')
+    Users
+@endsection
 
-<button type="button" onclick="location.href='{{route('itinerary.index')}}'">Itinerary</button>
-<button type="button" onclick="location.href='{{route('packagetour.index')}}'">Tour package</button>
-<button type="button" onclick="location.href='{{route('reservation.index')}}'">Reservation</button>
+@section('content')
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Users</div>
 
-<table class="table">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Role User</th>
-        <th>Phone Number</th>
-        <th>Created</th>
-        <th>Updated</th>
-        <th colspan="2">Action</th>
-    </tr>
-    </thead>
-    <tbody>
-    @if($users)
-        @foreach($users as $user)
-            <tr>
-                <td>{{$user->id}}</td>
-                <td>{{$user->name}}</td>
-                <td>{{$user->email}}</td>
-                <td>{{$user->roleUser->name}}</td>
-                <td>{{$user->phone_number}}</td>
-                <td>{{$user->created_at->diffForHumans()}}</td>
-                <td>{{$user->updated_at->diffForHumans()}}</td>
-                <td><button type="button" onclick="location.href='{{route('user.edit', $user->id)}}'">Edit</button></td>
-                <td>
-                    {!!  Form::open(['method' => 'DELETE', 'action' => ['UserController@destroy', $user->id]])!!}
-                        {!! Form::submit('Delete', ['class' => 'btn btn-danger col-sm-6']) !!}
-                    {!! Form::close() !!}
-                </td>
-            </tr>
-        @endforeach
-    @endif
-    </tbody>
-</table>
-<button type="button" onclick="location.href='{{route('user.create')}}'">Create</button>
+                    <div class="panel-body">
+                        List of registered users
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Role User</th>
+                                    <th>Phone Number</th>
+                                    <th>Created</th>
+                                    <th>Updated</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @if($users)
+                                    @foreach($users as $user)
+                                        <tr>
+                                            <td>{{$user->id}}</td>
+                                            <td>{{$user->name}}</td>
+                                            <td>{{$user->email}}</td>
+                                            <td>{{$user->roleUser->name}}</td>
+                                            <td>{{$user->phone_number}}</td>
+                                            <td>{{$user->created_at->diffForHumans()}}</td>
+                                            <td>{{$user->updated_at->diffForHumans()}}</td>
+                                            <td><button type="button" class="btn btn-primary" onclick="location.href='{{route('user.edit', $user->id)}}'">View</button></td>
+                                        </tr>
+                                    @endforeach
+                                @endif
+                                </tbody>
+                            </table>
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="location.href='{{route('user.create')}}'">Create</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
