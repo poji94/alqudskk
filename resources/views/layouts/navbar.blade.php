@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-static-top">
+<nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
 
@@ -37,8 +37,8 @@
                     </a>
 
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="">button 1</a></li>
-                        <li><a href="">button 2</a></li>
+                        <li><a href="{{ url('/packagetour') }}">View all tour packages</a></li>
+                        <li><a href="{{ url('/packagetour/create') }}">Add package tour</a></li>
                         <li><a href="">button 3</a></li>
                     </ul>
                 </li>
@@ -48,8 +48,8 @@
                     </a>
 
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="">button 1</a></li>
-                        <li><a href="">button 2</a></li>
+                        <li><a href="{{ url('/reservation') }}">View all reservations</a></li>
+                        <li><a href="{{ url('/reservation/create') }}">Create reservation</a></li>
                         <li><a href="">button 3</a></li>
                     </ul>
                 </li>

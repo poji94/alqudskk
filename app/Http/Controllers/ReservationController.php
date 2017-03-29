@@ -133,7 +133,7 @@ class ReservationController extends Controller
             $itineraries = Itinerary::findOrFail($input['itinerary_id']);
             $tempAddDays = 0;
             foreach ($itineraries as $itinerary) {
-                $sumPrice += $itinerary->price;
+                $sumPrice += ($input['children_no'] * $itinerary->price_children) + ($input['adult_no'] * $itinerary->price_adult);
 
                 $duration = $itinerary->duration;
                 $trimDuration = $duration[0];
@@ -146,10 +146,12 @@ class ReservationController extends Controller
             $reservation->packageTour()->sync([$input['packagetour_id']]);                  //since package tour only receive string instead of array, must create an array bracket
             $packagetour = PackageTour::findOrFail($input['packagetour_id']);
 
+            $sumPrice += ($input['children_no'] * $packagetour->price_children) + ($input['adult_no'] * $packagetour->price_adult);
+
             $duration = $packagetour->duration;
             $trimDuration = $duration[0];
             $reservationEnd = Carbon::parse($reservation->reservation_start)->addDays($trimDuration)->toDateString();
-            $reservation->update(['price' => $packagetour->price, 'reservation_end'=>$reservationEnd]);
+            $reservation->update(['price' => $packagetour->$sumPrice, 'reservation_end'=>$reservationEnd]);
         }
         return redirect(route('reservation.index'));
     }

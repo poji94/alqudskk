@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\PackageTourRequest;
+use App\Http\Requests\PackageTourStoreRequest;
+use App\Http\Requests\PackageTourUpdateRequest;
 use App\Itinerary;
 use App\PackageTour;
 use Illuminate\Http\Request;
@@ -41,7 +42,7 @@ class PackageTourController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PackageTourRequest $request)
+    public function store(PackageTourStoreRequest $request)
     {
         //creating the packagetour object, sync with associate itineraries, typevacation and placetourism
         $input = $request->all();
@@ -96,7 +97,7 @@ class PackageTourController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(PackageTourRequest $request, $id)
+    public function update(PackageTourUpdateRequest $request, $id)
     {
         //call out the particular packagetour object
         //update the information and sync with associate itineraries

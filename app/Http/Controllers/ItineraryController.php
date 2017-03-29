@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ItineraryRequest;
+use App\Http\Requests\ItineraryStoreRequest;
+use App\Http\Requests\ItineraryUpdateRequest;
 use App\Itinerary;
-use App\Media;
 use App\PlaceTourism;
 use App\TypeVacation;
-use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Illuminate\Support\Facades\Input;
@@ -51,7 +50,7 @@ class ItineraryController extends Controller
      */
 
     //store the itinerary from the create() process
-    public function store(ItineraryRequest $request)
+    public function store(ItineraryStoreRequest $request)
     {
         //creating itinerary object, tagging placetourism and typevacation and also relate itineraries with pictures
         $input = $request -> all();
@@ -115,7 +114,7 @@ class ItineraryController extends Controller
      */
 
     //store the itinerary from the create() process
-    public function update(ItineraryRequest $request, $id)
+    public function update(ItineraryUpdateRequest $request, $id)
     {
         //get again the object of particular itineraries, tagging typevacation and placetourism and relate with pictures
         $itinerary = Itinerary::findOrFail($id);

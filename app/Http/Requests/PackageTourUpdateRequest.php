@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class ReservationStoreRequest extends Request
+class PackageTourUpdateRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,11 @@ class ReservationStoreRequest extends Request
     public function rules()
     {
         return [
-            'reservation_type_id' => 'required',
-            'children_no' => 'required | integer | min:0',
-            'adult_no' => 'required | integer | min:1',
+            'name' => 'required | min:5 | max:20',
+            'description' => 'required | max:300',
+            'duration' => 'required',
+            'price_children' => 'required | integer | min:1',
+            'price_adult' => 'required | integer | min:1',
         ];
     }
 }

@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <div class="container">
+    <div class="container" style="padding-top: 5%">
         <div class="row">
             <div class="col-sm-6 col-md-offset-3">
                 <div class="panel panel-default">
@@ -15,7 +15,7 @@
                         {!! Form::model($itinerary, ['method'=>'PATCH', 'action'=> ['ItineraryController@update', $itinerary->id], 'files' => true]) !!}
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                             {!! Form::label('name', 'Name') !!}
-                            {!! Form::text('name', null, ['class'=>'form-control']) !!}
+                            {!! Form::text('name', null, ['class'=>'form-control', 'readonly']) !!}
                             @if ($errors->has('name'))
                                 <span class="help-block">
                                         <strong>{{ $errors->first('name') }}</strong>
@@ -113,14 +113,14 @@
                         </p>
                         <div class="form-group">
                             {!! Form::submit('Edit Itinerary', ['class'=>'btn btn-primary']) !!}
-                            <td>
-                                {!!  Form::open(['method' => 'DELETE', 'action' => ['ItineraryController@destroy', $itinerary->id]])!!}
-                                {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
-                                {!! Form::close() !!}
-                            </td>
-                            <button type="button" class="btn btn-primary" onclick="location.href='{{route('itinerary.index')}}'">Cancel</button>
                         </div>
                         {!! Form::close() !!}
+                        <div class="form-group">
+                            {!! Form::open(['method' => 'DELETE', 'action' => ['ItineraryController@destroy', $itinerary->id]])!!}
+                            {!! Form::submit('Delete', ['class' => ' btn btn-danger']) !!}
+                            {!! Form::close() !!}
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="location.href='{{route('itinerary.index')}}'">Cancel</button>
                     </div>
                 </div>
             </div>

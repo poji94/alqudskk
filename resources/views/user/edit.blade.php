@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <div class="container">
+    <div class="container" style="padding-top: 5%">
         <div class="row">
             <div class="col-sm-6 col-md-offset-3">
                 <div class="panel panel-default">
@@ -27,7 +27,7 @@
                         <div class="form-group">
                             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                                 {!! Form::label('email', 'Email') !!}
-                                {!! Form::email('email', null, ['class'=>'form-control']) !!}
+                                {!! Form::email('email', null, ['class'=>'form-control', 'readonly']) !!}
                                 @if ($errors->has('email'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('email') }}</strong>
@@ -91,14 +91,14 @@
                         </div>
                         <div class="form-group">
                             {!! Form::submit('Edit User', ['class'=>'btn btn-primary']) !!}
-                            <td>
-                                {!!  Form::open(['method' => 'DELETE', 'action' => ['UserController@destroy', $user->id]])!!}
-                                {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
-                                {!! Form::close() !!}
-                            </td>
-                            <button type="button" class="btn btn-primary" onclick="location.href='{{route('user.index')}}'">Cancel</button>
                         </div>
                         {!! Form::close() !!}
+                        <div class="form-group">
+                            {!!  Form::open(['method' => 'DELETE', 'action' => ['UserController@destroy', $user->id]])!!}
+                            {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
+                            {!! Form::close() !!}
+                            <button type="button" class="btn btn-primary" onclick="location.href='{{route('user.index')}}'">Cancel</button>
+                        </div>
                     </div>
                 </div>
             </div>

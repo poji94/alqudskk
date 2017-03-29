@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('head')
-    Itinerary
+    Itineraries
 @endsection
 
 @section('content')
-    <div class="container">
+    <div class="container" style="padding-top: 5%">
         <div class="row">
             <div class="col-sm-6 col-md-offset-3">
                 <div class="panel panel-default">

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class PackageTourRequest extends Request
+class PackageTourStoreRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,8 +27,8 @@ class PackageTourRequest extends Request
             'name' => 'required | min:5 | max:20 | unique:package_tours',
             'description' => 'required | max:300',
             'duration' => 'required',
-            'price_children' => 'required',
-            'price_adult' => 'required',
+            'price_children' => 'required | integer | min:1',
+            'price_adult' => 'required | integer | min:1',
         ];
     }
 }
