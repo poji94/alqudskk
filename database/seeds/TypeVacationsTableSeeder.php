@@ -20,24 +20,18 @@ class TypeVacationsTableSeeder extends Seeder
             ],
             [
                 // id = 2
-                'name'=>'Honeymoon',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ],
-            [
-                // id = 3
                 'name'=>'Cultural',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
-                // id = 4
+                // id = 3
                 'name'=>'Nature',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
-                // id = 5
+                // id = 4
                 'name'=>'Unique',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),

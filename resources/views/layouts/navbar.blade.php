@@ -23,7 +23,7 @@
                 <!-- Authentication Links -->
                 @if (Auth::guest())
                     <li><a href="{{ route('itinerary.getSelection') }}">Itinerary</a></li>
-{{--                    <li><a href="{{ route('packagetour.getSelectition') }}">Tour Packages</a></li>--}}
+                    <li><a href="{{ route('packagetour.getSelection') }}">Tour Packages</a></li>
                     <li><a href="{{ url('/login') }}">Reservation</a></li>
                     <li><a href="{{ url('/login') }}">Login</a></li>
                     <li><a href="{{ url('/register') }}">Register</a></li>
@@ -35,6 +35,7 @@
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
+                                <li><a href="{{ route('itinerary.getSelection') }}">View itineraries</a></li>
                                 <li><a href="{{ url('/itinerary') }}">Manage itineraries</a></li>
                                 <li><a href="{{ url('/itinerary/create') }}">Add itinerary</a></li>
                             </ul>
@@ -45,6 +46,7 @@
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
+                                <li><a href="{{ route('packagetour.getSelection') }}">View Tour Packages</a></li>
                                 <li><a href="{{ url('/packagetour') }}">Manage tour packages</a></li>
                                 <li><a href="{{ url('/packagetour/create') }}">Add package tour</a></li>
                             </ul>
@@ -56,7 +58,7 @@
 
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="{{ url('/reservation') }}">Manage reservations</a></li>
-                                <li><a href="{{ url('/userReservation')}}">View my reservations</a></li>
+                                <li><a href="{{ url('/userReservation')}}">My reservations</a></li>
                                 <li><a href="{{ url('/reservation/create') }}">Create reservation</a></li>
                             </ul>
                         </li>
@@ -81,7 +83,7 @@
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ url('/userReservation')}}">View my reservations</a></li>
+                                <li><a href="{{ url('/userReservation')}}">My reservations</a></li>
                                 <li><a href="{{ url('/reservation/create') }}">Create reservation</a></li>
                             </ul>
                         </li>

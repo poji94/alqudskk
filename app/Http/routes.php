@@ -25,8 +25,11 @@ Route::resource('/user', 'UserController');
 
 Route::resource('/itinerary', 'ItineraryController');
 Route::get('/itinerarySelection', 'ItineraryController@getSelection')->name('itinerary.getSelection');
+Route::get('/itinerarySelection/filter', 'ItineraryController@filterSelection')->name('itinerary.filterSelection');
 
 Route::resource('/packagetour', 'PackageTourController');
+Route::get('/packageTourSelection', 'PackageTourController@getSelection')->name('packagetour.getSelection');
+Route::get('/packageTourSelection/filter', 'PackageTourController@filterSelection')->name('packagetour.filterSelection');
 
 Route::resource('/reservation', 'ReservationController');
 Route::get('/userReservation', 'ReservationController@getUserReservation')->name('reservation.getUserReservation');

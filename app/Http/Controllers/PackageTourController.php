@@ -6,6 +6,8 @@ use App\Http\Requests\PackageTourStoreRequest;
 use App\Http\Requests\PackageTourUpdateRequest;
 use App\Itinerary;
 use App\PackageTour;
+use App\PlaceTourism;
+use App\TypeVacation;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -22,6 +24,62 @@ class PackageTourController extends Controller
         //get all objects of packagetour
         $packagetours = PackageTour::all();
         return view('packagetour.index', compact('packagetours'));
+    }
+
+    public function getSelection()
+    {
+        $isItinerary = false;
+        $selectedPackageTours = PackageTour::all();
+        $placetourism = PlaceTourism::lists('name', 'id')->all();
+        $typevacation = TypeVacation::lists('name', 'id')->all();
+        return view('packagetour.filter', compact('selectedPackageTours', 'placetourism', 'typevacation', 'isItinerary'));
+    }
+
+    public function filterSelection(Request $request)
+    {
+        $selectedPackageTours = new PackageTour();
+        $input = $request->all();
+        $packageTours = PackageTour::all();
+        if($input['place_tourism'] == null && $input['type_vacation'] == null) {
+            $selectedItineraries = $packageTours;
+        }
+        else if ($input['place_tourism'] == null ) {
+            foreach($packageTours as $packageTour) {
+                foreach($packageTour->types as $type) {
+                    if($type->pivot->type_vacation_id == $input['type_vacation']) {
+                        $selectedPackageTours = $type->packageTours;
+                    }
+                }
+            }
+        }
+        else if($input['type_vacation'] == null) {
+            foreach($packageTours as $packageTour) {
+                foreach($packageTour->places as $place) {
+                    if($place->pivot->place_tourism_id == $input['place_tourism']) {
+                        $selectedPackageTours = $place->packageTours;
+                    }
+                }
+            }
+        }
+        else {
+            foreach($packageTours as $packageTour) {
+                foreach($packageTour->places as $place) {
+                    if($place->pivot->place_tourism_id == $input['place_tourism']) {
+                        $filtered1PackageTours = $place->packageTours;
+                    }
+                }
+            }
+            foreach($filtered1PackageTours as $filtered1PackageTour) {
+                foreach($filtered1PackageTour->types as $type) {
+                    if($type->pivot->type_vacation_id == $input['type_vacation']) {
+                        $selectedPackageTours = PackageTour::findOrFail($type->pivot->typeable_id);
+                    }
+                }
+            }
+        }
+        $placetourism = PlaceTourism::lists('name', 'id')->all();
+        $typevacation = TypeVacation::lists('name', 'id')->all();
+        return view('packagetour.filter', compact('selectedPackageTours', 'placetourism', 'typevacation'));
     }
 
     /**
@@ -70,7 +128,18 @@ class PackageTourController extends Controller
      */
     public function show($id)
     {
-        //
+        $packageTour = PackageTour::findOrFail($id);
+        foreach($packageTour->types as $type) {
+            if($type->pivot->type_vacation_id == $packageTour->types->first()->id) {
+                $selectedTypePackageTours = $type->packageTours;
+            }
+        }
+        foreach($packageTour->places as $place) {
+            if($place->pivot->place_tourism_id == $packageTour->places->first()->id) {
+                $selectedPlacePackageTours = $place->packageTours;
+            }
+        }
+        return view('packagetour.show', compact('packageTour', 'selectedTypePackageTours', 'selectedPlacePackageTours'));
     }
 
     /**

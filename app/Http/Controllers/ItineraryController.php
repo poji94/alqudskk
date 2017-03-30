@@ -30,11 +30,57 @@ class ItineraryController extends Controller
 
     public function getSelection()
     {
-        $itineraries = Itinerary::all();
+        $selectedItineraries = Itinerary::all();
         $placetourism = PlaceTourism::lists('name', 'id')->all();
         $typevacation = TypeVacation::lists('name', 'id')->all();
-        return view('vacation.index', compact('itineraries', 'placetourism', 'typevacation'));
-//        return url()->current();
+        return view('itinerary.filter', compact('selectedItineraries', 'placetourism', 'typevacation'));
+    }
+
+    public function filterSelection(Request $request)
+    {
+        $selectedItineraries = new Itinerary();
+        $input = $request->all();
+        $itineraries = Itinerary::all();
+        if($input['place_tourism'] == null && $input['type_vacation'] == null) {
+            $selectedItineraries = $itineraries;
+        }
+        else if ($input['place_tourism'] == null ) {
+            foreach($itineraries as $itinerary) {
+                foreach($itinerary->types as $type) {
+                    if($type->pivot->type_vacation_id == $input['type_vacation']) {
+                        $selectedItineraries = $type->itineraries;
+                    }
+                }
+            }
+        }
+        else if($input['type_vacation'] == null) {
+            foreach($itineraries as $itinerary) {
+                foreach($itinerary->places as $place) {
+                    if($place->pivot->place_tourism_id == $input['place_tourism']) {
+                        $selectedItineraries = $place->itineraries;
+                    }
+                }
+            }
+        }
+        else {
+            foreach($itineraries as $itinerary) {
+                foreach($itinerary->places as $place) {
+                    if($place->pivot->place_tourism_id == $input['place_tourism']) {
+                        $filtered1Itineraries = $place->itineraries;
+                    }
+                }
+            }
+            foreach($filtered1Itineraries as $filtered1Itinerary) {
+                foreach($filtered1Itinerary->types as $type) {
+                    if($type->pivot->type_vacation_id == $input['type_vacation']) {
+                        $selectedItineraries = Itinerary::findOrFail($type->pivot->typeable_id);
+                    }
+                }
+            }
+        }
+        $placetourism = PlaceTourism::lists('name', 'id')->all();
+        $typevacation = TypeVacation::lists('name', 'id')->all();
+        return view('itinerary.filter', compact('selectedItineraries', 'placetourism', 'typevacation'));
     }
 
     /**
@@ -89,7 +135,18 @@ class ItineraryController extends Controller
      */
     public function show($id)
     {
-        //
+        $itinerary = Itinerary::findOrFail($id);
+        foreach($itinerary->types as $type) {
+            if($type->pivot->type_vacation_id == $itinerary->types->first()->id) {
+                $selectedTypeItineraries = $type->itineraries;
+            }
+        }
+        foreach($itinerary->places as $place) {
+            if($place->pivot->place_tourism_id == $itinerary->places->first()->id) {
+                $selectedPlaceItineraries = $place->itineraries;
+            }
+        }
+        return view('itinerary.show', compact('itinerary', 'selectedTypeItineraries', 'selectedPlaceItineraries'));
     }
 
     /**
