@@ -4,6 +4,13 @@
     Itineraries
 @endsection
 
+@section('styles')
+    .carousel-inner > .item > img,
+    .carousel-inner > .item > a > img {
+        margin: auto;
+    }
+@endsection
+
 @section('content')
     <div class="container" style="padding-top: 75px">
         <div class="row">
@@ -41,13 +48,28 @@
                     <div class="panel-body">
                         @if($selectedItineraries)
                             @foreach($selectedItineraries as $selectedItinerary)
-                                <div class="page-header">
-                                    Name: {{ $selectedItinerary->name }} <br>
-                                    Duration: {{ $selectedItinerary->duration }} <br>
-                                    Price per Adult: {{ $selectedItinerary->price_adult }} <br>
-                                    Price per Child: {{ $selectedItinerary->price_children }} <br>
-                                    <button type="button" class="btn btn-primary" onclick="location.href='{{route('itinerary.show', $selectedItinerary->id)}}'">View</button>
-                                    <button type="button" class="btn btn-primary" onclick="location.href='{{url('/login')}}'">Book Now</button>
+                                <div class="row page-header">
+                                    @php
+                                        $i = 0;
+                                    @endphp
+                                    @foreach($selectedItinerary->medias as $media)
+                                        @if($i == 0)
+                                            <div class="col-sm-4">
+                                                <img src="{{$media->path}}" alt="" style="height: 150px; width: 230px;">
+                                            </div>
+                                        @endif
+                                        @php
+                                            $i++;
+                                        @endphp
+                            @endforeach
+                                    <div class="col-sm-6">
+                                        Name: {{ $selectedItinerary->name }} <br>
+                                        Duration: {{ $selectedItinerary->duration }} <br>
+                                        Price per Adult: {{ $selectedItinerary->price_adult }} <br>
+                                        Price per Child: {{ $selectedItinerary->price_children }} <br>
+                                        <button type="button" class="btn btn-primary" onclick="location.href='{{route('itinerary.show', $selectedItinerary->id)}}'">View</button>
+                                        <button type="button" class="btn btn-primary" onclick="location.href='{{url('/login')}}'">Book Now</button>
+                                    </div>
                                 </div>
                             @endforeach
                         @endif
