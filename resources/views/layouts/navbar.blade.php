@@ -20,41 +20,42 @@
             <!-- Right Side Of Navbar -->
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="{{ url('/') }}">Home</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                        Itinerary<span class="caret"></span>
-                    </a>
-
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="{{ url('/itinerary') }}">View all itineraries</a></li>
-                        <li><a href="{{ url('/itinerary/create') }}">Add itinerary</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                        Tour Package<span class="caret"></span>
-                    </a>
-
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="{{ url('/packagetour') }}">View all tour packages</a></li>
-                        <li><a href="{{ url('/packagetour/create') }}">Add package tour</a></li>
-                    </ul>
-                </li>
                 <!-- Authentication Links -->
                 @if (Auth::guest())
-                    <li class="dropdown">
-                        <a href="{{ url('/login') }}">Reservation</a></li>
+                    <li><a href="{{ route('itinerary.getSelection') }}">Itinerary</a></li>
+{{--                    <li><a href="{{ route('packagetour.getSelectition') }}">Tour Packages</a></li>--}}
+                    <li><a href="{{ url('/login') }}">Reservation</a></li>
                     <li><a href="{{ url('/login') }}">Login</a></li>
                     <li><a href="{{ url('/register') }}">Register</a></li>
                 @else
                     @if(Auth::user()->role_user_id == 1 || Auth::user()->role_user_id == 2)
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                Itinerary<span class="caret"></span>
+                            </a>
+
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="{{ url('/itinerary') }}">Manage itineraries</a></li>
+                                <li><a href="{{ url('/itinerary/create') }}">Add itinerary</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                Tour Package<span class="caret"></span>
+                            </a>
+
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="{{ url('/packagetour') }}">Manage tour packages</a></li>
+                                <li><a href="{{ url('/packagetour/create') }}">Add package tour</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                 Reservation<span class="caret"></span>
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ url('/reservation') }}">View all reservations</a></li>
+                                <li><a href="{{ url('/reservation') }}">Manage reservations</a></li>
                                 <li><a href="{{ url('/userReservation')}}">View my reservations</a></li>
                                 <li><a href="{{ url('/reservation/create') }}">Create reservation</a></li>
                             </ul>
@@ -72,6 +73,8 @@
                             </li>
                         @endif
                     @else
+                        <li><a href="{{ route('itinerary.getSelection') }}">Itinerary</a></li>
+                        {{--<li><a href="{{ route('packagetour.getSelectition') }}">Tour Packages</a></li>--}}
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                 Reservation<span class="caret"></span>

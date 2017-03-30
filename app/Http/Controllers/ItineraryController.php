@@ -9,6 +9,7 @@ use App\PlaceTourism;
 use App\TypeVacation;
 
 use App\Http\Requests;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 
 class ItineraryController extends Controller
@@ -25,6 +26,15 @@ class ItineraryController extends Controller
         //getting all object of itineraries
         $itineraries = Itinerary::all();
         return view('itinerary.index', compact('itineraries'));
+    }
+
+    public function getSelection()
+    {
+        $itineraries = Itinerary::all();
+        $placetourism = PlaceTourism::lists('name', 'id')->all();
+        $typevacation = TypeVacation::lists('name', 'id')->all();
+        return view('vacation.index', compact('itineraries', 'placetourism', 'typevacation'));
+//        return url()->current();
     }
 
     /**

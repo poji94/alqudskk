@@ -24,6 +24,7 @@ Route::get('/home', 'HomeController@index');
 Route::resource('/user', 'UserController');
 
 Route::resource('/itinerary', 'ItineraryController');
+Route::get('/itinerarySelection', 'ItineraryController@getSelection')->name('itinerary.getSelection');
 
 Route::resource('/packagetour', 'PackageTourController');
 
