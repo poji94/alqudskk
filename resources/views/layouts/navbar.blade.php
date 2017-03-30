@@ -28,7 +28,6 @@
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="{{ url('/itinerary') }}">View all itineraries</a></li>
                         <li><a href="{{ url('/itinerary/create') }}">Add itinerary</a></li>
-                        <li><a href="">button 3</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -39,7 +38,6 @@
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="{{ url('/packagetour') }}">View all tour packages</a></li>
                         <li><a href="{{ url('/packagetour/create') }}">Add package tour</a></li>
-                        <li><a href="">button 3</a></li>
                     </ul>
                 </li>
                 <!-- Authentication Links -->
@@ -59,7 +57,6 @@
                                 <li><a href="{{ url('/reservation') }}">View all reservations</a></li>
                                 <li><a href="{{ url('/userReservation')}}">View my reservations</a></li>
                                 <li><a href="{{ url('/reservation/create') }}">Create reservation</a></li>
-                                <li><a href="">button 3</a></li>
                             </ul>
                         </li>
                         @if(Auth::user()->role_user_id == 1)

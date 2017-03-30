@@ -20,5 +20,6 @@ class DatabaseSeeder extends Seeder
          $this->call(ItineraryTableSeeder::class);
          $this->call(TourismablesTableSeeder::class);
          $this->call(TypeablesTableSeeder::class);
+         $this->call(PackageToursTableSeeder::class);
     }
 }
