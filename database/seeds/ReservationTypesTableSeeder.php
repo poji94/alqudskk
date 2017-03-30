@@ -15,10 +15,14 @@ class ReservationTypesTableSeeder extends Seeder
             [
                 // id = 1
                 'name'=>'Ground',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 // id = 2
                 'name'=>'Full Boats',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
             ],
         ]);
     }

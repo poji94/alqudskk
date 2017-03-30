@@ -18,6 +18,8 @@ class UsersTableSeeder extends Seeder
                 'password'=>bcrypt('poji94'),
                 'role_user_id'=>1,
                 'phone_number'=>'01412345678',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'name'=>'Lisaa',
@@ -25,6 +27,8 @@ class UsersTableSeeder extends Seeder
                 'password'=>bcrypt('secret'),
                 'role_user_id'=>2,
                 'phone_number'=>'',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'name'=>'Adrian',
@@ -32,6 +36,8 @@ class UsersTableSeeder extends Seeder
                 'password'=>bcrypt('secret'),
                 'role_user_id'=>3,
                 'phone_number'=>'',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
             ],
         ]);
     }

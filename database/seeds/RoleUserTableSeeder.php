@@ -15,14 +15,20 @@ class RoleUserTableSeeder extends Seeder
             [
                 // id = 1
                 'name'=>'Administrator',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 // id = 2
                 'name'=>'Executive Staff',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 // id = 3
                 'name'=>'Tourist',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
             ],
         ]);
     }

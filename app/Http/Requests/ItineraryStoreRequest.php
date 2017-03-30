@@ -28,8 +28,8 @@ class ItineraryStoreRequest extends Request
     {
         //change the style of typing due to set validation on each image files.
         $rules =  [
-            'name' => 'required | min:5 | max:20 | unique:itineraries',
-            'description' => 'required | max:300',
+            'name' => 'required | min:5 | max:50 | unique:itineraries',
+            'description' => 'required | max:5000',
             'duration' => 'required',
             'price_children' => 'required | integer | min:1',
             'price_adult' => 'required | integer | min:1',
