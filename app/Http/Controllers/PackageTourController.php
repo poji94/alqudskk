@@ -37,7 +37,7 @@ class PackageTourController extends Controller
 
     public function filterSelection(Request $request)
     {
-        $selectedPackageTours = new PackageTour();
+        $selectedPackageTours = array();
         $input = $request->all();
         $packageTours = PackageTour::all();
         if($input['place_tourism'] == null && $input['type_vacation'] == null) {

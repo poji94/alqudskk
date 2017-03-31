@@ -38,7 +38,7 @@ class ItineraryController extends Controller
 
     public function filterSelection(Request $request)
     {
-        $selectedItineraries = new Itinerary();
+        $selectedItineraries = array();
         $input = $request->all();
         $itineraries = Itinerary::all();
         if($input['place_tourism'] == null && $input['type_vacation'] == null) {

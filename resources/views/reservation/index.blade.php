@@ -7,7 +7,7 @@
 @section('content')
     <div class="container" style="padding-top: 75px">
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-md-10 col-md-offset-1">
                 <div class="panel panel-default">
                     <div class="panel-heading">Reservations</div>
 
@@ -24,6 +24,8 @@
                                 <th>User</th>
                                 <th>Type</th>
                                 <th>Status</th>
+                                <th>Date Start</th>
+                                <th>Date End</th>
                                 <th>Created</th>
                                 <th>Updated</th>
                                 <th>Action</th>
@@ -37,6 +39,8 @@
                                         <td>{{$reservation->reserveUser->name}}</td>
                                         <td>{{$reservation->reserveType->name}}</td>
                                         <td>{{$reservation->reserveStatus->name}}</td>
+                                        <td>{{$reservation->reservation_start}}</td>
+                                        <td>{{$reservation->reservation_end}}</td>
                                         <td>{{$reservation->created_at->diffForHumans()}}</td>
                                         <td>{{$reservation->updated_at->diffForHumans()}}</td>
                                         <td><button type="button" class="btn btn-primary" onclick="location.href='{{route('reservation.edit', $reservation->id)}}'">View</button></td>
