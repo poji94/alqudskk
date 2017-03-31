@@ -12,7 +12,8 @@
 
             <!-- Branding Image -->
             <a class="navbar-brand" href="{{ url('/') }}">
-                AlQudsKK
+                {{--<img src="preset/icon.png" alt="" style="width: 35px; height: 35px; display: inline"> AlQudsKK--}}
+                AlQuds Travel KK
             </a>
         </div>
 
@@ -76,7 +77,7 @@
                         @endif
                     @else
                         <li><a href="{{ route('itinerary.getSelection') }}">Itinerary</a></li>
-                        {{--<li><a href="{{ route('packagetour.getSelectition') }}">Tour Packages</a></li>--}}
+                        <li><a href="{{ route('packagetour.getSelection') }}">Tour Packages</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                 Reservation<span class="caret"></span>

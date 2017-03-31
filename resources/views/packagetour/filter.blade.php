@@ -41,13 +41,34 @@
                     <div class="panel-body">
                         @if($selectedPackageTours)
                             @foreach($selectedPackageTours as $selectedPackageTour)
-                                <div class="page-header">
-                                    Name: {{ $selectedPackageTour->name }} <br>
-                                    Duration: {{ $selectedPackageTour->duration }} <br>
-                                    Price per Adult: {{ $selectedPackageTour->price_adult }} <br>
-                                    Price per Child: {{ $selectedPackageTour->price_children }} <br>
-                                    <button type="button" class="btn btn-primary" onclick="location.href='{{route('packagetour.show', $selectedPackageTour->id)}}'">View</button>
-                                    <button type="button" class="btn btn-primary" onclick="location.href='{{url('/login')}}'">Book Now</button>
+                                <div class="row page-header">
+                                    @php
+                                        $i = 0;
+                                    @endphp
+                                    @foreach($selectedPackageTour->itineraries as $itinerary)
+                                        @foreach($itinerary->medias as $media)
+                                            @if($i == 0)
+                                                <div class="col-sm-4">
+                                                    <img src="{{$media->path}}" class="img-responsive img-rounded" alt="" style="height: 150px; width: 230px;">
+                                                </div>
+                                            @endif
+                                            @php
+                                                $i++;
+                                            @endphp
+                                        @endforeach
+                                    @endforeach
+                                    <div class="col-sm-6">
+                                        Name: {{ $selectedPackageTour->name }} <br>
+                                        Duration: {{ $selectedPackageTour->duration }} <br>
+                                        Price per Adult: RM {{ $selectedPackageTour->price_adult }} <br>
+                                        Price per Child: RM {{ $selectedPackageTour->price_children }} <br>
+                                        <button type="button" class="btn btn-primary" onclick="location.href='{{route('packagetour.show', $selectedPackageTour->id)}}'">View</button>
+                                        @if(Auth::guest())
+                                            <button type="button" class="btn btn-primary" onclick="location.href='{{url('/login')}}'">Book Now</button>
+                                        @else
+                                            <button type="button" class="btn btn-primary" onclick="location.href='{{url('/reservation/create')}}'">Book Now</button>
+                                        @endif
+                                    </div>
                                 </div>
                             @endforeach
                         @endif

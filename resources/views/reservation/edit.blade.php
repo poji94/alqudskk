@@ -19,7 +19,7 @@
                             @if($reservation->reservation_type_id == 1)
                                 <label class="radio-inline">
                                     {!! Form::radio('reservation_type_id', 1, true, ['id'=>'ground', 'style'=>'display:inline-block']) !!}
-                                    Ground
+                                    Itineraries
                                 </label>
                                 <script type="text/javascript">
                                     $(document).ready(function () {
@@ -30,7 +30,7 @@
                             @elseif($reservation->reservation_type_id == 2)
                                 <label class="radio-inline">
                                     {!! Form::radio('reservation_type_id', 2, false, ['id'=>'full_boat', 'style'=>'display:inline-block']) !!}
-                                    Full Boat
+                                    Tour package
                                 </label>
                                 <script type="text/javascript">
                                     $(document).ready(function () {
@@ -133,12 +133,21 @@
                             {!! Form::submit('Edit Reservation', ['class'=>'btn btn-primary']) !!}
                         </div>
                         {!! Form::close() !!}
-                        <div class="form-group">
-                            {!!  Form::open(['method' => 'DELETE', 'action' => ['ReservationController@destroy', $reservation->id]])!!}
-                            {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
-                            {!! Form::close() !!}
-                        </div>
-                        <button type="button" class="btn btn-primary" onclick="location.href='{{route('reservation.index')}}'">Cancel</button>
+                        @if($reservation->reservation_status_id == 2)
+                            <div class="form-group">
+                                {!!  Form::open(['method' => 'DELETE', 'action' => ['ReservationController@destroy', $reservation->id]])!!}
+                                 {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
+                                {!! Form::close() !!}
+                            </div>
+                        @else
+                            <div class="form-group">
+                                {!! Form::open(['method'=>'GET', 'action'=> 'ReservationController@cancelReservation', 'files' => true]) !!}
+                                    <input type="hidden" name="id" value="{{$reservation->id}}">
+                                    {!! Form::submit('Cancel Reservation', ['class' => 'btn btn-danger']) !!}
+                                {!! Form::close() !!}
+                            </div>
+                        @endif
+                        <button type="button" class="btn btn-primary" onclick="location.href='{{route('reservation.index')}}'">Back</button>
                     </div>
                 </div>
             </div>

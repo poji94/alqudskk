@@ -177,6 +177,20 @@ class ReservationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    public function cancelReservation(Request $request)
+    {
+        $input = $request->all();
+        $reservation = Reservation::findOrFail($input['id']);
+        $reservation->update(['reservation_status_id'=>2]);
+        if(Auth::user()->role_user_id == 3) {
+            return redirect(route('reservation.getUserReservation'));
+        }
+        else {
+            return redirect(route('reservation.index'));
+        }
+    }
+
     public function destroy($id)
     {
         //delete everything related to particular reservation

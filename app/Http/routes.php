@@ -13,13 +13,13 @@
 
 use Illuminate\Support\Facades\Auth;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
 
 Route::auth();
 
-Route::get('/home', 'HomeController@index');
+Route::get('/', 'HomeController@index');
 
 Route::resource('/user', 'UserController');
 
@@ -33,3 +33,4 @@ Route::get('/packageTourSelection/filter', 'PackageTourController@filterSelectio
 
 Route::resource('/reservation', 'ReservationController');
 Route::get('/userReservation', 'ReservationController@getUserReservation')->name('reservation.getUserReservation');
+Route::get('/cancelReservation', 'ReservationController@cancelReservation')->name('reservation.cancelReservation');

@@ -18,12 +18,12 @@
 
                             <label class="radio-inline">
                                 {!! Form::radio('reservation_type_id', 1, false, ['id'=>'ground', 'style'=>'display:inline-block']) !!}
-                                Ground
+                                Itineraries
                             </label>
 
                             <label class="radio-inline">
                                 {!! Form::radio('reservation_type_id', 2, false, ['id'=>'full_boat', 'style'=>'display:inline-block']) !!}
-                                Full Boat
+                                Tour package
                             </label>
                             @if ($errors->has('reservation_type_id'))
                                 <span class="help-block">
