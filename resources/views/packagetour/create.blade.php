@@ -66,7 +66,7 @@
                             <input type="button" class="btn btn-danger" id="remove-itinerary" value="Remove">
                         </div>
                         <p>
-                            <input type="button" class="btn btn-primary" id="add-itinerary" value="Add Itinerary">
+                            <input type="button" class="btn btn-primary" id="add-itinerary" value="Add Activity">
                             <script type="text/javascript">
                                 $(document).ready(function () {
                                     $("#itinerary-form").hide();

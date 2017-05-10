@@ -19,7 +19,7 @@
                             @if($reservation->reservation_type_id == 1)
                                 <label class="radio-inline">
                                     {!! Form::radio('reservation_type_id', 1, true, ['id'=>'ground', 'style'=>'display:inline-block']) !!}
-                                    Itineraries
+                                    Activities
                                 </label>
                                 <script type="text/javascript">
                                     $(document).ready(function () {
@@ -63,7 +63,7 @@
                             @endphp
                         @endforeach
                         <p>
-                            <input type="button" class="btn btn-primary" id="add-itinerary" value="Add Itinerary">
+                            <input type="button" class="btn btn-primary" id="add-itinerary" value="Add Activity">
                             <script type="text/javascript">
                                 $(document).ready(function () {
                                     $("#itinerary-form").hide();
@@ -133,20 +133,12 @@
                             {!! Form::submit('Edit Reservation', ['class'=>'btn btn-primary']) !!}
                         </div>
                         {!! Form::close() !!}
-                        @if($reservation->reservation_status_id == 2)
-                            <div class="form-group">
-                                {!!  Form::open(['method' => 'DELETE', 'action' => ['ReservationController@destroy', $reservation->id]])!!}
-                                 {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
-                                {!! Form::close() !!}
-                            </div>
-                        @else
-                            <div class="form-group">
-                                {!! Form::open(['method'=>'GET', 'action'=> 'ReservationController@cancelReservation', 'files' => true]) !!}
-                                    <input type="hidden" name="id" value="{{$reservation->id}}">
-                                    {!! Form::submit('Cancel Reservation', ['class' => 'btn btn-danger']) !!}
-                                {!! Form::close() !!}
-                            </div>
-                        @endif
+                        <div class="form-group">
+                            {!! Form::open(['method'=>'GET', 'action'=> 'ReservationController@cancelReservation', 'files' => true]) !!}
+                                <input type="hidden" name="id" value="{{$reservation->id}}">
+                                {!! Form::submit('Cancel Reservation', ['class' => 'btn btn-danger']) !!}
+                            {!! Form::close() !!}
+                        </div>
                         <button type="button" class="btn btn-primary" onclick="location.href='{{route('reservation.index')}}'">Back</button>
                     </div>
                 </div>

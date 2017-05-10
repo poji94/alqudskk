@@ -16,7 +16,7 @@
         <div class="row">
             <div class="col-sm-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Itinerary selection</div>
+                    <div class="panel-heading">Activity selection</div>
 
                     <div class="panel-body">
                         Please choose your selection
@@ -44,7 +44,7 @@
         <div class="row">
             <div class="col-sm-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">List of itineraries</div>
+                    <div class="panel-heading">List of activities</div>
                     <div class="panel-body">
                         @if($selectedItineraries)
                             @foreach($selectedItineraries as $selectedItinerary)

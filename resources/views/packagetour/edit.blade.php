@@ -83,7 +83,7 @@
                                 @endphp
                             @endforeach
                             <p>
-                                <input type="button" class="btn btn-primary" id="add-itinerary" value="Add Itinerary">
+                                <input type="button" class="btn btn-primary" id="add-itinerary" value="Add Activity">
                                 <script type="text/javascript">
                                     $(document).ready(function () {
                                         $("#itinerary-form").hide();
@@ -107,13 +107,7 @@
                                 {!! Form::submit('Edit Tour Package', ['class'=>'btn btn-primary']) !!}
                             </div>
                         {!! Form::close() !!}
-                        <div class="form-group">
-                            {!!  Form::open(['method' => 'DELETE', 'action' => ['PackageTourController@destroy', $packagetour->id]])!!}
-                            {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
-                            {!! Form::close() !!}
-                        </div>
                         <button type="button" class="btn btn-primary" onclick="location.href='{{route('packagetour.index')}}'">Cancel</button>
-
                     </div>
                 </div>
             </div>

@@ -16,10 +16,10 @@
                         <div class="form-group{{ $errors->has('reservation_type_id') ? ' has-error' : '' }}" style="display: inline-block">
                             {!! Form::label('reservation_type_id_label', 'Type of Reservation:  ') !!}
 
-                            <label class="radio-inline">
-                                {!! Form::radio('reservation_type_id', 1, false, ['id'=>'ground', 'style'=>'display:inline-block']) !!}
-                                Itineraries
-                            </label>
+                            {{--<label class="radio-inline">--}}
+                                {{--{!! Form::radio('reservation_type_id', 1, true, ['id'=>'ground', 'style'=>'display:inline-block']) !!}--}}
+                                {{--Activities--}}
+                            {{--</label>--}}
 
                             <label class="radio-inline">
                                 {!! Form::radio('reservation_type_id', 2, false, ['id'=>'full_boat', 'style'=>'display:inline-block']) !!}
@@ -53,7 +53,7 @@
                             <input type="button" class="btn btn-danger" id="remove-itinerary" value="Remove">
                         </div>
                         <p>
-                            <input type="button" class="btn btn-primary" id="add-itinerary" value="Add Itinerary">
+                            <input type="button" class="btn btn-primary" id="add-itinerary" value="Add Activity">
                             <script type="text/javascript">
                                 $(document).ready(function () {
                                     $("#itinerary-form").hide();

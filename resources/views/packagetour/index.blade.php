@@ -21,7 +21,7 @@
                                     <th>Name</th>
                                     <th>Created</th>
                                     <th>Updated</th>
-                                    <th>Action</th>
+                                    <th colspan="2">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -33,6 +33,13 @@
                                             <td>{{$packagetour->created_at->diffForHumans()}}</td>
                                             <td>{{$packagetour->updated_at->diffForHumans()}}</td>
                                             <td><button type="button" class="btn btn-primary" onclick="location.href='{{route('packagetour.edit', $packagetour->id)}}'">View</button></td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {!!  Form::open(['method' => 'DELETE', 'action' => ['PackageTourController@destroy', $packagetour->id]])!!}
+                                                    {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
+                                                    {!! Form::close() !!}
+                                                </div>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 @endif

@@ -23,7 +23,7 @@
                 <li><a href="{{ url('/') }}">Home</a></li>
                 <!-- Authentication Links -->
                 @if (Auth::guest())
-                    <li><a href="{{ route('itinerary.getSelection') }}">Itinerary</a></li>
+                    <li><a href="{{ route('itinerary.getSelection') }}">Activity</a></li>
                     <li><a href="{{ route('packagetour.getSelection') }}">Tour Packages</a></li>
                     <li><a href="{{ url('/login') }}">Reservation</a></li>
                     <li><a href="{{ url('/login') }}">Login</a></li>
@@ -32,13 +32,13 @@
                     @if(Auth::user()->role_user_id == 1 || Auth::user()->role_user_id == 2)
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                Itinerary<span class="caret"></span>
+                                Activity<span class="caret"></span>
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ route('itinerary.getSelection') }}">View itineraries</a></li>
-                                <li><a href="{{ url('/itinerary') }}">Manage itineraries</a></li>
-                                <li><a href="{{ url('/itinerary/create') }}">Add itinerary</a></li>
+                                <li><a href="{{ route('itinerary.getSelection') }}">View activities</a></li>
+                                <li><a href="{{ url('/itinerary') }}">Manage activities</a></li>
+                                <li><a href="{{ url('/itinerary/create') }}">Add activity</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
@@ -76,7 +76,7 @@
                             </li>
                         @endif
                     @else
-                        <li><a href="{{ route('itinerary.getSelection') }}">Itinerary</a></li>
+                        <li><a href="{{ route('itinerary.getSelection') }}">Activity</a></li>
                         <li><a href="{{ route('packagetour.getSelection') }}">Tour Packages</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">

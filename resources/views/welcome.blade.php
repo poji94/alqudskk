@@ -16,8 +16,8 @@
     <div class="row">
         <div class="col-sm-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">List of itineraries</div>
-                <div class="panel-body">We provide itineraries to choose for you
+                <div class="panel-heading">List of activities</div>
+                <div class="panel-body">We provide activities to choose for you
                     @if($itineraries)
                         @foreach($itineraries as $itinerary)
                             <div class="row page-header">

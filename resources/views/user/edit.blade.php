@@ -93,13 +93,6 @@
                             {!! Form::submit('Edit User', ['class'=>'btn btn-primary']) !!}
                         </div>
                         {!! Form::close() !!}
-                        @if(Auth::user()->user_role_id == 3)
-                            <div class="form-group">
-                                {!!  Form::open(['method' => 'DELETE', 'action' => ['UserController@destroy', $user->id]])!!}
-                                {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
-                                {!! Form::close() !!}
-                            </div>
-                        @endif
                         <button type="button" class="btn btn-primary" onclick="location.href='{{route('user.index')}}'">Cancel</button>
                     </div>
                 </div>

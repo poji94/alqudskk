@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('head')
-    Add Itinerary
+    Add Activity
 @endsection
 
 @section('content')
@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col-sm-6 col-md-offset-3">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Add Itinerary</div>
+                    <div class="panel-heading">Add Activity</div>
 
                     <div class="panel-body">
                         {!! Form::open(['method'=>'POST', 'action'=> 'ItineraryController@store', 'files' => true]) !!}
@@ -109,7 +109,7 @@
                             </script>
                         </p>
                         <div class="form-group">
-                            {!! Form::submit('Create Itinerary', ['class'=>'btn btn-primary']) !!}
+                            {!! Form::submit('Create Activity', ['class'=>'btn btn-primary']) !!}
                             <button type="button" class="btn btn-primary" onclick="location.href='{{route('itinerary.index')}}'">Cancel</button>
                         </div>
                         {!! Form::close() !!}

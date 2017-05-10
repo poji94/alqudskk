@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('head')
-    View Itinerary
+    View Activity
 @endsection
 
 @section('styles')
@@ -16,7 +16,7 @@
         <div class="row">
             <div class="col-sm-6 col-md-offset-3">
                 <div class="panel panel-default">
-                    <div class="panel-heading">View Itinerary</div>
+                    <div class="panel-heading">View Activity</div>
 
                     <div id="myCarousel" class="carousel slide" data-ride="carousel">
                         <!-- Indicators -->
@@ -165,14 +165,10 @@
 
                         </p>
                         <div class="form-group">
-                            {!! Form::submit('Edit Itinerary', ['class'=>'btn btn-primary']) !!}
+                            {!! Form::submit('Edit Activity', ['class'=>'btn btn-primary']) !!}
                         </div>
                         {!! Form::close() !!}
-                        <div class="form-group">
-                            {!! Form::open(['method' => 'DELETE', 'action' => ['ItineraryController@destroy', $itinerary->id]])!!}
-                            {!! Form::submit('Delete', ['class' => ' btn btn-danger']) !!}
-                            {!! Form::close() !!}
-                        </div>
+
                         <button type="button" class="btn btn-primary" onclick="location.href='{{route('itinerary.index')}}'">Cancel</button>
                     </div>
                 </div>
