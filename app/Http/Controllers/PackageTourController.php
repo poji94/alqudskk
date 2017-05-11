@@ -7,6 +7,7 @@ use App\Http\Requests\PackageTourUpdateRequest;
 use App\Itinerary;
 use App\PackageTour;
 use App\PlaceTourism;
+use App\PriceTourism;
 use App\TypeVacation;
 use Illuminate\Http\Request;
 
@@ -105,6 +106,7 @@ class PackageTourController extends Controller
         //creating the packagetour object, sync with associate itineraries, typevacation and placetourism
         $input = $request->all();
         $packagetour = PackageTour::create($input);
+        $packagetour->prices()->create($input);
         $packagetour->itineraries()->sync($input['itinerary_id']);
         $packagetour->places()->detach();
         $packagetour->types()->detach();
@@ -154,9 +156,16 @@ class PackageTourController extends Controller
         //list out the itineraries
         //call out the particular packagetour
         $i = 0;
-        $packagetour = PackageTour::findOrFail($id);
+        $packageTour = PackageTour::findOrFail($id);
+//        $packageTour = $packageTour->prices;
+//        foreach($packageTour->prices as $price) {
+//            if($price->pivot->price_tourism_id == $packageTour->prices->first()->id) {
+//                $selectedPricePackageTours = $packageTour->prices;
+//            }
+//        }
         $itineraries = Itinerary::lists('name', 'id')->all();
-        return view('packagetour.edit', compact('packagetour', 'itineraries', 'i'));
+//        dd($packageTour->prices);
+        return view('packagetour.edit', compact('packageTour', 'itineraries', 'selectedPricePackageTours', 'i'));
     }
 
     /**
@@ -174,6 +183,9 @@ class PackageTourController extends Controller
         $packagetour = PackageTour::findOrFail($id);
         $input = $request -> all();
         $packagetour->update($input);
+        $packagetour->prices()->delete();
+        $packagetour->prices()->detach();
+        $packagetour->prices()->create($input);
         $packagetour->itineraries()->sync($input['itinerary_id']);
         $packagetour->places()->detach();
         $packagetour->types()->detach();
@@ -199,6 +211,8 @@ class PackageTourController extends Controller
         //delete everything relate to particular packagetour
         $packagetour = PackageTour::findOrFail($id);
         $packagetour->delete();
+        $packagetour->prices()->delete();
+        $packagetour->prices()->detach();
         $packagetour->itineraries()->detach();
         $packagetour->places()->detach();
         $packagetour->types()->detach();

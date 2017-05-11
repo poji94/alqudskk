@@ -18,8 +18,8 @@
                             {!! Form::text('name', null, ['class'=>'form-control']) !!}
                             @if ($errors->has('name'))
                                 <span class="help-block">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
+                                    <strong>{{ $errors->first('name') }}</strong>
+                                </span>
                             @endif
                         </div>
                         <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
@@ -27,8 +27,8 @@
                             {!! Form::textarea('description', null, ['class'=>'form-control', 'rows'=>'4']) !!}
                             @if ($errors->has('description'))
                                 <span class="help-block">
-                                        <strong>{{ $errors->first('description') }}</strong>
-                                    </span>
+                                    <strong>{{ $errors->first('description') }}</strong>
+                                </span>
                             @endif
                         </div>
                         <div class="form-group{{ $errors->has('duration') ? ' has-error' : '' }}">
@@ -36,26 +36,66 @@
                             {!! Form::text('duration', null, ['class'=>'form-control']) !!}
                             @if ($errors->has('duration'))
                                 <span class="help-block">
-                                        <strong>{{ $errors->first('duration') }}</strong>
-                                    </span>
+                                    <strong>{{ $errors->first('duration') }}</strong>
+                                </span>
                             @endif
                         </div>
                         <div class="row">
-                            <div class="col-sm-6 form-group{{ $errors->has('price_children') ? ' has-error' : '' }}">
-                                {!! Form::label('price_children', 'Price per child') !!}
-                                {!! Form::number('price_children', null, ['class'=>'form-control']) !!}
-                                @if ($errors->has('price_children'))
+                            <div>
+                                {!! Form::label('personal', 'Personal price') !!}
+                            </div>
+                            <div class="col-sm-6 form-group{{ $errors->has('personal') ? ' has-error' : '' }}">
+                                {!! Form::label('personal', 'Price per adult') !!}
+                                {!! Form::number('personal', null, ['class'=>'form-control']) !!}
+                                @if ($errors->has('personal'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('price_children') }}</strong>
+                                        <strong>{{ $errors->first('personal') }}</strong>
                                     </span>
                                 @endif
                             </div>
-                            <div class="col-sm-6 form-group{{ $errors->has('price_adult') ? ' has-error' : '' }}">
-                                {!! Form::label('price_adult', 'Price per adult') !!}
-                                {!! Form::number('price_adult', null, ['class'=>'form-control']) !!}
-                                @if ($errors->has('price_adult'))
+                        </div>
+                        <div class="row">
+                            <div>
+                                {!! Form::label('private_group', 'Private group price') !!}
+                            </div>
+                            <div class="col-sm-6 form-group{{ $errors->has('private_group_adult') ? ' has-error' : '' }}">
+                                {!! Form::label('private_group_adult', 'Price per adult') !!}
+                                {!! Form::number('private_group_adult', null, ['class'=>'form-control']) !!}
+                                @if ($errors->has('private_group_adult'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('price_adult') }}</strong>
+                                        <strong>{{ $errors->first('private_group_adult') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                            <div class="col-sm-6 form-group{{ $errors->has('private_group_children') ? ' has-error' : '' }}">
+                                {!! Form::label('private_group_children', 'Price per child') !!}
+                                {!! Form::number('private_group_children', null, ['class'=>'form-control']) !!}
+                                @if ($errors->has('private_group_children'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('private_group_children') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div>
+                                {!! Form::label('public_group', 'Public group price') !!}
+                            </div>
+                            <div class="col-sm-6 form-group{{ $errors->has('public_group_adult') ? ' has-error' : '' }}">
+                                {!! Form::label('public_group_adult', 'Price per adult') !!}
+                                {!! Form::number('public_group_adult', null, ['class'=>'form-control']) !!}
+                                @if ($errors->has('public_group_adult'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('public_group_adult') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                            <div class="col-sm-6 form-group{{ $errors->has('public_group_children') ? ' has-error' : '' }}">
+                                {!! Form::label('public_group_children', 'Price per child') !!}
+                                {!! Form::number('public_group_children', null, ['class'=>'form-control']) !!}
+                                @if ($errors->has('public_group_children'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('public_group_children') }}</strong>
                                     </span>
                                 @endif
                             </div>

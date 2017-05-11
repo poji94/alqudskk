@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePackageToursTable extends Migration
+class CreatePriceablesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,11 @@ class CreatePackageToursTable extends Migration
      */
     public function up()
     {
-        Schema::create('package_tours', function (Blueprint $table) {
+        Schema::create('priceables', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name')->unique();
-            $table->text('description');
-            $table->string('duration');
+            $table->integer('price_tourism_id');
+            $table->integer('priceable_id');
+            $table->string('priceable_type');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreatePackageToursTable extends Migration
      */
     public function down()
     {
-        Schema::drop('package_tours');
+        Schema::drop('priceables');
     }
 }
