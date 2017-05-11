@@ -41,10 +41,10 @@
                                 @endif
                             </div>
                         @foreach($packageTour->prices as $price)
+                            <div>
+                                {!! Form::label('personal', 'Personal price') !!}
+                            </div>
                             <div class="row">
-                                <div>
-                                    {!! Form::label('personal', 'Personal price') !!}
-                                </div>
                                 <div class="col-sm-6 form-group{{ $errors->has('personal') ? ' has-error' : '' }}">
                                     {!! Form::label('personal', 'Price per adult') !!}
                                     {!! Form::number('personal', $price->personal, ['class'=>'form-control']) !!}
@@ -55,10 +55,10 @@
                                     @endif
                                 </div>
                             </div>
+                            <div>
+                                {!! Form::label('private_group', 'Private group price') !!}
+                            </div>
                             <div class="row">
-                                <div>
-                                    {!! Form::label('private_group', 'Private group price') !!}
-                                </div>
                                 <div class="col-sm-6 form-group{{ $errors->has('private_group_adult') ? ' has-error' : '' }}">
                                     {!! Form::label('private_group_adult', 'Price per adult') !!}
                                     {!! Form::number('private_group_adult', $price->private_group_adult, ['class'=>'form-control']) !!}
@@ -78,10 +78,10 @@
                                     @endif
                                 </div>
                             </div>
+                            <div>
+                                {!! Form::label('public_group', 'Public group price') !!}
+                            </div>
                             <div class="row">
-                                <div>
-                                    {!! Form::label('public_group', 'Public group price') !!}
-                                </div>
                                 <div class="col-sm-6 form-group{{ $errors->has('public_group_adult') ? ' has-error' : '' }}">
                                     {!! Form::label('public_group_adult', 'Price per adult') !!}
                                     {!! Form::number('public_group_adult', $price->public_group_adult, ['class'=>'form-control']) !!}

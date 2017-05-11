@@ -40,12 +40,12 @@
                                 </span>
                             @endif
                         </div>
+                        <div>
+                            {!! Form::label('personal', 'Personal price') !!}
+                        </div>
                         <div class="row">
-                            <div>
-                                {!! Form::label('personal', 'Personal price') !!}
-                            </div>
                             <div class="col-sm-6 form-group{{ $errors->has('personal') ? ' has-error' : '' }}">
-                                {!! Form::label('personal', 'Price per adult') !!}
+                                {!! Form::label('personal', 'Per adult') !!}
                                 {!! Form::number('personal', null, ['class'=>'form-control']) !!}
                                 @if ($errors->has('personal'))
                                     <span class="help-block">
@@ -54,12 +54,12 @@
                                 @endif
                             </div>
                         </div>
+                        <div>
+                            {!! Form::label('private_group', 'Private group price') !!}
+                        </div>
                         <div class="row">
-                            <div>
-                                {!! Form::label('private_group', 'Private group price') !!}
-                            </div>
                             <div class="col-sm-6 form-group{{ $errors->has('private_group_adult') ? ' has-error' : '' }}">
-                                {!! Form::label('private_group_adult', 'Price per adult') !!}
+                                {!! Form::label('private_group_adult', 'Per adult') !!}
                                 {!! Form::number('private_group_adult', null, ['class'=>'form-control']) !!}
                                 @if ($errors->has('private_group_adult'))
                                     <span class="help-block">
@@ -68,7 +68,7 @@
                                 @endif
                             </div>
                             <div class="col-sm-6 form-group{{ $errors->has('private_group_children') ? ' has-error' : '' }}">
-                                {!! Form::label('private_group_children', 'Price per child') !!}
+                                {!! Form::label('private_group_children', 'Per child') !!}
                                 {!! Form::number('private_group_children', null, ['class'=>'form-control']) !!}
                                 @if ($errors->has('private_group_children'))
                                     <span class="help-block">
@@ -77,12 +77,12 @@
                                 @endif
                             </div>
                         </div>
+                        <div>
+                            {!! Form::label('public_group', 'Public group price') !!}
+                        </div>
                         <div class="row">
-                            <div>
-                                {!! Form::label('public_group', 'Public group price') !!}
-                            </div>
                             <div class="col-sm-6 form-group{{ $errors->has('public_group_adult') ? ' has-error' : '' }}">
-                                {!! Form::label('public_group_adult', 'Price per adult') !!}
+                                {!! Form::label('public_group_adult', 'Per adult') !!}
                                 {!! Form::number('public_group_adult', null, ['class'=>'form-control']) !!}
                                 @if ($errors->has('public_group_adult'))
                                     <span class="help-block">
@@ -91,7 +91,7 @@
                                 @endif
                             </div>
                             <div class="col-sm-6 form-group{{ $errors->has('public_group_children') ? ' has-error' : '' }}">
-                                {!! Form::label('public_group_children', 'Price per child') !!}
+                                {!! Form::label('public_group_children', 'Per child') !!}
                                 {!! Form::number('public_group_children', null, ['class'=>'form-control']) !!}
                                 @if ($errors->has('public_group_children'))
                                     <span class="help-block">

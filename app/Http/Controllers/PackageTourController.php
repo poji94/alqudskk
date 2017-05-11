@@ -157,15 +157,9 @@ class PackageTourController extends Controller
         //call out the particular packagetour
         $i = 0;
         $packageTour = PackageTour::findOrFail($id);
-//        $packageTour = $packageTour->prices;
-//        foreach($packageTour->prices as $price) {
-//            if($price->pivot->price_tourism_id == $packageTour->prices->first()->id) {
-//                $selectedPricePackageTours = $packageTour->prices;
-//            }
-//        }
         $itineraries = Itinerary::lists('name', 'id')->all();
 //        dd($packageTour->prices);
-        return view('packagetour.edit', compact('packageTour', 'itineraries', 'selectedPricePackageTours', 'i'));
+        return view('packagetour.edit', compact('packageTour', 'itineraries', 'i'));
     }
 
     /**
