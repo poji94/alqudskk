@@ -147,8 +147,6 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        //Adding laravelcollective service provider
-        Collective\Html\HtmlServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -157,6 +155,10 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
+        //adding packages
+        Collective\Html\HtmlServiceProvider::class,
+        \Torann\Currency\CurrencyServiceProvider::class,
 
     ],
 
@@ -206,6 +208,7 @@ return [
         //Aliasing laravelcollective
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+        'Currency' => \Torann\Currency\Facades\Currency::class,
 
     ],
 

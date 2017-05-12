@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Currency;
 use App\Http\Requests\PackageTourStoreRequest;
 use App\Http\Requests\PackageTourUpdateRequest;
 use App\Itinerary;
@@ -42,7 +43,7 @@ class PackageTourController extends Controller
         $input = $request->all();
         $packageTours = PackageTour::all();
         if($input['place_tourism'] == null && $input['type_vacation'] == null) {
-            $selectedItineraries = $packageTours;
+            $selectedPackageTours = $packageTours;
         }
         else if ($input['place_tourism'] == null ) {
             foreach($packageTours as $packageTour) {
@@ -130,6 +131,9 @@ class PackageTourController extends Controller
      */
     public function show($id)
     {
+        $currencies = Currency::lists('name', 'id')->all();
+        $originalCurrency = currency()->setUserCurrency('MYR');
+        $currency = currency()->getCurrency();
         $packageTour = PackageTour::findOrFail($id);
         foreach($packageTour->types as $type) {
             if($type->pivot->type_vacation_id == $packageTour->types->first()->id) {
@@ -141,7 +145,33 @@ class PackageTourController extends Controller
                 $selectedPlacePackageTours = $place->packageTours;
             }
         }
-        return view('packagetour.show', compact('packageTour', 'selectedTypePackageTours', 'selectedPlacePackageTours'));
+        return view('packagetour.show', compact('currencies', 'originalCurrency', 'currency', 'packageTour', 'selectedTypePackageTours', 'selectedPlacePackageTours'));
+    }
+
+    public function changeCurrency(Request $request)
+    {
+        $input = $request->all();
+        $currencies = Currency::lists('name', 'id')->all();
+        $originalCurrency = currency()->setUserCurrency('MYR');
+        $packageTour = PackageTour::findOrFail($input['id']);
+        if($input['currency_drop_down'] == currency()->id) {
+            $currency = currency()->getCurrency();
+        }
+        else {
+            $currency = Currency::findOrFail($input['currency_drop_down']);
+        }
+
+        foreach($packageTour->types as $type) {
+            if($type->pivot->type_vacation_id == $packageTour->types->first()->id) {
+                $selectedTypePackageTours = $type->packageTours;
+            }
+        }
+        foreach($packageTour->places as $place) {
+            if($place->pivot->place_tourism_id == $packageTour->places->first()->id) {
+                $selectedPlacePackageTours = $place->packageTours;
+            }
+        }
+        return view('packagetour.show', compact('currencies', 'originalCurrency', 'currency', 'packageTour', 'selectedTypePackageTours', 'selectedPlacePackageTours'));
     }
 
     /**

@@ -30,6 +30,7 @@ Route::get('/itinerarySelection/filter', 'ItineraryController@filterSelection')-
 Route::resource('/packagetour', 'PackageTourController');
 Route::get('/packageTourSelection', 'PackageTourController@getSelection')->name('packagetour.getSelection');
 Route::get('/packageTourSelection/filter', 'PackageTourController@filterSelection')->name('packagetour.filterSelection');
+Route::get('/packageTourSelection/changeCurrency', 'PackageTourController@changeCurrency')->name('packagetour.changeCurrency');
 
 Route::resource('/reservation', 'ReservationController');
 Route::get('/userReservation', 'ReservationController@getUserReservation')->name('reservation.getUserReservation');

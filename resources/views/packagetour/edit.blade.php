@@ -104,7 +104,7 @@
                         @endforeach
                             <div class="row form-group" id="itinerary-form">
                                 {!! Form::label('itinerary_id', 'Itinerary', ['class'=>'col-sm-2']) !!}
-                                {!! Form::select('itinerary_id[]', $itineraries, null, ['class'=>'col-sm-4', 'multiple'=>'multiple']) !!}
+                                {!! Form::select('itinerary_id[]', $itineraries, null, ['class'=>'col-sm-8', 'multiple'=>'multiple']) !!}
                                 <input type="button" class="col-sm-2 btn btn-danger" id="remove-itinerary" value="Remove">
                             </div>
                             @foreach($packageTour->itineraries as $itinerary)

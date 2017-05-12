@@ -69,10 +69,22 @@
                                 </div>
                             </div>
                             <div class="col-sm-6">
-                                Name: {{ $packageTour ->name }} <br><br>
-                                Description: {{$packageTour->description}} <br><br>
-                                Duration: {{ $packageTour->duration }} <br><br>
+                                Name:<br> {{ $packageTour ->name }} <br><br>
+                                Description:<br> {{$packageTour->description}} <br><br>
+                                Duration:<br> {{ $packageTour->duration }} <br><br>
                                 Price :<br>
+                                {!! Form::label('currency_drop_down', 'Currency') !!}
+                                <div class="row form-group">
+                                    {!! Form::open(['method'=>'GET', 'action'=> 'PackageTourController@changeCurrency']) !!}
+                                        <div class="col-sm-10">
+                                            {!! Form::select('currency_drop_down', [''=>'Choose Options'] + $currencies, $currency['id'], ['id'=>'currency_drop_down', 'class'=>'form-control']) !!}
+                                        </div>
+                                        <div class="col-sm-2">
+                                            {!! Form::hidden('id', $packageTour->id) !!}
+                                            {!! Form::submit('Change', ['class'=>'btn btn-primary']) !!}
+                                        </div>
+                                    {!! Form::close() !!}
+                                </div>
                                 <div class="responsive-table">
                                     <table class="table">
                                         <thead>
@@ -86,18 +98,18 @@
                                             @foreach($packageTour->prices as $price)
                                                 <tr>
                                                     <td>Personal</td>
-                                                    <td>{{$price->personal}}</td>
+                                                    <td>{{currency($price->personal, $originalCurrency['code'], $currency['code'])}}</td>
                                                     <td>-</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Private Group</td>
-                                                    <td>{{$price->private_group_adult}}</td>
-                                                    <td>{{$price->private_group_children}}</td>
+                                                    <td>{{currency($price->private_group_adult, $originalCurrency['code'], $currency['code'])}}</td>
+                                                    <td>{{currency($price->private_group_children, $originalCurrency['code'], $currency['code'])}}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Public Group</td>
-                                                    <td>{{$price->public_group_adult}}</td>
-                                                    <td>{{$price->public_group_children}}</td>
+                                                    <td>{{currency($price->public_group_adult, $originalCurrency['code'], $currency['code'])}}</td>
+                                                    <td>{{currency($price->public_group_children, $originalCurrency['code'], $currency['code'])}}</td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
