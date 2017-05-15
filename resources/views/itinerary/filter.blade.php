@@ -49,7 +49,7 @@
                         @if($selectedItineraries)
                             @foreach($selectedItineraries as $selectedItinerary)
                                 <div class="row page-header">
-                                    @phpc
+                                    @php
                                         $i = 0;
                                     @endphp
                                     @foreach($selectedItinerary->medias as $media)

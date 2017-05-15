@@ -14,13 +14,13 @@ class ReservationTypesTableSeeder extends Seeder
         DB::table('reservation_types')->insert([
             [
                 // id = 1
-                'name'=>'Ground',
+                'name'=>'Activity',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 // id = 2
-                'name'=>'Full Boats',
+                'name'=>'Tour Package',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],

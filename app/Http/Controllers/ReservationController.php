@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ReservationStoreRequest;
+use App\Http\Requests\ReservationStorePackageTourRequest;
 use App\Itinerary;
 use App\PackageTour;
 use App\Reservation;
@@ -10,6 +10,7 @@ use App\ReservationStatus;
 use App\ReservationType;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Redis;
 
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
@@ -33,6 +34,17 @@ class ReservationController extends Controller
         $reservations = Reservation::where('user_id', Auth::user()->id)->get();
         return view('reservation.index', compact('reservations'));
     }
+
+    public function createPackageTour($id)
+    {
+        $i = 0;
+        $reservedPackageTour = PackageTour::findOrFail($id);
+        $packagetours = PackageTour::lists('name', 'id')->all();
+//        $reservation = new Reservation();
+//        $reservation->packageTour()->attach($id);
+        return view('reservation.createPackageTour', compact('reservation', 'packagetours', 'reservedPackageTour', 'i'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -52,6 +64,49 @@ class ReservationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    public function storePackageTour(ReservationStorePackageTourRequest $request)
+    {
+        //create the reservation instance object
+        //initialize the sumPrice - for sum all the itineraries price
+        //automate the user_id, reservation_status_id to pending, associate the itineraries/packagetour, durations
+        //Note: reservation_type_id == 1 - Ground(activity). Else 2-full boat(packagetour)
+
+        $sumPrice = 0;
+        $input = $request -> all();
+        $reservation = Reservation::create($input);
+        $reservation->update(['user_id'=>Auth::user()->id, 'reservation_status_id'=>1]);
+        $reservation->packageTour()->sync([$input['packagetour_id']]);                  //since package tour only receive string instead of array, must create an array bracket
+        $packagetour = PackageTour::findOrFail($input['packagetour_id']);
+
+        if($input['price_type'] == 'personal') {
+            foreach($packagetour->prices as $price) {
+                $sumPrice += $input['adult_no'] * $price->personal;
+            }
+        }
+        else if($input['price_type'] == 'private_group') {
+            foreach($packagetour->prices as $price) {
+                $sumPrice += ($input['adult_no'] * $price->private_group_adult) + ($input['children_no'] * $price->private_group_children);
+            }
+        }
+        else if($input['price_type'] == 'public_group') {
+            foreach($packagetour->prices as $price) {
+                $sumPrice += ($input['adult_no'] * $price->public_group_adult) + ($input['children_no'] * $price->public_group_children);
+            }
+        }
+
+        $duration = $packagetour->duration;
+        $trimDuration = $duration[0];
+        $reservationEnd = Carbon::parse($reservation->reservation_start)->addDays($trimDuration)->toDateString();
+        $reservation->update(['price' => $sumPrice, 'reservation_end'=>$reservationEnd]);
+        if(Auth::user()->role_user_id == 3) {
+            return redirect(route('reservation.getUserReservation'));
+        }
+        else {
+            return redirect(route('reservation.index'));
+        }
+    }
+
     public function store(ReservationStoreRequest $request)
     {
         //create the reservation instance object

@@ -15,10 +15,6 @@ class Kernel extends HttpKernel
      */
     protected $middleware = [
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
-
-        //added for 3rd party packages
-        \Illuminate\Session\Middleware\StartSession::class,
-        \Torann\Currency\Middleware\CurrencyMiddleware::class,
     ];
 
     /**
@@ -33,6 +29,10 @@ class Kernel extends HttpKernel
             \Illuminate\Session\Middleware\StartSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
+
+            //added for 3rd party packages
+            \Torann\Currency\Middleware\CurrencyMiddleware::class,
+
         ],
 
         'api' => [

@@ -59,7 +59,7 @@
 
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="{{ url('/reservation') }}">Manage reservations</a></li>
-                                <li><a href="{{ url('/userReservation')}}">My reservations</a></li>
+                                <li><a href="{{ route('reservation.getUserReservation')}}">My reservations</a></li>
                                 <li><a href="{{ url('/reservation/create') }}">Create reservation</a></li>
                             </ul>
                         </li>
@@ -84,7 +84,7 @@
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ url('/userReservation')}}">My reservations</a></li>
+                                <li><a href="{{ route('reservation.getUserReservation')}}">My reservations</a></li>
                                 <li><a href="{{ url('/reservation/create') }}">Create reservation</a></li>
                             </ul>
                         </li>

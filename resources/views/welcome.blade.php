@@ -85,7 +85,7 @@
                                         @if(Auth::guest())
                                             <button type="button" class="btn btn-primary" onclick="location.href='{{url('/login')}}'">Book Now</button>
                                         @else
-                                            <button type="button" class="btn btn-primary" onclick="location.href='{{url('/reservation/create')}}'">Book Now</button>
+                                            <button type="button" class="btn btn-primary" onclick="location.href='{{route('reservation.createPackageTour', $packageTour->id)}}'">Book Now</button>
                                         @endif
                                     </div>
                                 </div>

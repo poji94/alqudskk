@@ -16,10 +16,10 @@
                         <div class="form-group{{ $errors->has('reservation_type_id') ? ' has-error' : '' }}" style="display: inline-block">
                             {!! Form::label('reservation_type_id_label', 'Type of Reservation:  ') !!}
 
-                            {{--<label class="radio-inline">--}}
-                                {{--{!! Form::radio('reservation_type_id', 1, true, ['id'=>'ground', 'style'=>'display:inline-block']) !!}--}}
-                                {{--Activities--}}
-                            {{--</label>--}}
+                            <label class="radio-inline">
+                                {!! Form::radio('reservation_type_id', 1, true, ['id'=>'ground', 'style'=>'display:inline-block']) !!}
+                                Activities
+                            </label>
 
                             <label class="radio-inline">
                                 {!! Form::radio('reservation_type_id', 2, false, ['id'=>'full_boat', 'style'=>'display:inline-block']) !!}
