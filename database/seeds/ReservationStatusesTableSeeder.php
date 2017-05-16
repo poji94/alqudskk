@@ -14,31 +14,31 @@ class ReservationStatusesTableSeeder extends Seeder
         DB::table('reservation_statuses')->insert([
             [
                 // id = 1
-                'name'=>'Pending',
+                'name'=>'Waiting for Payment',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 // id = 2
-                'name'=>'Canceled',
+                'name'=>'Processing',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 // id = 3
-                'name'=>'Postponed',
+                'name'=>'Canceled',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 // id = 4
-                'name'=>'Rejected',
+                'name'=>'Accepted',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 // id = 5
-                'name'=>'Accepted',
+                'name'=>'Refunded',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],

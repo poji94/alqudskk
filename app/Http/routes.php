@@ -34,6 +34,12 @@ Route::get('/packageTourSelection/changeCurrency', 'PackageTourController@change
 
 Route::resource('/reservation', 'ReservationController');
 Route::get('/reservation/createReservation/{packagetour}', 'ReservationController@createPackageTour')->name('reservation.createPackageTour');
-Route::post('/reservation/getUserReservation', 'ReservationController@storePackageTour')->name('reservation.storePackageTour');
+Route::post('/getUserReservation', 'ReservationController@storePackageTour')->name('reservation.storePackageTour');
 Route::get('/getUserReservation', 'ReservationController@getUserReservation')->name('reservation.getUserReservation');
 Route::get('cancelReservation', 'ReservationController@cancelReservation')->name('reservation.cancelReservation');
+Route::post('/reservation/payWithStripe/{reservation}', 'ReservationController@payWithStripe')->name('reservation.payWithStripe');
+Route::get('/reservation/editPackageTour/{packagetour}', 'ReservationController@editPackageTour')->name('reservation.editPackageTour');
+Route::post('/reservation/editPackageTour/{packagetour}', 'ReservationController@updatePackageTour')->name('reservation.updatePackageTour');
+Route::get('/reservation/showPackageTour/{packagetour}', 'ReservationController@showPackageTour')->name('reservation.showPackageTour');
+Route::get('/reservation/reviewPackageTour/{packagetour}', 'ReservationController@reviewPackageTour')->name('reservation.reviewPackageTour');
+Route::post('/reservation/reviewPackageTour/{packagetour}', 'ReservationController@postReviewPackageTour')->name('reservation.postReviewPackageTour');

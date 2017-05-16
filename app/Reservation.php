@@ -8,7 +8,7 @@ class Reservation extends Model
 {
     //setting mass assignments
     protected $fillable = ['user_id', 'reservation_type_id', 'reservation_start', 'reservation_end',
-                            'children_no', 'adult_no', 'price', 'reservation_status_id'];
+                            'children_no', 'adult_no', 'price_type', 'price', 'reservation_status_id'];
 
     //one-to-one relationship reservation <-> user
     public function reserveUser() {
@@ -36,7 +36,7 @@ class Reservation extends Model
     }
 
     //accessor price attribute - adding rm infront
-    public function getPriceAttribute($value) {
-        return 'RM' . $value;
-    }
+//    public function getPriceAttribute($value) {
+//        return 'RM' . $value;
+//    }
 }

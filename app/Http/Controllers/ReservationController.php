@@ -6,6 +6,7 @@ use App\Http\Requests\ReservationStorePackageTourRequest;
 use App\Itinerary;
 use App\PackageTour;
 use App\Reservation;
+use App\Currency;
 use App\ReservationStatus;
 use App\ReservationType;
 use Carbon\Carbon;
@@ -26,23 +27,48 @@ class ReservationController extends Controller
     {
         //list out all reservation objects
         $reservations = Reservation::all();
-        return view('reservation.index', compact('reservations'));
+        if(session()->has('currencyCode')) {
+            $currency = Currency::whereCode(session()->get('currencyCode'))->first();
+        }
+        else {
+            $currency = Currency::whereCode('MYR')->first();
+        }
+        return view('reservation.index', compact('reservations', 'currency'));
     }
 
     public function getUserReservation()
     {
         $reservations = Reservation::where('user_id', Auth::user()->id)->get();
-        return view('reservation.index', compact('reservations'));
+        if(session()->has('currencyCode')) {
+            $currency = Currency::whereCode(session()->get('currencyCode'))->first();
+        }
+        else {
+            $currency = Currency::whereCode('MYR')->first();
+        }
+        return view('reservation.index', compact('reservations', 'originalCurrency', 'currency'));
     }
 
-    public function createPackageTour($id)
+    public function createPackageTour(Request $request, $id)
     {
         $i = 0;
         $reservedPackageTour = PackageTour::findOrFail($id);
+//        $collectionReservedPackageTourArray = [];
+//        $collectionReservedPackageTourColl = collect($reservedPackageTour);
+//        array_push($collectionReservedPackageTourArray, $collectionReservedPackageTourColl);
+//        if($request->session()->has('collectionReservedPackageTour')) {
+
+//            $sessionReservedPackageTour = $request->session()->get('collectionReservedPackageTour');
+//            array_push($collectionReservedPackageTourArray, $sessionReservedPackageTour);
+//            $collectionReservedPackageTourArray->push($sessionReservedPackageTour);//
+//            $collectionReservedPackageTour->merge($sessionReservedPackageTour);
+//        }
+        $request->session()->put('collectionReservedPackageTour', $reservedPackageTour);
         $packagetours = PackageTour::lists('name', 'id')->all();
-//        $reservation = new Reservation();
-//        $reservation->packageTour()->attach($id);
-        return view('reservation.createPackageTour', compact('reservation', 'packagetours', 'reservedPackageTour', 'i'));
+//        dd($reservedPackageTour->prices);
+//         dd($collectionReservedPackageTourArray);
+//        return $request->session()->get('collectionReservedPackageTour');
+//        return $request->session()->forget('collectionReservedPackageTour');
+        return view('reservation.createPackageTour', compact('reservation', 'reservedPackageTour', 'packagetours', 'i'));
     }
 
     /**
@@ -64,48 +90,6 @@ class ReservationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-
-    public function storePackageTour(ReservationStorePackageTourRequest $request)
-    {
-        //create the reservation instance object
-        //initialize the sumPrice - for sum all the itineraries price
-        //automate the user_id, reservation_status_id to pending, associate the itineraries/packagetour, durations
-        //Note: reservation_type_id == 1 - Ground(activity). Else 2-full boat(packagetour)
-
-        $sumPrice = 0;
-        $input = $request -> all();
-        $reservation = Reservation::create($input);
-        $reservation->update(['user_id'=>Auth::user()->id, 'reservation_status_id'=>1]);
-        $reservation->packageTour()->sync([$input['packagetour_id']]);                  //since package tour only receive string instead of array, must create an array bracket
-        $packagetour = PackageTour::findOrFail($input['packagetour_id']);
-
-        if($input['price_type'] == 'personal') {
-            foreach($packagetour->prices as $price) {
-                $sumPrice += $input['adult_no'] * $price->personal;
-            }
-        }
-        else if($input['price_type'] == 'private_group') {
-            foreach($packagetour->prices as $price) {
-                $sumPrice += ($input['adult_no'] * $price->private_group_adult) + ($input['children_no'] * $price->private_group_children);
-            }
-        }
-        else if($input['price_type'] == 'public_group') {
-            foreach($packagetour->prices as $price) {
-                $sumPrice += ($input['adult_no'] * $price->public_group_adult) + ($input['children_no'] * $price->public_group_children);
-            }
-        }
-
-        $duration = $packagetour->duration;
-        $trimDuration = $duration[0];
-        $reservationEnd = Carbon::parse($reservation->reservation_start)->addDays($trimDuration)->toDateString();
-        $reservation->update(['price' => $sumPrice, 'reservation_end'=>$reservationEnd]);
-        if(Auth::user()->role_user_id == 3) {
-            return redirect(route('reservation.getUserReservation'));
-        }
-        else {
-            return redirect(route('reservation.index'));
-        }
-    }
 
     public function store(ReservationStoreRequest $request)
     {
@@ -150,6 +134,48 @@ class ReservationController extends Controller
         }
     }
 
+    public function storePackageTour(ReservationStorePackageTourRequest $request)
+    {
+        //create the reservation instance object
+        //initialize the sumPrice - for sum all the itineraries price
+        //automate the user_id, reservation_status_id to pending, associate the itineraries/packagetour, durations
+        //Note: reservation_type_id == 1 - Ground(activity). Else 2-full boat(packagetour)
+
+        $sumPrice = 0;
+        $input = $request -> all();
+        $reservation = Reservation::create($input);
+        $reservation->update(['user_id'=>Auth::user()->id, 'reservation_status_id'=>1]);
+        $reservation->packageTour()->sync([$input['packagetour_id']]);                  //since package tour only receive string instead of array, must create an array bracket
+        $packagetour = PackageTour::findOrFail($input['packagetour_id']);
+
+        if($input['price_type'] == 'personal') {
+            foreach($packagetour->prices as $price) {
+                $sumPrice += $input['adult_no'] * $price->personal;
+            }
+        }
+        else if($input['price_type'] == 'private_group') {
+            foreach($packagetour->prices as $price) {
+                $sumPrice += ($input['adult_no'] * $price->private_group_adult) + ($input['children_no'] * $price->private_group_children);
+            }
+        }
+        else if($input['price_type'] == 'public_group') {
+            foreach($packagetour->prices as $price) {
+                $sumPrice += ($input['adult_no'] * $price->public_group_adult) + ($input['children_no'] * $price->public_group_children);
+            }
+        }
+
+        $duration = $packagetour->duration;
+        $trimDuration = $duration[0];
+        $reservationEnd = Carbon::parse($reservation->reservation_start)->addDays($trimDuration)->toDateString();
+        $reservation->update(['price' => $sumPrice, 'reservation_end'=>$reservationEnd]);
+        if(Auth::user()->role_user_id == 3) {
+            return redirect(route('reservation.getUserReservation'));
+        }
+        else {
+            return redirect(route('reservation.index'));
+        }
+    }
+
     /**
      * Display the specified resource.
      *
@@ -159,6 +185,19 @@ class ReservationController extends Controller
     public function show($id)
     {
         //
+    }
+
+    public function showPackageTour($id)
+    {
+        $reservation = Reservation::findOrFail($id);
+        if(session()->has('currencyCode')) {
+            $currency = Currency::whereCode(session()->get('currencyCode'))->first();
+        }
+        else {
+            $currency = Currency::whereCode('MYR')->first();
+        }
+        $packagetours = PackageTour::lists('name', 'id')->all();
+        return view('reservation.showPackageTour', compact('reservation', 'itineraries', 'packagetours', 'currency'));
     }
 
     /**
@@ -176,6 +215,32 @@ class ReservationController extends Controller
         $itineraries = Itinerary::lists('name', 'id')->all();
         $packagetours = PackageTour::lists('name', 'id')->all();
         return view('reservation.edit', compact('reservation', 'itineraries', 'packagetours', 'i'));
+    }
+
+    public function editPackageTour($id)
+    {
+        $reservation = Reservation::findOrFail($id);
+        if(session()->has('currencyCode')) {
+            $currency = Currency::whereCode(session()->get('currencyCode'))->first();
+        }
+        else {
+            $currency = Currency::whereCode('MYR')->first();
+        }
+        $packagetours = PackageTour::lists('name', 'id')->all();
+        return view('reservation.editPackageTour', compact('reservation', 'itineraries', 'packagetours', 'currency'));
+    }
+
+    public function reviewPackageTour($id)
+    {
+        $reservation = Reservation::findOrFail($id);
+        if(session()->has('currencyCode')) {
+            $currency = Currency::whereCode(session()->get('currencyCode'))->first();
+        }
+        else {
+            $currency = Currency::whereCode('MYR')->first();
+        }
+        $packagetours = PackageTour::lists('name', 'id')->all();
+        return view('reservation.editPackageTour', compact('reservation', 'itineraries', 'packagetours', 'currency'));
     }
 
     /**
@@ -226,12 +291,47 @@ class ReservationController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    public function updatePackageTour(Request $request, $id)
+    {
+        //pretty much similar to the store reservation
+        //this updates the particular reservation
+        $sumPrice = 0;
+        $input = $request -> all();
+        $reservation = Reservation::findOrFail($id);
+        $reservation->update($input);
+        $reservation->packageTour()->sync([$input['packagetour_id']]);                  //since package tour only receive string instead of array, must create an array bracket
+        $packagetour = PackageTour::findOrFail($input['packagetour_id']);
+
+        if($input['price_type'] == 'personal') {
+            foreach($packagetour->prices as $price) {
+                $sumPrice += $input['adult_no'] * $price->personal;
+            }
+        }
+        else if($input['price_type'] == 'private_group') {
+            foreach($packagetour->prices as $price) {
+                $sumPrice += ($input['adult_no'] * $price->private_group_adult) + ($input['children_no'] * $price->private_group_children);
+            }
+        }
+        else if($input['price_type'] == 'public_group') {
+            foreach($packagetour->prices as $price) {
+                $sumPrice += ($input['adult_no'] * $price->public_group_adult) + ($input['children_no'] * $price->public_group_children);
+            }
+        }
+
+        $duration = $packagetour->duration;
+        $trimDuration = $duration[0];
+        $reservationEnd = Carbon::parse($reservation->reservation_start)->addDays($trimDuration)->toDateString();
+        $reservation->update(['price' => $sumPrice, 'reservation_end'=>$reservationEnd]);
+        if(Auth::user()->role_user_id == 3) {
+            return redirect(route('reservation.getUserReservation'));
+        }
+        else {
+            return redirect(route('reservation.index'));
+        }
+    }
+
+    public function postReviewPackageTour()
+    {}
 
     public function cancelReservation(Request $request)
     {
@@ -259,5 +359,87 @@ class ReservationController extends Controller
         else {
             return redirect(route('reservation.index'));
         }
+    }
+
+    //payment section
+    public function payWithStripe(Request $request, $id)
+    {
+        $reservation = Reservation::findOrFail($id);
+        return $this->chargeCustomer($reservation->id, $reservation->price, $reservation->reserveUser->name, $request->session()->get('currencyCode'), $request->input('stripeToken'));
+    }
+
+    public function chargeCustomer($reservationId, $reservationPrice, $reservationUserName, $currencyCode, $token)
+    {
+        \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+        if(!$this->isStripeCustomer())
+        {
+            $customer = $this->createStripeCustomer($token);
+        }
+        else
+        {
+            $customer = \Stripe\Customer::retrieve(Auth::user()->stripe_id);
+        }
+        return $this->createStripeCharge($reservationId, $reservationPrice, $reservationUserName, $currencyCode, $customer);
+    }
+
+    public function createStripeCharge($reservationId, $reservationPrice, $reservationUserName, $currencyCode, $customer)
+    {
+        try {
+            $charge = \Stripe\Charge::create(array(
+                "amount" => $reservationPrice,
+                "currency" => $currencyCode,
+                "customer" => $customer->id,
+                "description" => $reservationUserName
+            ));
+        } catch(\Stripe\Error\Card $e) {
+            return redirect()
+                ->route('index')
+                ->with('error', 'Your credit card was been declined. Please try again or contact us.');
+        }
+
+        return $this->postStoreOrder($reservationId);
+    }
+
+    public function createStripeCustomer($token)
+    {
+        \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+
+        $customer = \Stripe\Customer::create(array(
+            "description" => Auth::user()->email,
+            "source" => $token
+        ));
+
+        Auth::user()->stripe_id = $customer->id;
+        Auth::user()->save();
+
+        return $customer;
+    }
+
+    public function isStripeCustomer()
+    {
+        return Auth::user() && \App\User::where('id', Auth::user()->id)->whereNotNull('stripe_id')->first();
+    }
+
+    public function postStoreOrder($reservationId)
+    {
+        if(session()->has('currencyCode')) {
+            $currency = Currency::whereCode(session()->get('currencyCode'))->first();
+        }
+        else {
+            $currency = Currency::whereCode('MYR')->first();
+        }
+
+        $reservation = Reservation::findOrFail($reservationId);
+        $reservation->update(['user_id'=>Auth::user()->id, 'reservation_status_id'=>2]);
+
+        $reservations = Reservation::where('user_id', Auth::user()->id)->get();
+//        Order::create([
+//            'email' => Auth::user()->email,
+//            'product' => $product_name
+//        ]);
+
+        return redirect()
+            ->route('reservation.getUserReservation', compact('currency', 'reservations'))
+            ->with('msg', 'Thanks for your purchase!');
     }
 }

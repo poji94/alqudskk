@@ -98,18 +98,18 @@
                                             @foreach($packageTour->prices as $price)
                                                 <tr>
                                                     <td>Personal</td>
-                                                    <td>{{currency($price->personal, $originalCurrency['code'], $currency['code'])}}</td>
+                                                    <td>{{currency($price->personal, 'MYR', $currency['code'])}}</td>
                                                     <td>-</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Private Group</td>
-                                                    <td>{{currency($price->private_group_adult, $originalCurrency['code'], $currency['code'])}}</td>
-                                                    <td>{{currency($price->private_group_children, $originalCurrency['code'], $currency['code'])}}</td>
+                                                    <td>{{currency($price->private_group_adult, 'MYR', $currency['code'])}}</td>
+                                                    <td>{{currency($price->private_group_children, 'MYR', $currency['code'])}}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Public Group</td>
-                                                    <td>{{currency($price->public_group_adult, $originalCurrency['code'], $currency['code'])}}</td>
-                                                    <td>{{currency($price->public_group_children, $originalCurrency['code'], $currency['code'])}}</td>
+                                                    <td>{{currency($price->public_group_adult, 'MYR', $currency['code'])}}</td>
+                                                    <td>{{currency($price->public_group_children, 'MYR', $currency['code'])}}</td>
                                                 </tr>
                                             @endforeach
                                         </tbody>

@@ -159,6 +159,7 @@ return [
         //adding packages
         Collective\Html\HtmlServiceProvider::class,
         \Torann\Currency\CurrencyServiceProvider::class,
+        Laravel\Cashier\CashierServiceProvider::class,
 
     ],
 
@@ -209,6 +210,7 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'Currency' => \Torann\Currency\Facades\Currency::class,
+        'Cashier' => Laravel\Cashier\CashierServiceProvider::class,
 
     ],
 

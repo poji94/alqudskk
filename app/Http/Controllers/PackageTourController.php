@@ -129,11 +129,16 @@ class PackageTourController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
         $currencies = Currency::lists('name', 'id')->all();
-        $originalCurrency = currency()->setUserCurrency('MYR');
-        $currency = currency()->getCurrency();
+        if($request->session()->has('currencyCode')) {
+            $currency = Currency::whereCode($request->session()->get('currencyCode'))->first();
+        }
+        else {
+            $currency = Currency::whereCode('MYR')->first();
+        }
+
         $packageTour = PackageTour::findOrFail($id);
         foreach($packageTour->types as $type) {
             if($type->pivot->type_vacation_id == $packageTour->types->first()->id) {
@@ -145,14 +150,13 @@ class PackageTourController extends Controller
                 $selectedPlacePackageTours = $place->packageTours;
             }
         }
-        return view('packagetour.show', compact('currencies', 'originalCurrency', 'currency', 'packageTour', 'selectedTypePackageTours', 'selectedPlacePackageTours'));
+        return view('packagetour.show', compact('currencies', 'currency', 'packageTour', 'selectedTypePackageTours', 'selectedPlacePackageTours'));
     }
 
     public function changeCurrency(Request $request)
     {
         $input = $request->all();
         $currencies = Currency::lists('name', 'id')->all();
-        $originalCurrency = currency()->setUserCurrency('MYR');
         $packageTour = PackageTour::findOrFail($input['id']);
         if($input['currency_drop_down'] == currency()->id) {
             $currency = currency()->getCurrency();
@@ -160,6 +164,7 @@ class PackageTourController extends Controller
         else {
             $currency = Currency::findOrFail($input['currency_drop_down']);
         }
+        $request->session()->put('currencyCode', $currency->code);
 
         foreach($packageTour->types as $type) {
             if($type->pivot->type_vacation_id == $packageTour->types->first()->id) {
@@ -171,7 +176,7 @@ class PackageTourController extends Controller
                 $selectedPlacePackageTours = $place->packageTours;
             }
         }
-        return view('packagetour.show', compact('currencies', 'originalCurrency', 'currency', 'packageTour', 'selectedTypePackageTours', 'selectedPlacePackageTours'));
+        return view('packagetour.show', compact('currencies', 'currency', 'packageTour', 'selectedTypePackageTours', 'selectedPlacePackageTours'));
     }
 
     /**
@@ -188,7 +193,6 @@ class PackageTourController extends Controller
         $i = 0;
         $packageTour = PackageTour::findOrFail($id);
         $itineraries = Itinerary::lists('name', 'id')->all();
-//        dd($packageTour->prices);
         return view('packagetour.edit', compact('packageTour', 'itineraries', 'i'));
     }
 

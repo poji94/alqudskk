@@ -21,6 +21,9 @@
                         <div class="form-group" id="package-tour-form">
                             {!! Form::label('packagetour_id', 'Tour Package') !!}
                             {!! Form::select('packagetour_id', [''=>'Choose Options'] + $packagetours, $reservedPackageTour->id, ['class'=>'form-control']) !!}
+                            {{--@foreach($collectionReservedPackageTourArray as $reservedPackageTour)--}}
+                                {{--{!! Form::select('packagetour_id', [''=>'Choose Options'] + $packagetours, $packageTour->id, ['class'=>'form-control']) !!}--}}
+                            {{--@endforeach--}}
                         </div>
                         <div class="form-group{{ $errors->has('price_type') ? ' has-error' : '' }}" style="display: inline-block">
                             {!! Form::label('price_type_label', 'Please choose:  ') !!}
@@ -73,7 +76,7 @@
                             </div>
                             <div id="children_no" class="col-sm-6 form-group{{ $errors->has('children_no') ? ' has-error' : '' }}">
                             {!! Form::label('children_no', 'Number of children') !!}
-                                {!! Form::number('children_no', 0, ['class'=>'form-control']) !!}
+                                {!! Form::number('children_no', 1, ['class'=>'form-control']) !!}
                                 @if ($errors->has('children_no'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('children_no') }}</strong>
@@ -92,7 +95,7 @@
                         </div>
                         <div class="form-group">
                             {!! Form::submit('Create Reservation', ['class'=>'btn btn-primary']) !!}
-                            <button type="button" class="btn btn-primary" onclick="location.href='{{route('reservation.index')}}'">Cancel</button>
+                            <button type="button" class="btn btn-primary" onclick="location.href='{{url()->previous()}}'">Cancel</button>
                         </div>
                         {!! Form::close() !!}
                     </div>
