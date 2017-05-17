@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ReservationStorePackageTourRequest;
+use App\Http\Requests\ReservationUpdatePackageTourRequest;
+use App\Http\Requests\ReservationReviewPackageTourRequest;
 use App\Itinerary;
 use App\PackageTour;
 use App\Reservation;
@@ -31,9 +33,10 @@ class ReservationController extends Controller
             $currency = Currency::whereCode(session()->get('currencyCode'))->first();
         }
         else {
-            $currency = Currency::whereCode('MYR')->first();
+            $currency = Currency::whereCode(currency()->config('default'))->first();
         }
-        return view('reservation.index', compact('reservations', 'currency'));
+        $reservationStatusIds = ReservationStatus::lists('name', 'id')->all();
+        return view('reservation.index', compact('reservations', 'currency', 'reservationStatusIds'));
     }
 
     public function getUserReservation()
@@ -43,9 +46,38 @@ class ReservationController extends Controller
             $currency = Currency::whereCode(session()->get('currencyCode'))->first();
         }
         else {
-            $currency = Currency::whereCode('MYR')->first();
+            $currency = Currency::whereCode(currency()->config('default'))->first();
         }
-        return view('reservation.index', compact('reservations', 'originalCurrency', 'currency'));
+        $reservationStatusIds = ReservationStatus::lists('name', 'id')->all();
+        return view('reservation.indexUser', compact('reservations', 'currency', 'reservationStatusIds'));
+    }
+
+    public function filterReservationStatus(Request $request)
+    {
+        $input = $request->all();
+        $reservations = Reservation::where('reservation_status_id', $input['reservation_status_id'])->get();
+        $reservationStatusIds = ReservationStatus::lists('name', 'id')->all();
+        if(session()->has('currencyCode')) {
+            $currency = Currency::whereCode(session()->get('currencyCode'))->first();
+        }
+        else {
+            $currency = Currency::whereCode(currency()->config('default'))->first();
+        }
+        return view('reservation.index', compact('reservations', 'currency', 'reservationStatusIds'));
+    }
+
+    public function filterReservationStatusUser(Request $request)
+    {
+        $input = $request->all();
+        $reservations = Reservation::where('user_id', Auth::user()->id)->where('reservation_status_id', $input['reservation_status_id'])->get();
+        $reservationStatusIds = ReservationStatus::lists('name', 'id')->all();
+        if(session()->has('currencyCode')) {
+            $currency = Currency::whereCode(session()->get('currencyCode'))->first();
+        }
+        else {
+            $currency = Currency::whereCode(currency()->config('default'))->first();
+        }
+        return view('reservation.indexUser', compact('reservations', 'currency', 'reservationStatusIds'));
     }
 
     public function createPackageTour(Request $request, $id)
@@ -91,7 +123,7 @@ class ReservationController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function store(ReservationStoreRequest $request)
+    public function store(Request $request)
     {
         //create the reservation instance object
         //initialize the sumPrice - for sum all the itineraries price
@@ -251,7 +283,7 @@ class ReservationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ReservationStoreRequest $request, $id)
+    public function update(Request $request, $id)
     {
         //pretty much similar to the store reservation
         //this updates the particular reservation
@@ -292,7 +324,7 @@ class ReservationController extends Controller
         }
     }
 
-    public function updatePackageTour(Request $request, $id)
+    public function updatePackageTour(ReservationUpdatePackageTourRequest $request, $id)
     {
         //pretty much similar to the store reservation
         //this updates the particular reservation
@@ -331,14 +363,14 @@ class ReservationController extends Controller
         }
     }
 
-    public function postReviewPackageTour(Request $request, $id)
+    public function postReviewPackageTour(ReservationReviewPackageTourRequest $request, $id)
     {
         //pretty much similar to the store reservation
         //this updates the particular reservation
         $sumPrice = 0;
         $input = $request -> all();
         $reservation = Reservation::findOrFail($id);
-        $reservation->update($input);
+        $reservation->update(['reservation_status_id'=>$input['reservation_status_id'], 'remarks'=>$input['remarks']]);
         return redirect(route('reservation.index'));
     }
 

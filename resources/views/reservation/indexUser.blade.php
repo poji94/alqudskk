@@ -21,7 +21,7 @@
                             </div>
                             <div class="col-sm-4 col-sm-offset-4 form-group{{ $errors->has('reservation_status_id') ? ' has-error' : '' }}" style="display: inline-block;">
                                 <div class="row">
-                                    {!! Form::open(['method'=>'GET', 'action'=> 'ReservationController@filterReservationStatus']) !!}
+                                    {!! Form::open(['method'=>'GET', 'action'=> 'ReservationController@filterReservationStatusUser']) !!}
                                         <div class="col-sm-8">
                                             {!! Form::select('reservation_status_id', [''=>'Filter Reservation'] + $reservationStatusIds, null, ['id'=>'reservation_status_id', 'class'=>'form-control']) !!}
                                         </div>
@@ -74,13 +74,13 @@
                                                     {!! Form::open(['method' => 'POST', 'action' => ['ReservationController@payWithStripe', $reservation->id]]) !!}
                                                     <div>
                                                         <script
-                                                            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                                                            data-key="{{ env('STRIPE_KEY') }}"
-                                                            data-amount="{{preg_replace("/[^0-9]/", "",currency($reservation->price, currency()->config('default'), $currency['code']))}}"
-                                                            data-name="AlQuds Travel KK"
-                                                            data-description="Payment Reservation"
-                                                            data-locale="auto"
-                                                            data-currency="{{$currency['code']}}">
+                                                                src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                                                data-key="{{ env('STRIPE_KEY') }}"
+                                                                data-amount="{{preg_replace("/[^0-9]/", "",currency($reservation->price, currency()->config('default'), $currency['code']))}}"
+                                                                data-name="AlQuds Travel KK"
+                                                                data-description="Payment Reservation"
+                                                                data-locale="auto"
+                                                                data-currency="{{$currency['code']}}">
                                                         </script>
                                                         <script>document.getElementsByClassName("stripe-button-el")["<?php echo $i ?>"].style.display = 'none';</script>
                                                         {!! Form::submit('Pay', ['class' => 'btn btn-primary']) !!}

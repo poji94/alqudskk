@@ -33,6 +33,8 @@ Route::get('/packageTourSelection/filter', 'PackageTourController@filterSelectio
 Route::get('/packageTourSelection/changeCurrency', 'PackageTourController@changeCurrency')->name('packagetour.changeCurrency');
 
 Route::resource('/reservation', 'ReservationController');
+Route::get('/filterReservationStatus', 'ReservationController@filterReservationStatus')->name('reservation.filterReservationStatus');
+Route::get('/filterReservationStatusUser', 'ReservationController@filterReservationStatusUser')->name('reservation.filterReservationStatusUser');
 Route::get('/reservation/createReservation/{packagetour}', 'ReservationController@createPackageTour')->name('reservation.createPackageTour');
 Route::post('/getUserReservation', 'ReservationController@storePackageTour')->name('reservation.storePackageTour');
 Route::get('/getUserReservation', 'ReservationController@getUserReservation')->name('reservation.getUserReservation');
