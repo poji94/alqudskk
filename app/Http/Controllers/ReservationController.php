@@ -194,7 +194,7 @@ class ReservationController extends Controller
             $currency = Currency::whereCode(session()->get('currencyCode'))->first();
         }
         else {
-            $currency = Currency::whereCode('MYR')->first();
+            $currency = Currency::whereCode(currency()->config('default'))->first();
         }
         $packagetours = PackageTour::lists('name', 'id')->all();
         return view('reservation.showPackageTour', compact('reservation', 'itineraries', 'packagetours', 'currency'));
@@ -224,7 +224,7 @@ class ReservationController extends Controller
             $currency = Currency::whereCode(session()->get('currencyCode'))->first();
         }
         else {
-            $currency = Currency::whereCode('MYR')->first();
+            $currency = Currency::whereCode(currency()->config('default'))->first();
         }
         $packagetours = PackageTour::lists('name', 'id')->all();
         return view('reservation.editPackageTour', compact('reservation', 'itineraries', 'packagetours', 'currency'));
@@ -237,7 +237,7 @@ class ReservationController extends Controller
             $currency = Currency::whereCode(session()->get('currencyCode'))->first();
         }
         else {
-            $currency = Currency::whereCode('MYR')->first();
+            $currency = Currency::whereCode(currency()->config('default'))->first();
         }
         $packagetours = PackageTour::lists('name', 'id')->all();
         return view('reservation.editPackageTour', compact('reservation', 'itineraries', 'packagetours', 'currency'));
@@ -365,7 +365,15 @@ class ReservationController extends Controller
     public function payWithStripe(Request $request, $id)
     {
         $reservation = Reservation::findOrFail($id);
-        return $this->chargeCustomer($reservation->id, $reservation->price, $reservation->reserveUser->name, $request->session()->get('currencyCode'), $request->input('stripeToken'));
+        if(session()->has('currencyCode')) {
+            $currency = Currency::whereCode(session()->get('currencyCode'))->first();
+        }
+        else {
+            $currency = Currency::whereCode(currency()->config('default'))->first();
+        }
+//        $reservationPrice = preg_replace("/[^0-9,.]/", "",currency($reservation->price, currency()->config('default'), $currency['code']));
+        $reservationPrice = preg_replace("/[^0-9]/", "",currency($reservation->price, currency()->config('default'), $currency['code']));
+        return $this->chargeCustomer($reservation->id, (int)$reservationPrice, $reservation->reserveUser->name, $request->session()->get('currencyCode'), $request->input('stripeToken'));
     }
 
     public function chargeCustomer($reservationId, $reservationPrice, $reservationUserName, $currencyCode, $token)
@@ -426,7 +434,7 @@ class ReservationController extends Controller
             $currency = Currency::whereCode(session()->get('currencyCode'))->first();
         }
         else {
-            $currency = Currency::whereCode('MYR')->first();
+            $currency = Currency::whereCode(currency()->config('default'))->first();
         }
 
         $reservation = Reservation::findOrFail($reservationId);

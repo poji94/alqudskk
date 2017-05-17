@@ -136,7 +136,7 @@ class PackageTourController extends Controller
             $currency = Currency::whereCode($request->session()->get('currencyCode'))->first();
         }
         else {
-            $currency = Currency::whereCode('MYR')->first();
+            $currency = Currency::whereCode(currency()->config('default'))->first();
         }
 
         $packageTour = PackageTour::findOrFail($id);
@@ -159,7 +159,7 @@ class PackageTourController extends Controller
         $currencies = Currency::lists('name', 'id')->all();
         $packageTour = PackageTour::findOrFail($input['id']);
         if($input['currency_drop_down'] == currency()->id) {
-            $currency = currency()->getCurrency();
+            $currency = Currency::whereCode(currency()->config('default'))->first();
         }
         else {
             $currency = Currency::findOrFail($input['currency_drop_down']);

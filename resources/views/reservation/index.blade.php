@@ -41,7 +41,7 @@
                                         <td>{{$reservation->id}}</td>
                                         <td>{{$reservation->reserveUser->name}}</td>
                                         <td>{{$reservation->reserveType->name}}</td>
-                                        <td>{{currency($reservation->price, 'MYR', $currency['code'])}}</td>>
+                                        <td>{{currency($reservation->price, currency()->config('default'), $currency['code'])}}</td>>
                                         <td>{{$reservation->reserveStatus->name}}</td>
                                         <td>{{$reservation->reservation_start}}</td>
                                         <td>{{$reservation->reservation_end}}</td>
@@ -59,7 +59,7 @@
                                                     <script
                                                         src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                                                         data-key="{{ env('STRIPE_KEY') }}"
-                                                        data-amount="{{currency($reservation->price, 'MYR', $currency['code'])}}"
+                                                        data-amount="{{preg_replace("/[^0-9]/", "",currency($reservation->price, currency()->config('default'), $currency['code']))}}"
                                                         data-name="AlQuds Travel KK"
                                                         data-description="Payment Reservation"
                                                         data-locale="auto"
