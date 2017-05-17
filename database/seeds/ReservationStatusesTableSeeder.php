@@ -26,7 +26,7 @@ class ReservationStatusesTableSeeder extends Seeder
             ],
             [
                 // id = 3
-                'name'=>'Canceled',
+                'name'=>'Rejected, processing for refund',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -38,7 +38,7 @@ class ReservationStatusesTableSeeder extends Seeder
             ],
             [
                 // id = 5
-                'name'=>'Refunded',
+                'name'=>'Rejected, refunded',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],

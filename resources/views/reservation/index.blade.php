@@ -80,11 +80,24 @@
                                                     {!! Form::close() !!}
                                                 </div>
                                             </td>
-                                        @elseif($reservation->reserveStatus->id ==2)
+                                        @elseif($reservation->reserveStatus->id ==2 || $reservation->reserveStatus->id ==3)
                                             @if(Auth::user()->role_user_id == 3)
                                                 <td><button type="button" class="btn btn-primary" onclick="location.href='{{route('reservation.showPackageTour', $reservation->id)}}'">View</button></td>
                                             @else
                                                 <td><button type="button" class="btn btn-primary" onclick="location.href='{{route('reservation.reviewPackageTour', $reservation->id)}}'">Review</button></td>
+                                            @endif
+                                        @elseif($reservation->reserveStatus->id ==4 || $reservation->reserveStatus->id ==5)
+                                            @if(Auth::user()->role_user_id == 3)
+                                                <td><button type="button" class="btn btn-primary" onclick="location.href='{{route('reservation.showPackageTour', $reservation->id)}}'">View</button></td>
+                                            @else
+                                                <td><button type="button" class="btn btn-primary" onclick="location.href='{{route('reservation.reviewPackageTour', $reservation->id)}}'">Review</button></td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        {!!  Form::open(['method' => 'DELETE', 'action' => ['ReservationController@destroy', $reservation->id]])!!}
+                                                        {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
+                                                        {!! Form::close() !!}
+                                                    </div>
+                                                </td>
                                             @endif
                                         @endif
                                     </tr>

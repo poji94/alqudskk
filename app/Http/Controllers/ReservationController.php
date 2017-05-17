@@ -240,7 +240,8 @@ class ReservationController extends Controller
             $currency = Currency::whereCode(currency()->config('default'))->first();
         }
         $packagetours = PackageTour::lists('name', 'id')->all();
-        return view('reservation.editPackageTour', compact('reservation', 'itineraries', 'packagetours', 'currency'));
+        $reservationStatusIds = ReservationStatus::lists('name', 'id')->all();
+        return view('reservation.reviewPackageTour', compact('reservation', 'reservationStatusIds', 'packagetours', 'currency'));
     }
 
     /**
@@ -330,8 +331,16 @@ class ReservationController extends Controller
         }
     }
 
-    public function postReviewPackageTour()
-    {}
+    public function postReviewPackageTour(Request $request, $id)
+    {
+        //pretty much similar to the store reservation
+        //this updates the particular reservation
+        $sumPrice = 0;
+        $input = $request -> all();
+        $reservation = Reservation::findOrFail($id);
+        $reservation->update($input);
+        return redirect(route('reservation.index'));
+    }
 
     public function cancelReservation(Request $request)
     {

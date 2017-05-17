@@ -12,13 +12,7 @@
                     <div class="panel-heading">View Reservation</div>
 
                     <div class="panel-body">
-                        @if($reservation->reserveStatus->id != 1)
-                            @if(Auth::user()->role_user_id != 3)
-                                {!! Form::model($reservation, ['method'=>'POST', 'action'=> ['ReservationController@postReviewPackageTour', $reservation->id], 'files' => true]) !!}
-                            @endif
-                        @else
-                            {!! Form::model($reservation, ['method'=>'POST', 'action'=> ['ReservationController@updatePackageTour', $reservation->id], 'files' => true]) !!}
-                        @endif
+                        {!! Form::model($reservation, ['method'=>'POST', 'action'=> ['ReservationController@updatePackageTour', $reservation->id], 'files' => true]) !!}
                         <div class="form-group{{ $errors->has('reservation_type_id') ? ' has-error' : '' }}" style="display: inline-block">
                             {!! Form::hidden('reservation_type_id', 2) !!}
                             {!! Form::label('reservation_type_id_label', 'Type of Reservation:  ') !!}
@@ -141,17 +135,8 @@
                             {!! Form::text('price', currency($reservation->price, 'MYR', $currency['code']), ['class'=>'form-control', 'readonly']) !!}
                         </div>
                         <div class="form-group">
-                            @if($reservation->reserveStatus->id != 1)
-                                @if(Auth::user()->role_user_id != 3)
-                                    {!! Form::submit('Review Reservation', ['class'=>'btn btn-primary']) !!}
-                                    <button type="button" class="btn btn-primary" onclick="location.href='{{url()->previous()}}'">Cancel</button>
-                                @else
-                                    <button type="button" class="btn btn-primary" onclick="location.href='{{url()->previous()}}'">Back</button>
-                                @endif
-                            @else
-                                {!! Form::submit('Edit Reservation', ['class'=>'btn btn-primary']) !!}
-                                <button type="button" class="btn btn-primary" onclick="location.href='{{url()->previous()}}'">Cancel</button>
-                            @endif
+                            {!! Form::submit('Edit Reservation', ['class'=>'btn btn-primary']) !!}
+                            <button type="button" class="btn btn-primary" onclick="location.href='{{url()->previous()}}'">Cancel</button>
                         </div>
                         {!! Form::close() !!}
                     </div>

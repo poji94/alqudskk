@@ -20,6 +20,8 @@ class CurrenciesTableSeeder extends Seeder
                 'format'=>'RM1,0.00',
                 'exchange_rate'=>'1',
                 'active'=>0,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'id'=>2,
@@ -29,6 +31,8 @@ class CurrenciesTableSeeder extends Seeder
                 'format'=>'$1,0.00',
                 'exchange_rate'=>'0.3222',
                 'active'=>0,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'id'=>3,
@@ -38,6 +42,8 @@ class CurrenciesTableSeeder extends Seeder
                 'format'=>'$1,0.00',
                 'exchange_rate'=>'0.231',
                 'active'=>0,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'id'=>4,
@@ -47,6 +53,8 @@ class CurrenciesTableSeeder extends Seeder
                 'format'=>'฿1,0.00',
                 'exchange_rate'=>'7.977',
                 'active'=>0,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'id'=>5,
@@ -56,6 +64,8 @@ class CurrenciesTableSeeder extends Seeder
                 'format'=>'$1,0.00',
                 'exchange_rate'=>'0.3112',
                 'active'=>0,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'id'=>6,
@@ -65,6 +75,8 @@ class CurrenciesTableSeeder extends Seeder
                 'format'=>'1 0,00 ₽',
                 'exchange_rate'=>'13.098',
                 'active'=>0,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
             ],
         ]);
     }
