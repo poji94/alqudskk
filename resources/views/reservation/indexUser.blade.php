@@ -65,10 +65,10 @@
                                             <td>{{$reservation->created_at->diffForHumans()}}</td>
                                             <td>{{$reservation->updated_at->diffForHumans()}}</td>
                                             @if($reservation->reserveStatus->id == 1)
-                                                @if($reservation->reserveType->id == 2)
-                                                    <td><button type="button" class="btn btn-primary" onclick="location.href='{{route('reservation.editPackageTour', $reservation->id)}}'">View</button></td>
+                                                @if($reservation->reserveType->id == 1)
+                                                    <td><button type="button" class="btn btn-primary" onclick="location.href='{{route('reservation.editItinerary', $reservation->id)}}'">View</button></td>
                                                 @else
-                                                    <td><button type="button" class="btn btn-primary" onclick="location.href='{{route('reservation.edit', $reservation->id)}}'">View</button></td>
+                                                    <td><button type="button" class="btn btn-primary" onclick="location.href='{{route('reservation.editPackageTour', $reservation->id)}}'">View</button></td>
                                                 @endif
                                                 <td>
                                                     {!! Form::open(['method' => 'POST', 'action' => ['ReservationController@payWithStripe', $reservation->id]]) !!}
@@ -99,16 +99,31 @@
                                                 </td>
                                             @elseif($reservation->reserveStatus->id ==2 || $reservation->reserveStatus->id ==3)
                                                 @if(Auth::user()->role_user_id == 3)
-                                                    <td><button type="button" class="btn btn-primary" onclick="location.href='{{route('reservation.showPackageTour', $reservation->id)}}'">View</button></td>
+                                                    @if($reservation->reserveType->id ==1)
+                                                        <td><button type="button" class="btn btn-primary" onclick="location.href='{{route('reservation.showItinerary', $reservation->id)}}'">View</button></td>
+                                                    @else
+                                                        <td><button type="button" class="btn btn-primary" onclick="location.href='{{route('reservation.showPackageTour', $reservation->id)}}'">View</button></td>
+                                                    @endif
                                                 @else
-                                                    <td><button type="button" class="btn btn-primary" onclick="location.href='{{route('reservation.reviewPackageTour', $reservation->id)}}'">Review</button></td>
+                                                    @if($reservation->reserveType->id ==1)
+                                                        <td><button type="button" class="btn btn-primary" onclick="location.href='{{route('reservation.reviewItinerary', $reservation->id)}}'">Review</button></td>
+                                                    @else
+                                                        <td><button type="button" class="btn btn-primary" onclick="location.href='{{route('reservation.reviewPackageTour', $reservation->id)}}'">Review</button></td>
+                                                    @endif
                                                 @endif
                                             @elseif($reservation->reserveStatus->id ==4 || $reservation->reserveStatus->id ==5)
                                                 @if(Auth::user()->role_user_id == 3)
-                                                    <td><button type="button" class="btn btn-primary" onclick="location.href='{{route('reservation.showPackageTour', $reservation->id)}}'">View</button></td>
+                                                    @if($reservation->reserveType->id ==1)
+                                                        <td><button type="button" class="btn btn-primary" onclick="location.href='{{route('reservation.showItinerary', $reservation->id)}}'">View</button></td>
+                                                    @else
+                                                        <td><button type="button" class="btn btn-primary" onclick="location.href='{{route('reservation.showPackageTour', $reservation->id)}}'">View</button></td>
+                                                    @endif
                                                 @else
-                                                    <td><button type="button" class="btn btn-primary" onclick="location.href='{{route('reservation.reviewPackageTour', $reservation->id)}}'">Review</button></td>
-                                                    <td>
+                                                    @if($reservation->reserveType->id ==1)
+                                                        <td><button type="button" class="btn btn-primary" onclick="location.href='{{route('reservation.reviewItinerary', $reservation->id)}}'">Review</button></td>
+                                                    @else
+                                                        <td><button type="button" class="btn btn-primary" onclick="location.href='{{route('reservation.reviewPackageTour', $reservation->id)}}'">Review</button></td>
+                                                    @endif                                                    <td>
                                                         <div class="form-group">
                                                             {!!  Form::open(['method' => 'DELETE', 'action' => ['ReservationController@destroy', $reservation->id]])!!}
                                                             {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}

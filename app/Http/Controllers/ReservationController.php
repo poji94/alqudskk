@@ -246,7 +246,7 @@ class ReservationController extends Controller
         $reservation = Reservation::create($input);
         $reservation->update(['user_id'=>Auth::user()->id, 'reservation_status_id'=>1]);
         $reservation->itineraries()->sync([$input['itinerary_id']]);                  //since package tour only receive string instead of array, must create an array bracket
-        $itinerary = PackageTour::findOrFail($input['itinerary_id']);
+        $itinerary = Itinerary::findOrFail($input['itinerary_id']);
 
         if($input['price_type'] == 'personal') {
             foreach($itinerary->prices as $price) {
@@ -353,7 +353,7 @@ class ReservationController extends Controller
             $currency = Currency::whereCode(currency()->config('default'))->first();
         }
         $itineraries = Itinerary::lists('name', 'id')->all();
-        return view('reservation.editItinerary', compact('reservation', 'itineraries', 'packagetours', 'currency'));
+        return view('reservation.editItinerary', compact('reservation', 'itineraries', 'itineraries', 'currency'));
     }
 
     public function reviewPackageTour($id)
@@ -479,8 +479,8 @@ class ReservationController extends Controller
         $input = $request -> all();
         $reservation = Reservation::findOrFail($id);
         $reservation->update($input);
-        $reservation->packageTour()->sync([$input['packagetour_id']]);                  //since package tour only receive string instead of array, must create an array bracket
-        $itinerary = Itinerary::findOrFail($input['packagetour_id']);
+        $reservation->itineraries()->sync([$input['itinerary_id']]);                  //since package tour only receive string instead of array, must create an array bracket
+        $itinerary = Itinerary::findOrFail($input['itinerary_id']);
 
         if($input['price_type'] == 'personal') {
             foreach($itinerary->prices as $price) {

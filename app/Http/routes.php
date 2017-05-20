@@ -42,17 +42,17 @@ Route::get('cancelReservation', 'ReservationController@cancelReservation')->name
 Route::post('/reservation/payWithStripe/{reservation}', 'ReservationController@payWithStripe')->name('reservation.payWithStripe');
 
 Route::get('/reservation/createItinerary/{itinerary}', 'ReservationController@createItinerary')->name('reservation.createItinerary');
-Route::post('/getUserReservation', 'ReservationController@storeItinerary')->name('reservation.storeItinerary');
-Route::get('/reservation/editItinerary/{itinerary}', 'ReservationController@editItinerary')->name('reservation.editItinerary');
-Route::post('/reservation/editItinerary/{itinerary}', 'ReservationController@updateItinerary')->name('reservation.updateItinerary');
-Route::get('/reservation/showItinerary/{itinerary}', 'ReservationController@showItinerary')->name('reservation.showItinerary');
-Route::get('/reservation/reviewItinerary/{itinerary}', 'ReservationController@reviewItinerary')->name('reservation.reviewItinerary');
-Route::post('/reservation/reviewItinerary/{itinerary}', 'ReservationController@postReviewItinerary')->name('reservation.postReviewItinerary');
+Route::post('/reservation/storedItinerary/', 'ReservationController@storeItinerary')->name('reservation.storeItinerary');
+Route::get('/reservation/editItinerary/{reservation}', 'ReservationController@editItinerary')->name('reservation.editItinerary');
+Route::post('/reservation/editItinerary/{reservation}', 'ReservationController@updateItinerary')->name('reservation.updateItinerary');
+Route::get('/reservation/showItinerary/{reservation}', 'ReservationController@showItinerary')->name('reservation.showItinerary');
+Route::get('/reservation/reviewItinerary/{reservation}', 'ReservationController@reviewItinerary')->name('reservation.reviewItinerary');
+Route::post('/reservation/reviewItinerary/{reservation}', 'ReservationController@postReviewItinerary')->name('reservation.postReviewItinerary');
 
 Route::get('/reservation/createPackageTour/{packagetour}', 'ReservationController@createPackageTour')->name('reservation.createPackageTour');
-Route::post('/getUserReservation', 'ReservationController@storePackageTour')->name('reservation.storePackageTour');
-Route::get('/reservation/editPackageTour/{packagetour}', 'ReservationController@editPackageTour')->name('reservation.editPackageTour');
-Route::post('/reservation/editPackageTour/{packagetour}', 'ReservationController@updatePackageTour')->name('reservation.updatePackageTour');
-Route::get('/reservation/showPackageTour/{packagetour}', 'ReservationController@showPackageTour')->name('reservation.showPackageTour');
-Route::get('/reservation/reviewPackageTour/{packagetour}', 'ReservationController@reviewPackageTour')->name('reservation.reviewPackageTour');
-Route::post('/reservation/reviewPackageTour/{packagetour}', 'ReservationController@postReviewPackageTour')->name('reservation.postReviewPackageTour');
+Route::post('/reservation/storedPackageTour', 'ReservationController@storePackageTour')->name('reservation.storePackageTour');
+Route::get('/reservation/editPackageTour/{reservation}', 'ReservationController@editPackageTour')->name('reservation.editPackageTour');
+Route::post('/reservation/editPackageTour/{reservation}', 'ReservationController@updatePackageTour')->name('reservation.updatePackageTour');
+Route::get('/reservation/showPackageTour/{reservation}', 'ReservationController@showPackageTour')->name('reservation.showPackageTour');
+Route::get('/reservation/reviewPackageTour/{reservation}', 'ReservationController@reviewPackageTour')->name('reservation.reviewPackageTour');
+Route::post('/reservation/reviewPackageTour/{reservation}', 'ReservationController@postReviewPackageTour')->name('reservation.postReviewPackageTour');

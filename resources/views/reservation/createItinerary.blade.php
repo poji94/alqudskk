@@ -19,7 +19,7 @@
                             Activity
                         </div>
                         <div class="form-group" id="package-tour-form">
-                            {!! Form::label('itinerary_id', 'Activity') !!}
+                            {!! Form::label('itinerary_id_label', 'Activity') !!}
                             {!! Form::select('itinerary_id', [''=>'Choose Options'] + $itineraries, $reservedItinerary->id, ['class'=>'form-control']) !!}
                             {{--@foreach($collectionReservedPackageTourArray as $reservedPackageTour)--}}
                             {{--{!! Form::select('packagetour_id', [''=>'Choose Options'] + $packagetours, $packageTour->id, ['class'=>'form-control']) !!}--}}
