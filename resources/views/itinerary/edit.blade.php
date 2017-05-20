@@ -116,26 +116,69 @@
                                     </span>
                             @endif
                         </div>
-                        <div class="row">
-                            <div class="col-sm-6 form-group{{ $errors->has('price_children') ? ' has-error' : '' }}">
-                                {!! Form::label('price_children', 'Price per child') !!}
-                                {!! Form::number('price_children', null, ['class'=>'form-control']) !!}
-                                @if ($errors->has('price_children'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('price_children') }}</strong>
-                                    </span>
-                                @endif
+                        @foreach($itinerary->prices as $price)
+                            <div>
+                                {!! Form::label('personal', 'Personal price') !!}
                             </div>
-                            <div class="col-sm-6 form-group{{ $errors->has('price_adult') ? ' has-error' : '' }}">
-                                {!! Form::label('price_adult', 'Price per adult') !!}
-                                {!! Form::number('price_adult', null, ['class'=>'form-control']) !!}
-                                @if ($errors->has('price_adult'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('price_adult') }}</strong>
+                            <div class="row">
+                                <div class="col-sm-6 form-group{{ $errors->has('personal') ? ' has-error' : '' }}">
+                                    {!! Form::label('personal', 'Price per adult') !!}
+                                    {!! Form::number('personal', $price->personal, ['class'=>'form-control']) !!}
+                                    @if ($errors->has('personal'))
+                                        <span class="help-block">
+                                        <strong>{{ $errors->first('personal') }}</strong>
                                     </span>
-                                @endif
+                                    @endif
+                                </div>
                             </div>
-                        </div>
+                            <div>
+                                {!! Form::label('private_group', 'Private group price') !!}
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6 form-group{{ $errors->has('private_group_adult') ? ' has-error' : '' }}">
+                                    {!! Form::label('private_group_adult', 'Price per adult') !!}
+                                    {!! Form::number('private_group_adult', $price->private_group_adult, ['class'=>'form-control']) !!}
+                                    @if ($errors->has('private_group_adult'))
+                                        <span class="help-block">
+                                        <strong>{{ $errors->first('private_group_adult') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                                <div class="col-sm-6 form-group{{ $errors->has('private_group_children') ? ' has-error' : '' }}">
+                                    {!! Form::label('private_group_children', 'Price per child') !!}
+                                    {!! Form::number('private_group_children', $price->private_group_children, ['class'=>'form-control']) !!}
+                                    @if ($errors->has('private_group_children'))
+                                        <span class="help-block">
+                                        <strong>{{ $errors->first('private_group_children') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+                            <div>
+                                {!! Form::label('public_group', 'Public group price') !!}
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6 form-group{{ $errors->has('public_group_adult') ? ' has-error' : '' }}">
+                                    {!! Form::label('public_group_adult', 'Price per adult') !!}
+                                    {!! Form::number('public_group_adult', $price->public_group_adult, ['class'=>'form-control']) !!}
+                                    @if ($errors->has('public_group_adult'))
+                                        <span class="help-block">
+                                        <strong>{{ $errors->first('public_group_adult') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                                <div class="col-sm-6 form-group{{ $errors->has('public_group_children') ? ' has-error' : '' }}">
+                                    {!! Form::label('public_group_children', 'Price per child') !!}
+                                    {!! Form::number('public_group_children', $price->public_group_children, ['class'=>'form-control']) !!}
+                                    @if ($errors->has('public_group_children'))
+                                        <span class="help-block">
+                                        <strong>{{ $errors->first('public_group_children') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+                        @endforeach
+
                         {!! Form::label('media_id', 'Media') !!}
                         <div class="form-group" id="media-form">
                             {!! Form::file('media_id_reference', array('multiple'=>'multiple', 'accept'=>'image/*', 'class'=>'btn btn-primary col-sm-10')) !!}

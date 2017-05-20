@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Itinerary extends Model
 {
     //setting mass assignments
-    protected $fillable = ['name', 'description', 'duration', 'price_children', 'price_adult'];
+    protected $fillable = ['name', 'description', 'duration'];
 
     //many-to-many relationship itinerary <-> packagetour through itinerary_packagetour pivot table
     public function packagesTours() {
@@ -22,6 +22,11 @@ class Itinerary extends Model
     //many-to-many polymorphic relationship itinerary <-> typevacation through typeable pivot table
     public function types() {
         return $this->morphToMany('App\TypeVacation', 'typeable');
+    }
+
+    //many-to-many polymorphic relationship itinerary <-> pricetourism through priceable pivot table
+    public function prices() {
+        return $this->morphToMany('App\PriceTourism', 'priceable');
     }
 
     //polymorhpic relationship itinerary <-> media

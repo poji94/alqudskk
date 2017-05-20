@@ -65,8 +65,6 @@
                                     <div class="col-sm-6">
                                         Name: {{ $selectedItinerary->name }} <br>
                                         Duration: {{ $selectedItinerary->duration }} <br>
-                                        Price per Adult: RM {{ $selectedItinerary->price_adult }} <br>
-                                        Price per Child: RM {{ $selectedItinerary->price_children }} <br>
                                         <button type="button" class="btn btn-primary" onclick="location.href='{{route('itinerary.show', $selectedItinerary->id)}}'">View</button>
                                         @if(Auth::guest())
                                             <button type="button" class="btn btn-primary" onclick="location.href='{{url('/login')}}'">Book Now</button>

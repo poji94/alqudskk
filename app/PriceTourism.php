@@ -12,4 +12,9 @@ class PriceTourism extends Model
     public function packageTours() {
         return $this->morphedByMany('App\PackageTour', 'priceable');
     }
+
+    //many-to-many polymorphic relationship pricetourism <-> itinerary through priceable pivot table
+    public function itineraries() {
+        return $this->morphedByMany('App\Itinerary', 'priceable');
+    }
 }

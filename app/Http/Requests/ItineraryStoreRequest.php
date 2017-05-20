@@ -31,8 +31,11 @@ class ItineraryStoreRequest extends Request
             'name' => 'required | min:5 | max:50 | unique:itineraries',
             'description' => 'required | max:5000',
             'duration' => 'required',
-            'price_children' => 'required | integer | min:1',
-            'price_adult' => 'required | integer | min:1',
+            'personal' => 'required | integer | min:1',
+            'private_group_children' => 'required | integer | min:1',
+            'private_group_adult' => 'required | integer | min:1',
+            'public_group_children' => 'required | integer | min:1',
+            'public_group_adult' => 'required | integer | min:1',
             'media_id' => 'array',
         ];
 

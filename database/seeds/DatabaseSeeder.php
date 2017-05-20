@@ -16,8 +16,8 @@ class DatabaseSeeder extends Seeder
          $this->call(CurrenciesTableSeeder::class);
          $this->call(ReservationTypesTableSeeder::class);
          $this->call(ReservationStatusesTableSeeder::class);
-//         $this->call(TypeVacationsTableSeeder::class);
-//         $this->call(PlaceTourismsTableSeeder::class);
+         $this->call(TypeVacationsTableSeeder::class);
+         $this->call(PlaceTourismsTableSeeder::class);
 //         $this->call(ItineraryTableSeeder::class);
 //         $this->call(TourismablesTableSeeder::class);
 //         $this->call(TypeablesTableSeeder::class);

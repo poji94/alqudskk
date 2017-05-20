@@ -111,6 +111,15 @@ class PackageTourController extends Controller
         $packagetour->itineraries()->sync($input['itinerary_id']);
         $packagetour->places()->detach();
         $packagetour->types()->detach();
+        if($medias = $request->file('media_id')) {
+            $i = 0;
+            foreach($medias as $media) {
+                $name = 'photo_' . $packagetour->name . '_' . $i . '.' . $media->getClientOriginalExtension();
+                $media->move('media', $name);
+                $packagetour->medias()->create(['path' => $name]);
+                $i++;
+            }
+        }
         foreach($packagetour->itineraries as $itinerary) {
             foreach($itinerary->places as $place) {
                 $packagetour->places()->save($place);
@@ -217,6 +226,20 @@ class PackageTourController extends Controller
         $packagetour->itineraries()->sync($input['itinerary_id']);
         $packagetour->places()->detach();
         $packagetour->types()->detach();
+
+        foreach($packagetour->medias as $media) {
+            unlink(public_path(). $media->path);
+        }
+        $packagetour->medias()->delete();
+        if($files = $request->file('media_id')) {
+            $i = 0;
+            foreach($files as $file) {
+                $name = 'photo_' . $packagetour->name . '_' . $i . '.' . $file->getClientOriginalExtension();
+                $file->move('media', $name);
+                $packagetour->medias()->create(['path' => $name]);
+                $i++;
+            }
+        }
         foreach($packagetour->itineraries as $itinerary) {
             foreach($itinerary->places as $place) {
                 $packagetour->places()->save($place);
@@ -242,6 +265,10 @@ class PackageTourController extends Controller
         $packagetour->prices()->delete();
         $packagetour->prices()->detach();
         $packagetour->itineraries()->detach();
+        foreach($packagetour->medias as $media) {
+            unlink(public_path(). $media->path);
+        }
+        $packagetour->medias()->delete();
         $packagetour->places()->detach();
         $packagetour->types()->detach();
         return redirect(route('packagetour.index'));

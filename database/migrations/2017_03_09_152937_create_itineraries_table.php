@@ -17,8 +17,6 @@ class CreateItinerariesTable extends Migration
             $table->string('name')->unique();
             $table->text('description');
             $table->string('duration');
-            $table->integer('price_children');
-            $table->integer('price_adult');
             $table->timestamps();
         });
     }

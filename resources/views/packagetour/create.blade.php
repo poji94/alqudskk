@@ -100,32 +100,63 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="row form-group" id="itinerary-form">
-                            {!! Form::label('itinerary_id', 'Itinerary', ['class'=>'col-sm-2']) !!}
-                            {!! Form::select('itinerary_id[]', $itineraries, null, ['class'=>'col-sm-8', 'multiple'=>'multiple']) !!}
-                            <input type="button" class="btn btn-danger" id="remove-itinerary" value="Remove">
+                        <div>
+                            {!! Form::label('media_id', 'Media') !!}
+                            <div class="form-group" id="media-form">
+                                {!! Form::file('media_id_reference', array('multiple'=>'multiple', 'accept'=>'image/*', 'class'=>'btn btn-primary col-sm-10')) !!}
+                                <input type="button" class="btn btn-danger" id="remove-media" value="Remove" >
+                            </div>
                         </div>
                         <p>
-                            <input type="button" class="btn btn-primary" id="add-itinerary" value="Add Activity">
+                            <input type="button" class="btn btn-primary" id="add-media" value="Add Photo">
                             <script type="text/javascript">
                                 $(document).ready(function () {
-                                    $("#itinerary-form").hide();
-                                    var itineraryFormIndex = 0;
-                                    $("#add-itinerary").click(function(){
-                                        itineraryFormIndex++;
-                                        $(this).parent().before($("#itinerary-form").clone().attr("id", "itinerary-form" + itineraryFormIndex));
-                                        $("#itinerary-form" + itineraryFormIndex +" :input").each(function () {
-                                            $(this).attr("name", $(this).attr("name") + itineraryFormIndex);
-                                            $(this).attr("id", $(this).attr("id") + itineraryFormIndex);
+                                    $("#media-form").hide();
+                                    var mediaFormIndex = 0;
+                                    $("#add-media").click(function(){
+                                        mediaFormIndex++;
+                                        $(this).parent().before($("#media-form").clone().attr("id", "media-form" + mediaFormIndex));
+                                        $("#media-form" + mediaFormIndex +" :input").each(function () {
+                                            $(this).attr("name", "media_id[]");
+                                            $(this).attr("id", $(this).attr("id") + mediaFormIndex);
                                         });
-                                        $("#remove-itinerary" + itineraryFormIndex).click(function () {
+                                        $("#remove-media" + mediaFormIndex).click(function () {
                                             $(this).closest("div").remove();
                                         });
-                                        $("#itinerary-form" + itineraryFormIndex).slideDown();
+                                        $("#media-form" + mediaFormIndex).slideDown();
                                     });
                                 });
                             </script>
                         </p>
+                        <div>
+                            {!! Form::label('activity_label', 'Activity associated with the tour package') !!}
+                            <div class="row form-group" id="itinerary-form">
+                                {!! Form::label('itinerary_id', 'Activity ', ['class'=>'col-sm-2']) !!}
+                                {!! Form::select('itinerary_id[]', $itineraries, null, ['class'=>'col-sm-8', 'multiple'=>'multiple']) !!}
+                                <input type="button" class="btn btn-danger" id="remove-itinerary" value="Remove">
+                            </div>
+                            <p>
+                                <input type="button" class="btn btn-primary" id="add-itinerary" value="Add Activity">
+                                <script type="text/javascript">
+                                    $(document).ready(function () {
+                                        $("#itinerary-form").hide();
+                                        var itineraryFormIndex = 0;
+                                        $("#add-itinerary").click(function(){
+                                            itineraryFormIndex++;
+                                            $(this).parent().before($("#itinerary-form").clone().attr("id", "itinerary-form" + itineraryFormIndex));
+                                            $("#itinerary-form" + itineraryFormIndex +" :input").each(function () {
+                                                $(this).attr("name", $(this).attr("name") + itineraryFormIndex);
+                                                $(this).attr("id", $(this).attr("id") + itineraryFormIndex);
+                                            });
+                                            $("#remove-itinerary" + itineraryFormIndex).click(function () {
+                                                $(this).closest("div").remove();
+                                            });
+                                            $("#itinerary-form" + itineraryFormIndex).slideDown();
+                                        });
+                                    });
+                                </script>
+                            </p>
+
                         <div class="form-group">
                             {!! Form::submit('Create Tour Package', ['class'=>'btn btn-primary']) !!}
                             <button type="button" class="btn btn-primary" onclick="location.href='{{route('packagetour.index')}}'">Cancel</button>

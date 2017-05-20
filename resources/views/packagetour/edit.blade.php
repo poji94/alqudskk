@@ -12,6 +12,54 @@
                     <div class="panel-heading">View Tour Package</div>
 
                     <div class="panel-body">
+                        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                            <!-- Indicators -->
+                            <ol class="carousel-indicators">
+                                @php
+                                    $i = 0;
+                                @endphp
+                                @foreach($packageTour->medias as $media)
+                                    @if($i == 0)
+                                        <li data-target="#myCarousel" data-slide-to="{{$i}}" class="active"></li>
+                                    @else
+                                        <li data-target="#myCarousel" data-slide-to="{{$i}}"></li>
+                                    @endif
+                                    @php
+                                        $i++;
+                                    @endphp
+                                @endforeach
+                            </ol>
+
+                            <!-- Wrapper for slides -->
+                            <div class="carousel-inner" role="listbox">
+                                @php
+                                    $i = 0;
+                                @endphp
+                                @foreach($packageTour->medias as $media)
+                                    @if($i == 0)
+                                        <div class="item active">
+                                            <img src="{{ $media->path }}" alt="" width="460" height="345">
+                                        </div>
+                                    @else
+                                        <div class="item">
+                                            <img src="{{ $media->path }}" alt="" width="460" height="345">
+                                        </div>
+                                    @endif
+                                    @php
+                                        $i++;
+                                    @endphp
+                                @endforeach
+                            </div>
+                            <!-- Left and right controls -->
+                            <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
                         {!! Form::model($packageTour, ['method'=>'PATCH', 'action'=> ['PackageTourController@update', $packageTour->id], 'files' => true]) !!}
                             <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                                 {!! Form::label('name', 'Name') !!}
@@ -102,16 +150,46 @@
                                 </div>
                             </div>
                         @endforeach
+                        <div>
+                            {!! Form::label('media_id', 'Media') !!}
+                            <div class="form-group" id="media-form">
+                                {!! Form::file('media_id_reference', array('multiple'=>'multiple', 'accept'=>'image/*', 'class'=>'btn btn-primary col-sm-10')) !!}
+                                <input type="button" class="btn btn-danger" id="remove-media" value="Remove" >
+                            </div>
+                        </div>
+                        <p>
+                            <input type="button" class="btn btn-primary" id="add-media" value="Add Photo">
+                            <script type="text/javascript">
+                                $(document).ready(function () {
+                                    $("#media-form").hide();
+                                    var mediaFormIndex = 0;
+                                    $("#add-media").click(function(){
+                                        mediaFormIndex++;
+                                        $(this).parent().before($("#media-form").clone().attr("id", "media-form" + mediaFormIndex));
+                                        $("#media-form" + mediaFormIndex +" :input").each(function () {
+                                            $(this).attr("name", "media_id[]");
+                                            $(this).attr("id", $(this).attr("id") + mediaFormIndex);
+                                        });
+                                        $("#remove-media" + mediaFormIndex).click(function () {
+                                            $(this).closest("div").remove();
+                                        });
+                                        $("#media-form" + mediaFormIndex).slideDown();
+                                    });
+                                });
+                            </script>
+                        </p>
+                        <div>
+                            {!! Form::label('activity_label', 'Activity associated with the tour package') !!}
                             <div class="row form-group" id="itinerary-form">
-                                {!! Form::label('itinerary_id', 'Itinerary', ['class'=>'col-sm-2']) !!}
+                                {!! Form::label('itinerary_id', 'Activity ', ['class'=>'col-sm-2']) !!}
                                 {!! Form::select('itinerary_id[]', $itineraries, null, ['class'=>'col-sm-8', 'multiple'=>'multiple']) !!}
-                                <input type="button" class="col-sm-2 btn btn-danger" id="remove-itinerary" value="Remove">
+                                <input type="button" class="btn btn-danger" id="remove-itinerary" value="Remove">
                             </div>
                             @foreach($packageTour->itineraries as $itinerary)
                                 <div class="row form-group" id="itinerary-form{{$i}}">
-                                    {!! Form::label('itinerary_id', 'Itinerary', ['class'=>'col-sm-2']) !!}
-                                    {!! Form::select('itinerary_id[]', $itineraries, $itinerary->id, ['class'=>'col-sm-4', 'multiple'=>'multiple']) !!}
-                                    <input type="button" class="col-sm-2 btn btn-danger" id="remove-itinerary{{$i}}" value="Remove">
+                                    {!! Form::label('itinerary_id', 'Activity ', ['class'=>'col-sm-2']) !!}
+                                    {!! Form::select('itinerary_id[]', $itineraries, $itinerary->id, ['class'=>'col-sm-8', 'multiple'=>'multiple']) !!}
+                                    <input type="button" class="btn btn-danger" id="remove-itinerary{{$i}}" value="Remove">
                                     <script type="text/javascript">
                                         $(document).ready(function () {
                                             $("#remove-itinerary" + "<?php echo $i ?>").click(function () {
@@ -145,6 +223,7 @@
                                     });
                                 </script>
                             </p>
+                        </div>
                             <div class="form-group">
                                 {!! Form::submit('Edit Tour Package', ['class'=>'btn btn-primary']) !!}
                             </div>

@@ -24,6 +24,11 @@ class PackageTour extends Model
         return $this->morphToMany('App\TypeVacation', 'typeable');
     }
 
+    //polymorhpic relationship packagetour <-> media
+    public function medias() {
+        return $this->morphMany('App\Media', 'imageable');
+    }
+
     //many-to-many polymorphic relationship packagetour <-> pricetourism through priceable pivot table
     public function prices() {
         return $this->morphToMany('App\PriceTourism', 'priceable');

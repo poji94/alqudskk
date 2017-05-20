@@ -7,6 +7,7 @@ use App\Http\Requests\ItineraryUpdateRequest;
 use App\Itinerary;
 use App\PlaceTourism;
 use App\TypeVacation;
+use App\Currency;
 
 use App\Http\Requests;
 use Illuminate\Http\Request;
@@ -111,10 +112,9 @@ class ItineraryController extends Controller
         //creating itinerary object, tagging placetourism and typevacation and also relate itineraries with pictures
         $input = $request -> all();
         $itinerary = Itinerary::create($input);
+        $itinerary->prices()->create($input);
         $placetourism = PlaceTourism::findOrFail($input['place_tourism']);
         $typevacation = TypeVacation::findOrFail($input['type_vacation']);
-        $itinerary->places()->save($placetourism);
-        $itinerary->types()->save($typevacation);
         if($medias = $request->file('media_id')) {
             $i = 0;
             foreach($medias as $media) {
@@ -124,6 +124,8 @@ class ItineraryController extends Controller
                 $i++;
             }
         }
+        $itinerary->places()->save($placetourism);
+        $itinerary->types()->save($typevacation);
         return redirect(route('itinerary.index'));
     }
 
@@ -133,8 +135,16 @@ class ItineraryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
+        $currencies = Currency::lists('name', 'id')->all();
+        if($request->session()->has('currencyCode')) {
+            $currency = Currency::whereCode($request->session()->get('currencyCode'))->first();
+        }
+        else {
+            $currency = Currency::whereCode(currency()->config('default'))->first();
+        }
+
         $itinerary = Itinerary::findOrFail($id);
         foreach($itinerary->types as $type) {
             if($type->pivot->type_vacation_id == $itinerary->types->first()->id) {
@@ -146,9 +156,34 @@ class ItineraryController extends Controller
                 $selectedPlaceItineraries = $place->itineraries;
             }
         }
-        return view('itinerary.show', compact('itinerary', 'selectedTypeItineraries', 'selectedPlaceItineraries'));
+        return view('itinerary.show', compact('currency', 'currencies', 'itinerary', 'selectedTypeItineraries', 'selectedPlaceItineraries'));
     }
 
+    public function changeCurrency(Request $request)
+    {
+        $input = $request->all();
+        $currencies = Currency::lists('name', 'id')->all();
+        $itinerary = Itinerary::findOrFail($input['id']);
+        if ($input['currency_drop_down'] == currency()->id) {
+            $currency = Currency::whereCode(currency()->config('default'))->first();
+        } else {
+            $currency = Currency::findOrFail($input['currency_drop_down']);
+        }
+        $request->session()->put('currencyCode', $currency->code);
+
+        foreach($itinerary->types as $type) {
+            if($type->pivot->type_vacation_id == $itinerary->types->first()->id) {
+                $selectedTypeItineraries = $type->itineraries;
+            }
+        }
+        foreach($itinerary->places as $place) {
+            if($place->pivot->place_tourism_id == $itinerary->places->first()->id) {
+                $selectedPlaceItineraries = $place->itineraries;
+            }
+        }
+        return view('itinerary.show', compact('currencies', 'currency', 'itinerary', 'selectedTypeItineraries', 'selectedPlaceItineraries'));
+    }
+    
     /**
      * Show the form for editing the specified resource.
      *
@@ -190,6 +225,9 @@ class ItineraryController extends Controller
 
         $placetourism = PlaceTourism::findOrFail($input['place_tourism']);
         $typevacation = TypeVacation::findOrFail($input['type_vacation']);
+        $itinerary->prices()->delete();
+        $itinerary->prices()->detach();
+        $itinerary->prices()->create($input);
         $itinerary->places()->detach();
         $itinerary->types()->detach();
         $itinerary->places()->save($placetourism);
@@ -224,6 +262,8 @@ class ItineraryController extends Controller
         //delete everything relate to the particular object of itineraries
         $itinerary = Itinerary::findOrFail($id);
         $itinerary->delete();
+        $itinerary->prices()->delete();
+        $itinerary->prices()->detach();
         $itinerary->places()->detach();
         $itinerary->types()->detach();
         foreach($itinerary->medias as $media) {

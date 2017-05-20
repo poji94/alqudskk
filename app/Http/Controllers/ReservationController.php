@@ -414,7 +414,7 @@ class ReservationController extends Controller
         }
 //        $reservationPrice = preg_replace("/[^0-9,.]/", "",currency($reservation->price, currency()->config('default'), $currency['code']));
         $reservationPrice = preg_replace("/[^0-9]/", "",currency($reservation->price, currency()->config('default'), $currency['code']));
-        return $this->chargeCustomer($reservation->id, (int)$reservationPrice, $reservation->reserveUser->name, $request->session()->get('currencyCode'), $request->input('stripeToken'));
+        return $this->chargeCustomer($reservation->id, (int)$reservationPrice, $reservation->reserveUser->name, $currency['code'], $request->input('stripeToken'));
     }
 
     public function chargeCustomer($reservationId, $reservationPrice, $reservationUserName, $currencyCode, $token)

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('head')
-    View Vacation
+    {{$itinerary->name}}
 @endsection
 
 @section('styles')
@@ -75,8 +75,49 @@
                                 Name: {{ $itinerary ->name }} <br><br>
                                 Description: {{$itinerary->description}} <br><br>
                                 Duration: {{ $itinerary->duration }} <br><br>
-                                Price per adult: RM {{ $itinerary->price_adult }} <br><br>
-                                Price per children: RM {{ $itinerary->price_children }} <br><br>
+                                Price :<br>
+                                {!! Form::label('currency_drop_down', 'Currency') !!}
+                                <div class="row form-group">
+                                    {!! Form::open(['method'=>'GET', 'action'=> 'ItineraryController@changeCurrency']) !!}
+                                    <div class="col-sm-10">
+                                        {!! Form::select('currency_drop_down', [''=>'Choose Options'] + $currencies, $currency['id'], ['id'=>'currency_drop_down', 'class'=>'form-control']) !!}
+                                    </div>
+                                    <div class="col-sm-2">
+                                        {!! Form::hidden('id', $itinerary->id) !!}
+                                        {!! Form::submit('Change', ['class'=>'btn btn-primary']) !!}
+                                    </div>
+                                    {!! Form::close() !!}
+                                </div>
+                                <div class="responsive-table">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th>Category</th>
+                                            <th>Adult</th>
+                                            <th>Child</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($itinerary->prices as $price)
+                                            <tr>
+                                                <td>Personal</td>
+                                                <td>{{currency($price->personal, 'MYR', $currency['code'])}}</td>
+                                                <td>-</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Private Group</td>
+                                                <td>{{currency($price->private_group_adult, 'MYR', $currency['code'])}}</td>
+                                                <td>{{currency($price->private_group_children, 'MYR', $currency['code'])}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Public Group</td>
+                                                <td>{{currency($price->public_group_adult, 'MYR', $currency['code'])}}</td>
+                                                <td>{{currency($price->public_group_children, 'MYR', $currency['code'])}}</td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                                 @if(Auth::guest())
                                     <button type="button" class="btn btn-primary" onclick="location.href='{{url('/login')}}'">Book Now</button>
                                 @else

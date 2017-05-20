@@ -32,6 +32,16 @@ class PackageTourUpdateRequest extends Request
             'private_group_adult' => 'required | integer | min:1',
             'public_group_children' => 'required | integer | min:1',
             'public_group_adult' => 'required | integer | min:1',
+            'media_id' => 'array',
         ];
+
+        //each image must validated as image file before accepted
+        $medias = $this->file('media_id');
+        if(!empty($medias)) {
+            foreach ($medias as $key=>$media) {
+                $rules[ sprintf('media_id.%d', $key)] = 'image';
+            }
+        }
+        return $rules;
     }
 }

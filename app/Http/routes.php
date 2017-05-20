@@ -26,6 +26,7 @@ Route::resource('/user', 'UserController');
 Route::resource('/itinerary', 'ItineraryController');
 Route::get('/itinerarySelection', 'ItineraryController@getSelection')->name('itinerary.getSelection');
 Route::get('/itinerarySelection/filter', 'ItineraryController@filterSelection')->name('itinerary.filterSelection');
+Route::get('/itinerarySelection/changeCurrency', 'ItineraryController@changeCurrency')->name('itinerary.changeCurrency');
 
 Route::resource('/packagetour', 'PackageTourController');
 Route::get('/packageTourSelection', 'PackageTourController@getSelection')->name('packagetour.getSelection');

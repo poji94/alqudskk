@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('head')
-    Itineraries
+    Tour Packages
 @endsection
 
 @section('content')
@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col-sm-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Itinerary selection</div>
+                    <div class="panel-heading">Tour package selection</div>
 
                     <div class="panel-body">
                         Please choose your selection
@@ -45,17 +45,15 @@
                                     @php
                                         $i = 0;
                                     @endphp
-                                    @foreach($selectedPackageTour->itineraries as $itinerary)
-                                        @foreach($itinerary->medias as $media)
-                                            @if($i == 0)
-                                                <div class="col-sm-4">
-                                                    <img src="{{$media->path}}" class="img-responsive img-rounded" alt="" style="height: 150px; width: 230px;">
-                                                </div>
-                                            @endif
-                                            @php
-                                                $i++;
-                                            @endphp
-                                        @endforeach
+                                    @foreach($selectedPackageTour->medias as $media)
+                                        @if($i == 0)
+                                            <div class="col-sm-4">
+                                                <img src="{{$media->path}}" class="img-responsive img-rounded" alt="" style="height: 150px; width: 230px;">
+                                            </div>
+                                        @endif
+                                        @php
+                                            $i++;
+                                        @endphp
                                     @endforeach
                                     <div class="col-sm-6">
                                         Name: {{ $selectedPackageTour->name }} <br>
