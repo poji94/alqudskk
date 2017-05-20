@@ -12,16 +12,16 @@
                     <div class="panel-heading">View Reservation</div>
 
                     <div class="panel-body">
-                        {!! Form::model($reservation, ['method'=>'POST', 'action'=> ['ReservationController@updatePackageTour', $reservation->id], 'files' => true]) !!}
+                        {!! Form::model($reservation, ['method'=>'POST', 'action'=> ['ReservationController@updateItinerary', $reservation->id], 'files' => true]) !!}
                         <div class="form-group{{ $errors->has('reservation_type_id') ? ' has-error' : '' }}" style="display: inline-block">
-                            {!! Form::hidden('reservation_type_id', 2) !!}
+                            {!! Form::hidden('reservation_type_id', 1) !!}
                             {!! Form::label('reservation_type_id_label', 'Type of Reservation:  ') !!}
                             Tour package
                         </div>
                         <div class="form-group" id="package-tour-form">
                             {!! Form::label('packagetour_id', 'Tour Package') !!}
-                            @foreach($reservation->packageTour as $packagetour)
-                                {!! Form::select('packagetour_id', [''=>'Choose Options'] + $packagetours, $packagetour->id, ['class'=>'form-control']) !!}
+                            @foreach($reservation->itineraries as $itinerary)
+                                {!! Form::select('packagetour_id', [''=>'Choose Options'] + $itineraries, $itinerary->id, ['class'=>'form-control']) !!}
                                 {{--@foreach($collectionReservedPackageTourArray as $reservedPackageTour)--}}
                                 {{--{!! Form::select('packagetour_id', [''=>'Choose Options'] + $packagetours, $packageTour->id, ['class'=>'form-control']) !!}--}}
                                 {{--@endforeach--}}

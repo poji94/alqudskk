@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('head')
-    Itineraries
+    Activities
 @endsection
 
 @section('content')
