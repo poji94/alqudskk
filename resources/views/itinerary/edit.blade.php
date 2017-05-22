@@ -78,6 +78,52 @@
                                     </span>
                             @endif
                         </div>
+                        <div>
+                            {!! Form::label('pickup_label', 'Pick up') !!}
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 form-group{{ $errors->has('pickup_place') ? ' has-error' : '' }}">
+                                {!! Form::label('pickup_place_label', 'Place') !!}
+                                {!! Form::text('pickup_place', null, ['class'=>'form-control']) !!}
+                                @if ($errors->has('pickup_place'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('pickup_place') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                            <div class="col-sm-6 form-group{{ $errors->has('pickup_time') ? ' has-error' : '' }}">
+                                {!! Form::label('pickup_time_label', 'Time') !!}
+                                {!! Form::time('pickup_time', null, ['class'=>'form-control']) !!}
+                                @if ($errors->has('pickup_time'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('pickup_time') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div>
+                            {!! Form::label('dropoff_label', 'Drop off') !!}
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 form-group{{ $errors->has('dropoff_place') ? ' has-error' : '' }}">
+                                {!! Form::label('dropoff_place_label', 'Place') !!}
+                                {!! Form::text('dropoff_place', null, ['class'=>'form-control']) !!}
+                                @if ($errors->has('dropoff_place'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('dropoff_place') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                            <div class="col-sm-6 form-group{{ $errors->has('dropoff_time') ? ' has-error' : '' }}">
+                                {!! Form::label('dropoff_time_label', 'Time') !!}
+                                {!! Form::time('dropoff_time', null, ['class'=>'form-control']) !!}
+                                @if ($errors->has('dropoff_time'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('dropoff_time') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
                         <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
                             {!! Form::label('description', 'Description') !!}
                             {!! Form::textarea('description', null, ['class'=>'form-control', 'rows'=>'4']) !!}

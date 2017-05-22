@@ -18,6 +18,14 @@
                             {!! Form::label('reservation_type_id_label', 'Type of Reservation:  ') !!}
                             Tour Package
                         </div>
+                        <div class="form-group">
+                            {!! Form::label('user_name', 'User Name: ') !!}
+                            {{$reservation->reserveUser->name}}<br>
+                            {!! Form::label('user_email', 'Email: ') !!}
+                            {{$reservation->reserveUser->email}}<br>
+                            {!! Form::label('user_email', 'Phone Number: ') !!}
+                            {{$reservation->reserveUser->phone_number}}
+                        </div>
                         <div class="form-group{{ $errors->has('reservation_status_id') ? ' has-error' : '' }}" style="display: block">
                             {!! Form::label('reservation_status_label', 'Status') !!}
                             {!! Form::select('reservation_status_id', [''=>'Choose Options'] + $reservationStatusIds, $reservation->reserveStatus->id, ['id'=>'reservation_status_id', 'class'=>'form-control']) !!}

@@ -15,6 +15,10 @@ class CreateItinerariesTable extends Migration
         Schema::create('itineraries', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->unique();
+            $table->string('pickup_place');
+            $table->time('pickup_time');
+            $table->string('dropoff_place');
+            $table->time('dropoff_time');
             $table->text('description');
             $table->string('duration');
             $table->timestamps();

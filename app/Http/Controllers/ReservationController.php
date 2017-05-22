@@ -14,8 +14,10 @@ use App\Reservation;
 use App\Currency;
 use App\ReservationStatus;
 use App\ReservationType;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 use Redis;
 
 use App\Http\Requests;
@@ -83,6 +85,21 @@ class ReservationController extends Controller
         return view('reservation.indexUser', compact('reservations', 'currency', 'reservationStatusIds'));
     }
 
+    public function searchUserReservation(Request $request)
+    {
+        $input = $request->all();
+        $userSearch = User::where('name', 'LIKE', '%' . $input['userSearch'] . '%')->first();
+        $reservations = Reservation::where('user_id', $userSearch['id'])->get();
+        $reservationStatusIds = ReservationStatus::lists('name', 'id')->all();
+        if(session()->has('currencyCode')) {
+            $currency = Currency::whereCode(session()->get('currencyCode'))->first();
+        }
+        else {
+            $currency = Currency::whereCode(currency()->config('default'))->first();
+        }
+        return view('reservation.index', compact('reservations', 'reservationStatusIds', 'currency'));
+    }
+
     public function createPackageTour(Request $request, $id)
     {
         $i = 0;
@@ -108,25 +125,36 @@ class ReservationController extends Controller
 
     public function createItinerary(Request $request, $id)
     {
-        $i = 0;
-        $reservedItinerary = Itinerary::findOrFail($id);
-//        $collectionReservedPackageTourArray = [];
-//        $collectionReservedPackageTourColl = collect($reservedPackageTour);
-//        array_push($collectionReservedPackageTourArray, $collectionReservedPackageTourColl);
-//        if($request->session()->has('collectionReservedPackageTour')) {
-
-//            $sessionReservedPackageTour = $request->session()->get('collectionReservedPackageTour');
-//            array_push($collectionReservedPackageTourArray, $sessionReservedPackageTour);
-//            $collectionReservedPackageTourArray->push($sessionReservedPackageTour);//
-//            $collectionReservedPackageTour->merge($sessionReservedPackageTour);
-//        }
-        $request->session()->put('collectionReservedPackageTour', $reservedItinerary);
+        $i = 1;
+        $reservedItineraries = [];
+        $request->session()->push('collectionReservedItineraries', $id);
+        $sessionItineraries = session()->get('collectionReservedItineraries');
+//        session()->forget('collectionReservedItineraries');
+        foreach ($sessionItineraries as $sessionItinerary) {
+            $reservedItineraries[$i] = Itinerary::where('id', $sessionItinerary)->first();
+            $i++;
+        }
         $itineraries = Itinerary::lists('name', 'id')->all();
-//        dd($reservedPackageTour->prices);
-//         dd($collectionReservedPackageTourArray);
-//        return $request->session()->get('collectionReservedPackageTour');
-//        return $request->session()->forget('collectionReservedPackageTour');
-        return view('reservation.createItinerary', compact('reservation', 'reservedItinerary', 'itineraries', 'i'));
+        return view('reservation.createItinerary', compact('reservedItineraries', 'itineraries', 'sessionItineraries'));
+    }
+
+    public function removeItineraryFromSession($id)
+    {
+        $i = 1;
+        $reservedItineraries = [];
+        $sessionItineraries = session()->pull('collectionReservedItineraries');
+        $id--;
+        unset($sessionItineraries[$id]);
+        if($sessionItineraries != []) {
+            foreach ($sessionItineraries as $sessionItinerary) {
+                $reservedItineraries[$i] = Itinerary::where('id', $sessionItinerary)->first();
+                $i++;
+            }
+            session()->push('collectionReservedItineraries', $sessionItineraries);
+        }
+
+        $itineraries = Itinerary::lists('name', 'id')->all();
+        return view('reservation.createItinerary', compact('reservedItineraries', 'itineraries', 'sessionItineraries'));
     }
 
     /**
@@ -297,7 +325,10 @@ class ReservationController extends Controller
             $currency = Currency::whereCode(currency()->config('default'))->first();
         }
         $packagetours = PackageTour::lists('name', 'id')->all();
-        return view('reservation.showPackageTour', compact('reservation','packagetours', 'currency'));
+        if($reservation->remarks_by != null) {
+            $remarksBy = User::findOrFail($reservation->remarks_by);
+        }
+        return view('reservation.showPackageTour', compact('reservation','packagetours', 'currency', 'remarksBy'));
     }
 
     public function showItinerary($id)
@@ -310,7 +341,10 @@ class ReservationController extends Controller
             $currency = Currency::whereCode(currency()->config('default'))->first();
         }
         $itineraries = Itinerary::lists('name', 'id')->all();
-        return view('reservation.showItinerary', compact('reservation', 'itineraries', 'currency'));
+        if($reservation->remarks_by != null) {
+            $remarksBy = User::findOrFail($reservation->remarks_by);
+        }
+        return view('reservation.showItinerary', compact('reservation', 'itineraries', 'currency', 'remarksBy'));
     }
 
     /**
@@ -526,7 +560,7 @@ class ReservationController extends Controller
         //this updates the particular reservation
         $input = $request -> all();
         $reservation = Reservation::findOrFail($id);
-        $reservation->update(['reservation_status_id'=>$input['reservation_status_id'], 'remarks'=>$input['remarks']]);
+        $reservation->update(['reservation_status_id'=>$input['reservation_status_id'], 'remarks'=>$input['remarks'], 'remarks_by'=>Auth::user()->id]);
         return redirect(route('reservation.index'));
     }
 

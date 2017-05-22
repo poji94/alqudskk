@@ -73,6 +73,29 @@
                             </div>
                             <div class="col-sm-6">
                                 Name: {{ $itinerary ->name }} <br><br>
+                                <div class="responsive-table">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th>Pick-up & drop-off</th>
+                                            <th>Place</th>
+                                            <th>Time</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>Pick-up</td>
+                                            <td>{{$itinerary->pickup_place}}</td>
+                                            <td>{{$itinerary->pickup_time}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Drop-off</td>
+                                            <td>{{$itinerary->dropoff_place}}</td>
+                                            <td>{{$itinerary->dropoff_time}}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                                 Description: {{$itinerary->description}} <br><br>
                                 Duration: {{ $itinerary->duration }} <br><br>
                                 Price :<br>
@@ -158,8 +181,6 @@
                                         <div class="col-sm-6">
                                             Name: {{ $selectedPlaceItinerary->name }} <br>
                                             Duration: {{ $selectedPlaceItinerary->duration }} <br>
-                                            Price per Adult: RM {{ $selectedPlaceItinerary->price_adult }} <br>
-                                            Price per Child: RM {{ $selectedPlaceItinerary->price_children }} <br>
                                             <button type="button" class="btn btn-primary" onclick="location.href='{{route('itinerary.show', $selectedPlaceItinerary->id)}}'">View</button>
                                             @if(Auth::guest())
                                                 <button type="button" class="btn btn-primary" onclick="location.href='{{url('/login')}}'">Book Now</button>
@@ -204,8 +225,6 @@
                                         <div class="col-sm-6">
                                             Name: {{ $selectedTypeItinerary->name }} <br>
                                             Duration: {{ $selectedTypeItinerary->duration }} <br>
-                                            Price per Adult: {{ $selectedTypeItinerary->price_adult }} <br>
-                                            Price per Child: {{ $selectedTypeItinerary->price_children }} <br>
                                             <button type="button" class="btn btn-primary" onclick="location.href='{{route('itinerary.show', $selectedTypeItinerary->id)}}'">View</button>
                                             @if(Auth::guest())
                                                 <button type="button" class="btn btn-primary" onclick="location.href='{{url('/login')}}'">Book Now</button>

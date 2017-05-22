@@ -19,7 +19,7 @@
                                     List of reservations
                                 @endif
                             </div>
-                            <div class="col-sm-4 col-sm-offset-4 form-group{{ $errors->has('reservation_status_id') ? ' has-error' : '' }}" style="display: inline-block;">
+                            <div class="col-sm-4 col-sm-offset-4 form-group" style="display: inline-block;">
                                 <div class="row">
                                     {!! Form::open(['method'=>'GET', 'action'=> 'ReservationController@filterReservationStatusUser']) !!}
                                         <div class="col-sm-8">

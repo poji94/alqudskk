@@ -19,15 +19,27 @@
                                     List of reservations
                                 @endif
                             </div>
-                            <div class="col-sm-4 col-sm-offset-4 form-group{{ $errors->has('reservation_status_id') ? ' has-error' : '' }}" style="display: inline-block;">
+                            <div class="col-sm-4 form-group" style="display: inline-block;">
                                 <div class="row">
                                     {!! Form::open(['method'=>'GET', 'action'=> 'ReservationController@filterReservationStatus']) !!}
-                                        <div class="col-sm-8">
-                                            {!! Form::select('reservation_status_id', [''=>'Filter Reservation'] + $reservationStatusIds, null, ['id'=>'reservation_status_id', 'class'=>'form-control']) !!}
-                                        </div>
-                                        <div class="col-sm-1">
-                                            {!! Form::submit('Change', ['class'=>'btn btn-primary']) !!}
-                                        </div>
+                                    <div class="col-sm-8">
+                                        {!! Form::select('reservation_status_id', [''=>'Filter Reservation'] + $reservationStatusIds, null, ['id'=>'reservation_status_id', 'class'=>'form-control']) !!}
+                                    </div>
+                                    <div class="col-sm-1">
+                                        {!! Form::submit('Change', ['class'=>'btn btn-primary']) !!}
+                                    </div>
+                                    {!! Form::close() !!}
+                                </div>
+                            </div>
+                            <div class="col-sm-4 form-group" style="display: inline-block;">
+                                <div class="row">
+                                    {!! Form::open(['method'=>'GET', 'action'=> 'ReservationController@searchUserReservation']) !!}
+                                    <div class="col-sm-8">
+                                        {!! Form::text('userSearch', null, ['class'=>'form-control', 'placeholder'=>'Search user\'s reservation']) !!}
+                                    </div>
+                                    <div class="col-sm-1">
+                                        {!! Form::submit('Search', ['class'=>'btn btn-primary']) !!}
+                                    </div>
                                     {!! Form::close() !!}
                                 </div>
                             </div>

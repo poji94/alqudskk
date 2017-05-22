@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Itinerary extends Model
 {
     //setting mass assignments
-    protected $fillable = ['name', 'description', 'duration'];
+    protected $fillable = ['name', 'description', 'duration', 'pickup_place', 'pickup_time', 'dropoff_place', 'dropoff_time'];
 
     //many-to-many relationship itinerary <-> packagetour through itinerary_packagetour pivot table
     public function packagesTours() {

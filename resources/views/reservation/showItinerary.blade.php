@@ -18,6 +18,14 @@
                             Tour package
                         </div>
                         <div class="form-group">
+                            {!! Form::label('user_name', 'User Name: ') !!}
+                            {{$reservation->reserveUser->name}}<br>
+                            {!! Form::label('user_email', 'Email: ') !!}
+                            {{$reservation->reserveUser->email}}<br>
+                            {!! Form::label('user_email', 'Phone Number: ') !!}
+                            {{$reservation->reserveUser->phone_number}}
+                        </div>
+                        <div class="form-group">
                             {!! Form::label('reservation_status_label', 'Status:  ') !!}
                             {{$reservation->reserveStatus->name}}
                         </div>
@@ -63,10 +71,21 @@
                             {!! Form::label('price', 'Price: ') !!}
                             {{currency($reservation->price, currency()->config('default'), $currency['code'])}}
                         </div>
-                        <div class="form group">
-                            {!! Form::label('remarks_label', 'Remark: ') !!}<br>
-                            {{ $reservation->remarks }}<br>
-                        </div>
+                        @if($reservation->reserveStatus->id != 2)
+                            <div class="form group">
+                                {!! Form::label('remarks_label', 'Remark: ') !!}<br>
+                                {{ $reservation->remarks }}<br>
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                {!! Form::label('reviewer_name', 'More info, please enquire: ') !!}<br>
+                                {{$remarksBy->name}}<br>
+                                {!! Form::label('user_email', 'Email: ') !!}
+                                {{$remarksBy->email}}<br>
+                                {!! Form::label('user_email', 'Phone Number: ') !!}
+                                {{$remarksBy->phone_number}}
+                            </div>
+                        @endif
                         <div class="form-group">
                             <button type="button" class="btn btn-primary" onclick="location.href='{{url()->previous()}}'">Back</button>
                         </div>

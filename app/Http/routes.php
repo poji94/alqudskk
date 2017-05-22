@@ -34,6 +34,7 @@ Route::get('/packageTourSelection/filter', 'PackageTourController@filterSelectio
 Route::get('/packageTourSelection/changeCurrency', 'PackageTourController@changeCurrency')->name('packagetour.changeCurrency');
 
 Route::resource('/reservation', 'ReservationController');
+Route::get('/searchUserReservation', 'ReservationController@searchUserReservation')->name('reservation.searchUserReservation');
 Route::get('/filterReservationStatus', 'ReservationController@filterReservationStatus')->name('reservation.filterReservationStatus');
 Route::get('/filterReservationStatusUser', 'ReservationController@filterReservationStatusUser')->name('reservation.filterReservationStatusUser');
 Route::get('/getUserReservation', 'ReservationController@getUserReservation')->name('reservation.getUserReservation');
@@ -41,6 +42,8 @@ Route::get('cancelReservation', 'ReservationController@cancelReservation')->name
 
 Route::post('/reservation/payWithStripe/{reservation}', 'ReservationController@payWithStripe')->name('reservation.payWithStripe');
 
+Route::get('/reservation/addMoreItinerary', 'ReservationController@addMoreItinerary')->name('reservation.addMoreItinerary');
+Route::get('/reservation/removeItineraryFromSession/{id}', 'ReservationController@removeItineraryFromSession')->name('reservation.removeItineraryFromSession');
 Route::get('/reservation/createItinerary/{itinerary}', 'ReservationController@createItinerary')->name('reservation.createItinerary');
 Route::post('/reservation/storedItinerary/', 'ReservationController@storeItinerary')->name('reservation.storeItinerary');
 Route::get('/reservation/editItinerary/{reservation}', 'ReservationController@editItinerary')->name('reservation.editItinerary');
