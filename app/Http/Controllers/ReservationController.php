@@ -100,27 +100,48 @@ class ReservationController extends Controller
         return view('reservation.index', compact('reservations', 'reservationStatusIds', 'currency'));
     }
 
+    public function cartPackageTour()
+    {
+        $i = 1;
+        $reservedPackageTours = [];
+        $sessionPackageTours = session()->get('collectionReservedPackageTours');
+        if($sessionPackageTours != null) {
+            foreach($sessionPackageTours as $sessionPackageTour) {
+                $reservedPackageTours[$i] = PackageTour::where('id', $sessionPackageTour)->first();
+                $i++;
+            }
+        }
+        $packagetours = PackageTour::lists('name', 'id')->all();
+        return view('reservation.createPackageTour', compact('reservedPackageTours', 'packagetours'));
+    }
+
+    public function cartItinerary()
+    {
+        $i = 1;
+        $reservedItineraries = [];
+        $sessionItineraries = session()->get('collectionReservedItineraries');
+        if($sessionItineraries != null) {
+            foreach ($sessionItineraries as $sessionItinerary) {
+                $reservedItineraries[$i] = Itinerary::where('id', $sessionItinerary)->first();
+                $i++;
+            }
+        }
+        $itineraries = Itinerary::lists('name', 'id')->all();
+        return view('reservation.createItinerary', compact('reservedItineraries', 'itineraries'));
+    }
+
     public function createPackageTour(Request $request, $id)
     {
-        $i = 0;
-        $reservedPackageTour = PackageTour::findOrFail($id);
-//        $collectionReservedPackageTourArray = [];
-//        $collectionReservedPackageTourColl = collect($reservedPackageTour);
-//        array_push($collectionReservedPackageTourArray, $collectionReservedPackageTourColl);
-//        if($request->session()->has('collectionReservedPackageTour')) {
-
-//            $sessionReservedPackageTour = $request->session()->get('collectionReservedPackageTour');
-//            array_push($collectionReservedPackageTourArray, $sessionReservedPackageTour);
-//            $collectionReservedPackageTourArray->push($sessionReservedPackageTour);//
-//            $collectionReservedPackageTour->merge($sessionReservedPackageTour);
-//        }
-        $request->session()->put('collectionReservedPackageTour', $reservedPackageTour);
+        $i = 1;
+        $reservedPackageTours = [];
+        $request->session()->push('collectionReservedPackageTours', $id);
+        $sessionPackageTours = session()->get('collectionReservedPackageTours');
+        foreach($sessionPackageTours as $sessionPackageTour) {
+            $reservedPackageTours[$i] = PackageTour::where('id', $sessionPackageTour)->first();
+            $i++;
+        }
         $packagetours = PackageTour::lists('name', 'id')->all();
-//        dd($reservedPackageTour->prices);
-//         dd($collectionReservedPackageTourArray);
-//        return $request->session()->get('collectionReservedPackageTour');
-//        return $request->session()->forget('collectionReservedPackageTour');
-        return view('reservation.createPackageTour', compact('reservation', 'reservedPackageTour', 'packagetours', 'i'));
+        return view('reservation.createPackageTour', compact('reservedPackageTours', 'packagetours'));
     }
 
     public function createItinerary(Request $request, $id)
@@ -129,13 +150,30 @@ class ReservationController extends Controller
         $reservedItineraries = [];
         $request->session()->push('collectionReservedItineraries', $id);
         $sessionItineraries = session()->get('collectionReservedItineraries');
-//        session()->forget('collectionReservedItineraries');
         foreach ($sessionItineraries as $sessionItinerary) {
             $reservedItineraries[$i] = Itinerary::where('id', $sessionItinerary)->first();
             $i++;
         }
         $itineraries = Itinerary::lists('name', 'id')->all();
-        return view('reservation.createItinerary', compact('reservedItineraries', 'itineraries', 'sessionItineraries'));
+        return view('reservation.createItinerary', compact('reservedItineraries', 'itineraries'));
+    }
+
+    public function removePackageTourFromSession($id)
+    {
+        $i = 1;
+        $reservedPackageTours = [];
+        $sessionPackageTours = session()->pull('collectionReservedPackageTours');
+        $id--;
+        unset($sessionPackageTours[$id]);
+        if($sessionPackageTours != []) {
+            foreach ($sessionPackageTours as $sessionPackageTour) {
+                $reservedPackageTours[$i] = PackageTour::where('id', $sessionPackageTour)->first();
+                $i++;
+            }
+            session()->push('collectionReservedPackageTours', $sessionPackageTours);
+        }
+        $packagetours = PackageTour::lists('name', 'id')->all();
+        return view('reservation.createPackageTour', compact('reservedPackageTours', 'packagetours'));
     }
 
     public function removeItineraryFromSession($id)
@@ -152,9 +190,8 @@ class ReservationController extends Controller
             }
             session()->push('collectionReservedItineraries', $sessionItineraries);
         }
-
         $itineraries = Itinerary::lists('name', 'id')->all();
-        return view('reservation.createItinerary', compact('reservedItineraries', 'itineraries', 'sessionItineraries'));
+        return view('reservation.createItinerary', compact('reservedItineraries', 'itineraries'));
     }
 
     /**
@@ -163,12 +200,7 @@ class ReservationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        //list the itineraries and packagetours
-        $itineraries = Itinerary::lists('name', 'id')->all();
-        $packagetours = PackageTour::lists('name', 'id')->all();
-        return view('reservation.create', compact('itineraries', 'packagetours'));
-    }
+    {}
 
     /**
      * Store a newly created resource in storage.
@@ -178,47 +210,7 @@ class ReservationController extends Controller
      */
 
     public function store(Request $request)
-    {
-        //create the reservation instance object
-        //initialize the sumPrice - for sum all the itineraries price
-        //automate the user_id, reservation_status_id to pending, associate the itineraries/packagetour, durations
-        //Note: reservation_type_id == 1 - Ground. Else (2) is full boat
-        $sumPrice = 0;
-        $input = $request -> all();
-        $reservation = Reservation::create($input);
-        $reservation->update(['user_id'=>Auth::user()->id, 'reservation_status_id'=>1]);
-        if($input['reservation_type_id'] == 1) {
-            $reservation->itineraries()->sync($input['itinerary_id']);
-            $itineraries = Itinerary::findOrFail($input['itinerary_id']);
-            $tempAddDays = 0;
-            foreach ($itineraries as $itinerary) {
-                $sumPrice += ($input['children_no'] * $itinerary->price_children) + ($input['adult_no'] * $itinerary->price_adult);
-
-                $duration = $itinerary->duration;
-                $trimDuration = $duration[0];
-                $tempAddDays += $trimDuration;
-            }
-            $reservationEnd = Carbon::parse($reservation->reservation_start)->addDays($tempAddDays)->toDateString();
-            $reservation->update(['price' => $sumPrice, 'reservation_end'=>$reservationEnd]);
-        }
-        else if($input['reservation_type_id'] == 2 ) {
-            $reservation->packageTour()->sync([$input['packagetour_id']]);                  //since package tour only receive string instead of array, must create an array bracket
-            $packagetour = PackageTour::findOrFail($input['packagetour_id']);
-
-            $sumPrice += ($input['children_no'] * $packagetour->price_children) + ($input['adult_no'] * $packagetour->price_adult);
-
-            $duration = $packagetour->duration;
-            $trimDuration = $duration[0];
-            $reservationEnd = Carbon::parse($reservation->reservation_start)->addDays($trimDuration)->toDateString();
-            $reservation->update(['price' => $sumPrice, 'reservation_end'=>$reservationEnd]);
-        }
-        if(Auth::user()->role_user_id == 3) {
-            return redirect(route('reservation.getUserReservation'));
-        }
-        else {
-            return redirect(route('reservation.index'));
-        }
-    }
+    {}
 
     public function storePackageTour(ReservationStorePackageTourRequest $request)
     {
@@ -227,31 +219,36 @@ class ReservationController extends Controller
         //automate the user_id, reservation_status_id to pending, associate the itineraries/packagetour, durations
         //Note: reservation_type_id == 1 - Ground(activity). Else 2-full boat(packagetour)
 
+        session()->forget('collectionReservedPackageTours');
         $sumPrice = 0;
+        $trimDuration = 0;
         $input = $request -> all();
         $reservation = Reservation::create($input);
         $reservation->update(['user_id'=>Auth::user()->id, 'reservation_status_id'=>1]);
-        $reservation->packageTour()->sync([$input['packagetour_id']]);                  //since package tour only receive string instead of array, must create an array bracket
-        $packagetour = PackageTour::findOrFail($input['packagetour_id']);
-
-        if($input['price_type'] == 'personal') {
-            foreach($packagetour->prices as $price) {
-                $sumPrice += $input['adult_no'] * $price->personal;
-            }
-        }
-        else if($input['price_type'] == 'private_group') {
-            foreach($packagetour->prices as $price) {
-                $sumPrice += ($input['adult_no'] * $price->private_group_adult) + ($input['children_no'] * $price->private_group_children);
-            }
-        }
-        else if($input['price_type'] == 'public_group') {
-            foreach($packagetour->prices as $price) {
-                $sumPrice += ($input['adult_no'] * $price->public_group_adult) + ($input['children_no'] * $price->public_group_children);
-            }
+        foreach($input['packagetour_id'] as $packagetour_id) {
+            $reservation->packageTours()->attach($packagetour_id);                  //since package tour only receive string instead of array, must create an array bracket
         }
 
-        $duration = $packagetour->duration;
-        $trimDuration = $duration[0];
+        foreach($reservation->packageTours as $packageTour) {
+            if($input['price_type'] == 'personal') {
+                foreach($packageTour->prices as $price) {
+                    $sumPrice += $input['adult_no'] * $price->personal;
+                }
+            }
+            else if($input['price_type'] == 'private_group') {
+                foreach($packageTour->prices as $price) {
+                    $sumPrice += ($input['adult_no'] * $price->private_group_adult) + ($input['children_no'] * $price->private_group_children);
+                }
+            }
+            else if($input['price_type'] == 'public_group') {
+                foreach($packageTour->prices as $price) {
+                    $sumPrice += ($input['adult_no'] * $price->public_group_adult) + ($input['children_no'] * $price->public_group_children);
+                }
+            }
+            $duration = $packageTour->duration;
+            $trimDuration += $duration[0];
+        }
+
         $reservationEnd = Carbon::parse($reservation->reservation_start)->addDays($trimDuration)->toDateString();
         $reservation->update(['price' => $sumPrice, 'reservation_end'=>$reservationEnd]);
         if(Auth::user()->role_user_id == 3) {
@@ -268,32 +265,34 @@ class ReservationController extends Controller
         //initialize the sumPrice - for sum all the itineraries price
         //automate the user_id, reservation_status_id to pending, associate the itineraries/packagetour, durations
         //Note: reservation_type_id == 1 - Ground(activity). Else 2-full boat(packagetour)
-
+        session()->forget('collectionReservedItineraries');
         $sumPrice = 0;
         $input = $request -> all();
         $reservation = Reservation::create($input);
         $reservation->update(['user_id'=>Auth::user()->id, 'reservation_status_id'=>1]);
-        $reservation->itineraries()->sync([$input['itinerary_id']]);                  //since package tour only receive string instead of array, must create an array bracket
-        $itinerary = Itinerary::findOrFail($input['itinerary_id']);
+        foreach($input['itinerary_id'] as $itinerary_id) {
+            $reservation->itineraries()->attach($itinerary_id);                  //since package tour only receive string instead of array, must create an array bracket
+        }
+        foreach($reservation->itineraries as $itinerary) {
+            if($input['price_type'] == 'personal') {
+                foreach($itinerary->prices as $price) {
+                    $sumPrice += $input['adult_no'] * $price->personal;
+                }
+            }
+            else if($input['price_type'] == 'private_group') {
+                foreach($itinerary->prices as $price) {
+                    $sumPrice += ($input['adult_no'] * $price->private_group_adult) + ($input['children_no'] * $price->private_group_children);
+                }
+            }
+            else if($input['price_type'] == 'public_group') {
+                foreach($itinerary->prices as $price) {
+                    $sumPrice += ($input['adult_no'] * $price->public_group_adult) + ($input['children_no'] * $price->public_group_children);
+                }
+            }
+        }
 
-        if($input['price_type'] == 'personal') {
-            foreach($itinerary->prices as $price) {
-                $sumPrice += $input['adult_no'] * $price->personal;
-            }
-        }
-        else if($input['price_type'] == 'private_group') {
-            foreach($itinerary->prices as $price) {
-                $sumPrice += ($input['adult_no'] * $price->private_group_adult) + ($input['children_no'] * $price->private_group_children);
-            }
-        }
-        else if($input['price_type'] == 'public_group') {
-            foreach($itinerary->prices as $price) {
-                $sumPrice += ($input['adult_no'] * $price->public_group_adult) + ($input['children_no'] * $price->public_group_children);
-            }
-        }
-
-        $duration = $itinerary->duration;
-        $trimDuration = $duration[0];
+        $duration = count($reservation->itineraries);
+        $trimDuration = $duration / 2 + ($duration % 2);
         $reservationEnd = Carbon::parse($reservation->reservation_start)->addDays($trimDuration)->toDateString();
         $reservation->update(['price' => $sumPrice, 'reservation_end'=>$reservationEnd]);
         if(Auth::user()->role_user_id == 3) {
@@ -311,9 +310,7 @@ class ReservationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
-    }
+    {}
 
     public function showPackageTour($id)
     {
@@ -354,15 +351,7 @@ class ReservationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
-        //call the particular reservation
-        //list out the itineraries and packagetours
-        $i = 0;
-        $reservation = Reservation::findOrFail($id);
-        $itineraries = Itinerary::lists('name', 'id')->all();
-        $packagetours = PackageTour::lists('name', 'id')->all();
-        return view('reservation.edit', compact('reservation', 'itineraries', 'packagetours', 'i'));
-    }
+    {}
 
     public function editPackageTour($id)
     {
@@ -426,75 +415,38 @@ class ReservationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        //pretty much similar to the store reservation
-        //this updates the particular reservation
-        $sumPrice = 0;
-        $input = $request -> all();
-        $reservation = Reservation::findOrFail($id);
-        $reservation->update($input);
-        if($input['reservation_type_id'] == 1) {                                                //if reservation type is ground
-            $reservation->itineraries()->sync($input['itinerary_id']);
-            $itineraries = Itinerary::findOrFail($input['itinerary_id']);
-            $tempAddDays = 0;
-            foreach ($itineraries as $itinerary) {
-                $sumPrice += ($input['children_no'] * $itinerary->price_children) + ($input['adult_no'] * $itinerary->price_adult);
-
-                $duration = $itinerary->duration;
-                $trimDuration = $duration[0];
-                $tempAddDays += $trimDuration;
-            }
-            $reservationEnd = Carbon::parse($reservation->reservation_start)->addDays($tempAddDays)->toDateString();
-            $reservation->update(['price' => $sumPrice, 'reservation_end'=>$reservationEnd]);
-        }
-        else if($input['reservation_type_id'] == 2 ) {
-            $reservation->packageTour()->sync([$input['packagetour_id']]);                  //since package tour only receive string instead of array, must create an array bracket
-            $packagetour = PackageTour::findOrFail($input['packagetour_id']);
-
-            $sumPrice += ($input['children_no'] * $packagetour->price_children) + ($input['adult_no'] * $packagetour->price_adult);
-
-            $duration = $packagetour->duration;
-            $trimDuration = $duration[0];
-            $reservationEnd = Carbon::parse($reservation->reservation_start)->addDays($trimDuration)->toDateString();
-            $reservation->update(['price' => $packagetour->$sumPrice, 'reservation_end'=>$reservationEnd]);
-        }
-        if(Auth::user()->role_user_id == 3) {
-            return redirect(route('reservation.getUserReservation'));
-        }
-        else {
-            return redirect(route('reservation.index'));
-        }
-    }
+    {}
 
     public function updatePackageTour(ReservationUpdatePackageTourRequest $request, $id)
     {
         //pretty much similar to the store reservation
         //this updates the particular reservation
         $sumPrice = 0;
+        $trimDuration = 0;
         $input = $request -> all();
         $reservation = Reservation::findOrFail($id);
         $reservation->update($input);
-        $reservation->packageTour()->sync([$input['packagetour_id']]);                  //since package tour only receive string instead of array, must create an array bracket
-        $packagetour = PackageTour::findOrFail($input['packagetour_id']);
 
         if($input['price_type'] == 'personal') {
-            foreach($packagetour->prices as $price) {
-                $sumPrice += $input['adult_no'] * $price->personal;
-            }
-        }
-        else if($input['price_type'] == 'private_group') {
-            foreach($packagetour->prices as $price) {
-                $sumPrice += ($input['adult_no'] * $price->private_group_adult) + ($input['children_no'] * $price->private_group_children);
-            }
-        }
-        else if($input['price_type'] == 'public_group') {
-            foreach($packagetour->prices as $price) {
-                $sumPrice += ($input['adult_no'] * $price->public_group_adult) + ($input['children_no'] * $price->public_group_children);
+            foreach ($reservation->packageTours as $packageTour) {
+                if ($input['price_type'] == 'personal') {
+                    foreach ($packageTour->prices as $price) {
+                        $sumPrice += $input['adult_no'] * $price->personal;
+                    }
+                } else if ($input['price_type'] == 'private_group') {
+                    foreach ($packageTour->prices as $price) {
+                        $sumPrice += ($input['adult_no'] * $price->private_group_adult) + ($input['children_no'] * $price->private_group_children);
+                    }
+                } else if ($input['price_type'] == 'public_group') {
+                    foreach ($packageTour->prices as $price) {
+                        $sumPrice += ($input['adult_no'] * $price->public_group_adult) + ($input['children_no'] * $price->public_group_children);
+                    }
+                }
+                $duration = $packageTour->duration;
+                $trimDuration += $duration[0];
             }
         }
 
-        $duration = $packagetour->duration;
-        $trimDuration = $duration[0];
         $reservationEnd = Carbon::parse($reservation->reservation_start)->addDays($trimDuration)->toDateString();
         $reservation->update(['price' => $sumPrice, 'reservation_end'=>$reservationEnd]);
         if(Auth::user()->role_user_id == 3) {
@@ -513,27 +465,27 @@ class ReservationController extends Controller
         $input = $request -> all();
         $reservation = Reservation::findOrFail($id);
         $reservation->update($input);
-        $reservation->itineraries()->sync([$input['itinerary_id']]);                  //since package tour only receive string instead of array, must create an array bracket
-        $itinerary = Itinerary::findOrFail($input['itinerary_id']);
 
-        if($input['price_type'] == 'personal') {
-            foreach($itinerary->prices as $price) {
-                $sumPrice += $input['adult_no'] * $price->personal;
+        foreach($reservation->itineraries as $itinerary) {
+            if($input['price_type'] == 'personal') {
+                foreach($itinerary->prices as $price) {
+                    $sumPrice += $input['adult_no'] * $price->personal;
+                }
             }
-        }
-        else if($input['price_type'] == 'private_group') {
-            foreach($itinerary->prices as $price) {
-                $sumPrice += ($input['adult_no'] * $price->private_group_adult) + ($input['children_no'] * $price->private_group_children);
+            else if($input['price_type'] == 'private_group') {
+                foreach($itinerary->prices as $price) {
+                    $sumPrice += ($input['adult_no'] * $price->private_group_adult) + ($input['children_no'] * $price->private_group_children);
+                }
             }
-        }
-        else if($input['price_type'] == 'public_group') {
-            foreach($itinerary->prices as $price) {
-                $sumPrice += ($input['adult_no'] * $price->public_group_adult) + ($input['children_no'] * $price->public_group_children);
+            else if($input['price_type'] == 'public_group') {
+                foreach($itinerary->prices as $price) {
+                    $sumPrice += ($input['adult_no'] * $price->public_group_adult) + ($input['children_no'] * $price->public_group_children);
+                }
             }
         }
 
-        $duration = $itinerary->duration;
-        $trimDuration = $duration[0];
+        $duration = count($reservation->itineraries);
+        $trimDuration = $duration / 2 + ($duration % 2);
         $reservationEnd = Carbon::parse($reservation->reservation_start)->addDays($trimDuration)->toDateString();
         $reservation->update(['price' => $sumPrice, 'reservation_end'=>$reservationEnd]);
         if(Auth::user()->role_user_id == 3) {
@@ -550,7 +502,7 @@ class ReservationController extends Controller
         //this updates the particular reservation
         $input = $request -> all();
         $reservation = Reservation::findOrFail($id);
-        $reservation->update(['reservation_status_id'=>$input['reservation_status_id'], 'remarks'=>$input['remarks']]);
+        $reservation->update(['reservation_status_id'=>$input['reservation_status_id'], 'remarks'=>$input['remarks'], 'remarks_by'=>Auth::user()->id]);
         return redirect(route('reservation.index'));
     }
 
@@ -582,7 +534,7 @@ class ReservationController extends Controller
         //delete everything related to particular reservation
         $reservation = Reservation::findOrFail($id);
         $reservation->delete();
-        $reservation->packageTour()->detach();
+        $reservation->packageTours()->detach();
         $reservation->itineraries()->detach();
         if(Auth::user()->role_user_id == 3) {
             return redirect(route('reservation.getUserReservation'));

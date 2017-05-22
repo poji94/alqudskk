@@ -60,7 +60,8 @@
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="{{ url('/reservation') }}">Manage reservations</a></li>
                                 <li><a href="{{ route('reservation.getUserReservation')}}">My reservations</a></li>
-                                <li><a href="{{ url('/reservation/create') }}">Create reservation</a></li>
+                                <li><a href="{{route('reservation.cartItinerary')}}">Activity Cart</a></li>
+                                <li><a href="{{route('reservation.cartPackageTour')}}">Tour Package Cart</a></li>
                             </ul>
                         </li>
                         @if(Auth::user()->role_user_id == 1)
@@ -84,8 +85,9 @@
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ route('reservation.getUserReservation')}}">My reservations</a></li>
-                                <li><a href="{{ url('/reservation/create') }}">Create reservation</a></li>
+                                <li><a href="{{route('reservation.getUserReservation')}}">My reservations</a></li>
+                                <li><a href="{{route('reservation.cartItinerary')}}">Activity Cart</a></li>
+                                <li><a href="{{route('reservation.cartPackageTour')}}">Tour Package Cart</a></li>
                             </ul>
                         </li>
                     @endif

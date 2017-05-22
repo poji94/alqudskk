@@ -18,12 +18,23 @@
                             {!! Form::label('reservation_type_id_label', 'Type of Reservation:  ') !!}
                                 Tour package
                         </div>
-                        <div class="form-group" id="package-tour-form">
-                            {!! Form::label('packagetour_id', 'Tour Package') !!}
-                            {!! Form::select('packagetour_id', [''=>'Choose Options'] + $packagetours, $reservedPackageTour->id, ['class'=>'form-control']) !!}
-                            {{--@foreach($collectionReservedPackageTourArray as $reservedPackageTour)--}}
-                                {{--{!! Form::select('packagetour_id', [''=>'Choose Options'] + $packagetours, $packageTour->id, ['class'=>'form-control']) !!}--}}
-                            {{--@endforeach--}}
+                        @php
+                            $i = 1;
+                        @endphp
+                        @if($reservedPackageTours)
+                            @foreach($reservedPackageTours as $reservedPackageTour)
+                                <div class="row form-group" id="packagetour-form{{$i}}">
+                                    {!! Form::label('packagetour_id', 'Tour Package ' . $i, ['class'=>'col-sm-2']) !!}
+                                    {!! Form::select('packagetour_id[]', $packagetours, $reservedPackageTour['id'], ['class'=>'col-sm-8', 'multiple'=>'multiple']) !!}
+                                    <button type="button" class="btn btn-danger" onclick="location.href='{{route('reservation.removePackageTourFromSession', $i)}}'">Remove</button>
+                                </div>
+                                @php
+                                    $i++;
+                                @endphp
+                            @endforeach
+                        @endif
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary" onclick="location.href='{{route('packagetour.getSelection')}}'">Add Tour Package</button>
                         </div>
                         <div class="form-group{{ $errors->has('price_type') ? ' has-error' : '' }}" style="display: inline-block">
                             {!! Form::label('price_type_label', 'Please choose:  ') !!}

@@ -42,6 +42,7 @@ Route::get('cancelReservation', 'ReservationController@cancelReservation')->name
 
 Route::post('/reservation/payWithStripe/{reservation}', 'ReservationController@payWithStripe')->name('reservation.payWithStripe');
 
+Route::get('/cartItinerary', 'ReservationController@cartItinerary')->name('reservation.cartItinerary');
 Route::get('/reservation/addMoreItinerary', 'ReservationController@addMoreItinerary')->name('reservation.addMoreItinerary');
 Route::get('/reservation/removeItineraryFromSession/{id}', 'ReservationController@removeItineraryFromSession')->name('reservation.removeItineraryFromSession');
 Route::get('/reservation/createItinerary/{itinerary}', 'ReservationController@createItinerary')->name('reservation.createItinerary');
@@ -52,6 +53,8 @@ Route::get('/reservation/showItinerary/{reservation}', 'ReservationController@sh
 Route::get('/reservation/reviewItinerary/{reservation}', 'ReservationController@reviewItinerary')->name('reservation.reviewItinerary');
 Route::post('/reservation/reviewItinerary/{reservation}', 'ReservationController@postReviewItinerary')->name('reservation.postReviewItinerary');
 
+Route::get('/cartPackageTour', 'ReservationController@cartPackageTour')->name('reservation.cartPackageTour');
+Route::get('/reservation/removePackageTourFromSession/{id}', 'ReservationController@removePackageTourFromSession')->name('reservation.removePackageTourFromSession');
 Route::get('/reservation/createPackageTour/{packagetour}', 'ReservationController@createPackageTour')->name('reservation.createPackageTour');
 Route::post('/reservation/storedPackageTour', 'ReservationController@storePackageTour')->name('reservation.storePackageTour');
 Route::get('/reservation/editPackageTour/{reservation}', 'ReservationController@editPackageTour')->name('reservation.editPackageTour');

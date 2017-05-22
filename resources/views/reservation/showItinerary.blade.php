@@ -29,12 +29,18 @@
                             {!! Form::label('reservation_status_label', 'Status:  ') !!}
                             {{$reservation->reserveStatus->name}}
                         </div>
-                        <div class="form-group" id="package-tour-form">
-                            {!! Form::label('packagetour_id', 'Tour Package: ') !!}
-                            @foreach($reservation->itineraries as $itinerary)
-                                {{$itinerary->name}}
-                            @endforeach
-                        </div>
+                        @php
+                            $i = 1;
+                        @endphp
+                        @foreach($reservation->itineraries as $itinerary)
+                            <div class="form-group" id="package-tour-form">
+                                {!! Form::label('$itinerary_id', 'Activity ' . $i . ': ') !!}
+                                    {{$itinerary->name}}
+                            </div>
+                            @php
+                                $i++;
+                            @endphp
+                        @endforeach
                         <div class="form-group{{ $errors->has('price_type') ? ' has-error' : '' }}" style="display: inline-block">
                             {!! Form::label('price_type_label', 'Type: ') !!}
                             @if($reservation->price_type == 'personal')

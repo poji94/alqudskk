@@ -26,7 +26,7 @@ class Reservation extends Model
     }
 
     //many-to-many polymorphic relationship reservation <-> packgetour through reservable pivot table
-    public function packageTour() {
+    public function packageTours() {
         return $this->morphedByMany('App\PackageTour', 'reservable');
     }
 

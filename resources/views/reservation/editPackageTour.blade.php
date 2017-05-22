@@ -18,15 +18,18 @@
                             {!! Form::label('reservation_type_id_label', 'Type of Reservation:  ') !!}
                             Tour package
                         </div>
-                        <div class="form-group" id="package-tour-form">
-                            {!! Form::label('packagetour_id', 'Tour Package') !!}
-                            @foreach($reservation->packageTour as $packagetour)
-                                {!! Form::select('packagetour_id', [''=>'Choose Options'] + $packagetours, $packagetour->id, ['class'=>'form-control']) !!}
-                                {{--@foreach($collectionReservedPackageTourArray as $reservedPackageTour)--}}
-                                {{--{!! Form::select('packagetour_id', [''=>'Choose Options'] + $packagetours, $packageTour->id, ['class'=>'form-control']) !!}--}}
-                                {{--@endforeach--}}
-                            @endforeach
-                        </div>
+                        @php
+                            $i=1;
+                        @endphp
+                        @foreach($reservation->packageTours as $packagetour)
+                            <div class="form-group" id="package-tour-form">
+                                {!! Form::label('packagetour_id', 'Tour Package ' . $i) !!}
+                                {!! Form::select('packagetour_id', [''=>'Choose Options'] + $packagetours, $packagetour->id, ['class'=>'form-control', 'readonly']) !!}
+                            </div>
+                            @php
+                                $i++;
+                            @endphp
+                        @endforeach
                         <div class="form-group{{ $errors->has('price_type') ? ' has-error' : '' }}" style="display: inline-block">
                             {!! Form::label('price_type_label', 'Please choose:  ') !!}
                             @if($reservation->reserveStatus->id == 1)
