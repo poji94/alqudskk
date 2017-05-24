@@ -26,7 +26,7 @@
                                 <div class="row form-group" id="packagetour-form{{$i}}">
                                     {!! Form::label('packagetour_id', 'Tour Package ' . $i, ['class'=>'col-sm-2']) !!}
                                     {!! Form::select('packagetour_id[]', $packagetours, $reservedPackageTour['id'], ['class'=>'col-sm-8', 'multiple'=>'multiple']) !!}
-                                    <button type="button" class="btn btn-danger" onclick="location.href='{{route('reservation.removePackageTourFromSession', $i)}}'">Remove</button>
+                                    <button type="button" class="btn btn-danger" onclick="location.href='{{route('reservation.removePackageTourFromSession', $reservedPackageTour['id'])}}'">Remove</button>
                                 </div>
                                 @php
                                     $i++;
@@ -97,7 +97,7 @@
                         </div>
                         <div class="form-group{{ $errors->has('reservation_start') ? ' has-error' : '' }}">
                             {!! Form::label('reservation_start', 'Start date') !!}
-                            {!! Form::date('reservation_start', null, ['class'=>'form-control']) !!}
+                            {!! Form::date('reservation_start', null, ['class'=>'form-control', 'min'=>\Carbon\Carbon::today()->toDateString(), 'onkeydown'=>'return false']) !!}
                             @if ($errors->has('reservation_start'))
                                 <span class="help-block">
                                         <strong>{{ $errors->first('reservation_start') }}</strong>

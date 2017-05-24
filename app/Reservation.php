@@ -8,7 +8,7 @@ class Reservation extends Model
 {
     //setting mass assignments
     protected $fillable = ['user_id', 'reservation_type_id', 'reservation_start', 'reservation_end',
-                            'children_no', 'adult_no', 'price_type', 'price', 'reservation_status_id', 'remarks', 'remarks_by'];
+                            'children_no', 'adult_no', 'price_type', 'price', 'reservation_status_id', 'other_details', 'remarks', 'remarks_by'];
 
     //one-to-one relationship reservation <-> user
     public function reserveUser() {

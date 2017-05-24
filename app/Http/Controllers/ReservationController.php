@@ -105,6 +105,7 @@ class ReservationController extends Controller
         $i = 1;
         $reservedPackageTours = [];
         $sessionPackageTours = session()->get('collectionReservedPackageTours');
+
         if($sessionPackageTours != null) {
             foreach($sessionPackageTours as $sessionPackageTour) {
                 $reservedPackageTours[$i] = PackageTour::where('id', $sessionPackageTour)->first();
@@ -119,21 +120,33 @@ class ReservationController extends Controller
     {
         $i = 1;
         $reservedItineraries = [];
+        $reservedItinerariesOption = [];
         $sessionItineraries = session()->get('collectionReservedItineraries');
+        $sessionItinerariesOption = session()->get('collectionReservedItinerariesOption');
+
         if($sessionItineraries != null) {
             foreach ($sessionItineraries as $sessionItinerary) {
                 $reservedItineraries[$i] = Itinerary::where('id', $sessionItinerary)->first();
                 $i++;
             }
         }
+
+        $i = 1;
+        if($sessionItinerariesOption != []) {
+            foreach($sessionItinerariesOption as $sessionItineraryOption) {
+                $reservedItinerariesOption[$i] = $sessionItineraryOption;
+                $i++;
+            }
+        }
+
         $itineraries = Itinerary::lists('name', 'id')->all();
-        return view('reservation.createItinerary', compact('reservedItineraries', 'itineraries'));
+        return view('reservation.createItinerary', compact('reservedItineraries', 'reservedItinerariesOption', 'itineraries'));
     }
 
     public function createPackageTour(Request $request, $id)
     {
         $i = 1;
-        $reservedPackageTours = [];
+//        $reservedPackageTours = [];
         $request->session()->push('collectionReservedPackageTours', $id);
         $sessionPackageTours = session()->get('collectionReservedPackageTours');
         foreach($sessionPackageTours as $sessionPackageTour) {
@@ -144,18 +157,32 @@ class ReservationController extends Controller
         return view('reservation.createPackageTour', compact('reservedPackageTours', 'packagetours'));
     }
 
-    public function createItinerary(Request $request, $id)
+    public function createItinerary(Request $request)
     {
+        $input = $request->all();
         $i = 1;
         $reservedItineraries = [];
-        $request->session()->push('collectionReservedItineraries', $id);
+        $reservedItinerariesOption = [];
+
+        $request->session()->push('collectionReservedItineraries', $input['id']);
+        $request->session()->push('collectionReservedItinerariesOption', $input['option']);
+
         $sessionItineraries = session()->get('collectionReservedItineraries');
+        $sessionItinerariesOption = session()->get('collectionReservedItinerariesOption');
+
         foreach ($sessionItineraries as $sessionItinerary) {
             $reservedItineraries[$i] = Itinerary::where('id', $sessionItinerary)->first();
             $i++;
         }
+
+        $i = 1;
+        foreach($sessionItinerariesOption as $sessionItineraryOption) {
+            $reservedItinerariesOption[$i] = $sessionItineraryOption;
+            $i++;
+        }
+
         $itineraries = Itinerary::lists('name', 'id')->all();
-        return view('reservation.createItinerary', compact('reservedItineraries', 'itineraries'));
+        return view('reservation.createItinerary', compact('reservedItineraries', 'reservedItinerariesOption', 'itineraries'));
     }
 
     public function removePackageTourFromSession($id)
@@ -163,15 +190,19 @@ class ReservationController extends Controller
         $i = 1;
         $reservedPackageTours = [];
         $sessionPackageTours = session()->pull('collectionReservedPackageTours');
+
         $id--;
         unset($sessionPackageTours[$id]);
+        $sessionPackageTours = array_values($sessionPackageTours);
+
         if($sessionPackageTours != []) {
             foreach ($sessionPackageTours as $sessionPackageTour) {
                 $reservedPackageTours[$i] = PackageTour::where('id', $sessionPackageTour)->first();
                 $i++;
             }
-            session()->push('collectionReservedPackageTours', $sessionPackageTours);
+            session()->put('collectionReservedPackageTours', $sessionPackageTours);
         }
+
         $packagetours = PackageTour::lists('name', 'id')->all();
         return view('reservation.createPackageTour', compact('reservedPackageTours', 'packagetours'));
     }
@@ -180,18 +211,33 @@ class ReservationController extends Controller
     {
         $i = 1;
         $reservedItineraries = [];
+        $reservedItinerariesOption = [];
         $sessionItineraries = session()->pull('collectionReservedItineraries');
+        $sessionItinerariesOption = session()->pull('collectionReservedItinerariesOption');
         $id--;
         unset($sessionItineraries[$id]);
+        unset($sessionItinerariesOption[$id]);
+
+
         if($sessionItineraries != []) {
             foreach ($sessionItineraries as $sessionItinerary) {
                 $reservedItineraries[$i] = Itinerary::where('id', $sessionItinerary)->first();
                 $i++;
             }
-            session()->push('collectionReservedItineraries', $sessionItineraries);
+            session()->put('collectionReservedItineraries', $sessionItineraries);
         }
+
+        $i = 1;
+        if($sessionItinerariesOption != []) {
+            foreach($sessionItinerariesOption as $sessionItineraryOption) {
+                $reservedItinerariesOption[$i] = $sessionItineraryOption;
+                $i++;
+            }
+            session()->put('collectionReservedItinerariesOption', $reservedItinerariesOption);
+        }
+
         $itineraries = Itinerary::lists('name', 'id')->all();
-        return view('reservation.createItinerary', compact('reservedItineraries', 'itineraries'));
+        return view('reservation.createItinerary', compact('reservedItineraries', 'reservedItinerariesOption', 'itineraries'));
     }
 
     /**
@@ -265,7 +311,12 @@ class ReservationController extends Controller
         //initialize the sumPrice - for sum all the itineraries price
         //automate the user_id, reservation_status_id to pending, associate the itineraries/packagetour, durations
         //Note: reservation_type_id == 1 - Ground(activity). Else 2-full boat(packagetour)
+
+        $reservedItinerariesOption =  session()->get('collectionReservedItinerariesOption');
+//        return $reservedItinerariesOption;
+        session()->forget('collectionReservedItinerariesOption');
         session()->forget('collectionReservedItineraries');
+//        session()->forget('collectionReservedItinerariesOption');
         $sumPrice = 0;
         $input = $request -> all();
         $reservation = Reservation::create($input);
@@ -273,6 +324,16 @@ class ReservationController extends Controller
         foreach($input['itinerary_id'] as $itinerary_id) {
             $reservation->itineraries()->attach($itinerary_id);                  //since package tour only receive string instead of array, must create an array bracket
         }
+
+        $i = 0;
+        foreach($reservation->itineraries as $itinerary) {
+            foreach($reservedItinerariesOption as $reservedItineraryOption){
+                return $reservedItineraryOption. ' ';
+//                $itinerary->pivot->option = $reservedItineraryOption;
+//                $itinerary->pivot->save();
+            }
+        }
+
         foreach($reservation->itineraries as $itinerary) {
             if($input['price_type'] == 'personal') {
                 foreach($itinerary->prices as $price) {
@@ -427,24 +488,22 @@ class ReservationController extends Controller
         $reservation = Reservation::findOrFail($id);
         $reservation->update($input);
 
-        if($input['price_type'] == 'personal') {
-            foreach ($reservation->packageTours as $packageTour) {
-                if ($input['price_type'] == 'personal') {
-                    foreach ($packageTour->prices as $price) {
-                        $sumPrice += $input['adult_no'] * $price->personal;
-                    }
-                } else if ($input['price_type'] == 'private_group') {
-                    foreach ($packageTour->prices as $price) {
-                        $sumPrice += ($input['adult_no'] * $price->private_group_adult) + ($input['children_no'] * $price->private_group_children);
-                    }
-                } else if ($input['price_type'] == 'public_group') {
-                    foreach ($packageTour->prices as $price) {
-                        $sumPrice += ($input['adult_no'] * $price->public_group_adult) + ($input['children_no'] * $price->public_group_children);
-                    }
+        foreach ($reservation->packageTours as $packageTour) {
+            if ($input['price_type'] == 'personal') {
+                foreach ($packageTour->prices as $price) {
+                    $sumPrice += $input['adult_no'] * $price->personal;
                 }
-                $duration = $packageTour->duration;
-                $trimDuration += $duration[0];
+            } else if ($input['price_type'] == 'private_group') {
+                foreach ($packageTour->prices as $price) {
+                    $sumPrice += ($input['adult_no'] * $price->private_group_adult) + ($input['children_no'] * $price->private_group_children);
+                }
+            } else if ($input['price_type'] == 'public_group') {
+                foreach ($packageTour->prices as $price) {
+                    $sumPrice += ($input['adult_no'] * $price->public_group_adult) + ($input['children_no'] * $price->public_group_children);
+                }
             }
+            $duration = $packageTour->duration;
+            $trimDuration += $duration[0];
         }
 
         $reservationEnd = Carbon::parse($reservation->reservation_start)->addDays($trimDuration)->toDateString();

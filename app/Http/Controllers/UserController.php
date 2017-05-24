@@ -10,6 +10,7 @@ use App\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
@@ -54,6 +55,7 @@ class UserController extends Controller
         //create the user object
         $input = $request -> all();
         User::create($input);
+        Session::flash('created_user', 'User successfully created');
         return redirect(route('user.index'));
     }
 
@@ -106,6 +108,7 @@ class UserController extends Controller
         }
 
         $user->update($input);
+        Session::flash('updated_user', 'User successfully updated');
         return redirect(route('user.index'));
     }
 
@@ -127,6 +130,7 @@ class UserController extends Controller
         foreach($reservations as $reservation) {
             $reservation->delete();
         }
+        Session::flash('deleted_user', 'User successfully deleted');
         return redirect(route('user.index'));
     }
 }

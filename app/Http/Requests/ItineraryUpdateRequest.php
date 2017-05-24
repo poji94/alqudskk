@@ -26,6 +26,9 @@ class ItineraryUpdateRequest extends Request
         //change the style of typing due to set validation on each image files.
         $rules =  [
             'name' => 'required | min:5 | max:50',
+            'option1_pickup_place' => 'required',
+            'option1_pickup_time' => 'required',
+            'option1_dropoff_place' => 'required',
             'description' => 'required | max:5000',
             'duration' => 'required',
             'personal' => 'required | integer | min:1',

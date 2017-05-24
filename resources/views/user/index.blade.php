@@ -12,7 +12,18 @@
                     <div class="panel-heading">Users</div>
 
                     <div class="panel-body">
-                        List of registered users
+                        {!! Form::label('user_label', 'List of registered users') !!}
+
+                        <br>
+                        @if(Session::has('created_user'))
+                            <p class="bg-info" align="center">{{session('created_user')}}</p>
+                        @endif
+                        @if(Session::has('updated_user'))
+                            <p class="bg-info" align="center">{{session('updated_user')}}</p>
+                        @endif
+                        @if(Session::has('deleted_user'))
+                            <p class="bg-info" align="center">{{session('deleted_user')}}</p>
+                        @endif
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>

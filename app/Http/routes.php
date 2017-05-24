@@ -45,7 +45,7 @@ Route::post('/reservation/payWithStripe/{reservation}', 'ReservationController@p
 Route::get('/cartItinerary', 'ReservationController@cartItinerary')->name('reservation.cartItinerary');
 Route::get('/reservation/addMoreItinerary', 'ReservationController@addMoreItinerary')->name('reservation.addMoreItinerary');
 Route::get('/reservation/removeItineraryFromSession/{id}', 'ReservationController@removeItineraryFromSession')->name('reservation.removeItineraryFromSession');
-Route::get('/reservation/createItinerary/{itinerary}', 'ReservationController@createItinerary')->name('reservation.createItinerary');
+Route::post('/reservation/createItinerary/', 'ReservationController@createItinerary')->name('reservation.createItinerary');
 Route::post('/reservation/storedItinerary/', 'ReservationController@storeItinerary')->name('reservation.storeItinerary');
 Route::get('/reservation/editItinerary/{reservation}', 'ReservationController@editItinerary')->name('reservation.editItinerary');
 Route::post('/reservation/editItinerary/{reservation}', 'ReservationController@updateItinerary')->name('reservation.updateItinerary');

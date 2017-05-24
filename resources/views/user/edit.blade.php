@@ -91,9 +91,9 @@
                         </div>
                         <div class="form-group">
                             {!! Form::submit('Edit User', ['class'=>'btn btn-primary']) !!}
+                            <button type="button" class="btn btn-primary" onclick="location.href='{{route('user.index')}}'">Cancel</button>
                         </div>
                         {!! Form::close() !!}
-                        <button type="button" class="btn btn-primary" onclick="location.href='{{route('user.index')}}'">Cancel</button>
                     </div>
                 </div>
             </div>

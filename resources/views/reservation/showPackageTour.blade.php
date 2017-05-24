@@ -51,16 +51,25 @@
                                 Public Group
                             @endif
                         </div>
-                        <div class="row">
-                            <div id="adult_no" class="col-sm-6 form-group{{ $errors->has('adult_no') ? ' has-error' : '' }}">
-                                {!! Form::label('adult_no', 'Number of adult: ') !!}
-                                {{$reservation->adult_no}}
+                        @if($reservation->price_type == 'personal')
+                            <div class="row">
+                                <div id="adult_no" class="col-sm-6 form-group{{ $errors->has('adult_no') ? ' has-error' : '' }}">
+                                    {!! Form::label('adult_no', 'Number of adult: ') !!}
+                                    {{$reservation->adult_no}}
+                                </div>
                             </div>
-                            <div id="children_no" class="col-sm-6 form-group{{ $errors->has('children_no') ? ' has-error' : '' }}">
-                                {!! Form::label('children_no', 'Number of children: ') !!}
-                                {{$reservation->children_no}}
+                        @else
+                            <div class="row">
+                                <div id="adult_no" class="col-sm-6 form-group{{ $errors->has('adult_no') ? ' has-error' : '' }}">
+                                    {!! Form::label('adult_no', 'Number of adult: ') !!}
+                                    {{$reservation->adult_no}}
+                                </div>
+                                <div id="children_no" class="col-sm-6 form-group{{ $errors->has('children_no') ? ' has-error' : '' }}">
+                                    {!! Form::label('children_no', 'Number of children: ') !!}
+                                    {{$reservation->children_no}}
+                                </div>
                             </div>
-                        </div>
+                        @endif
                         <div class="row">
                             <div class="col-sm-6 form-group{{ $errors->has('reservation_start') ? ' has-error' : '' }}">
                                 {!! Form::label('reservation_start', 'Start date: ') !!}

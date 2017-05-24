@@ -16,10 +16,10 @@
         <div class="row">
             <div class="col-sm-10 col-md-offset-1">
                 <div class="panel panel-default">
-                    <div class="panel-heading">View Vacation</div>
+                    <div class="panel-heading">View Activity</div>
 
                     <div class="panel-body">
-                        Vacation details
+                        {!! Form::label('activity_label', 'Activity Details') !!}
                         <div class="row">
                             <div class="col-sm-5">
                                 <div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -72,12 +72,15 @@
                                 </div>
                             </div>
                             <div class="col-sm-6">
-                                Name: {{ $itinerary ->name }} <br><br>
+                                {!! Form::label('name_label', 'Name: ') !!}
+                                {{ $itinerary ->name }} <br><br>
+
+                                {!! Form::label('pickup_dropoff_label', 'Pickup and Dropoff: ') !!}
                                 <div class="responsive-table">
                                     <table class="table">
                                         <thead>
                                         <tr>
-                                            <th>Pick-up & drop-off</th>
+                                            <th>Option 1</th>
                                             <th>Place</th>
                                             <th>Time</th>
                                         </tr>
@@ -85,21 +88,56 @@
                                         <tbody>
                                         <tr>
                                             <td>Pick-up</td>
-                                            <td>{{$itinerary->pickup_place}}</td>
-                                            <td>{{$itinerary->pickup_time}}</td>
+                                            <td>{{$itinerary->option1_pickup_place}}</td>
+                                            <td>{{$itinerary->option1_pickup_time}}</td>
                                         </tr>
                                         <tr>
                                             <td>Drop-off</td>
-                                            <td>{{$itinerary->dropoff_place}}</td>
-                                            <td>{{$itinerary->dropoff_time}}</td>
+                                            <td>{{$itinerary->option1_dropoff_place}}</td>
+                                            <td>{{$itinerary->option1_dropoff_time}}</td>
                                         </tr>
                                         </tbody>
                                     </table>
                                 </div>
-                                Description: {{$itinerary->description}} <br><br>
-                                Duration: {{ $itinerary->duration }} <br><br>
-                                Price :<br>
-                                {!! Form::label('currency_drop_down', 'Currency') !!}
+                                @if($itinerary->option2_pickup_place != null)
+                                    <div class="responsive-table">
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th>Option 2</th>
+                                                <th>Place</th>
+                                                <th>Time</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>Pick-up</td>
+                                                <td>{{$itinerary->option2_pickup_place}}</td>
+                                                <td>{{$itinerary->option2_pickup_time}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Drop-off</td>
+                                                <td>{{$itinerary->option2_dropoff_place}}</td>
+                                                <td>{{$itinerary->option2_dropoff_time}}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                @endif
+                                {!! Form::label('description_label', 'Description: ') !!}<br>
+                                {{$itinerary->description}} <br><br>
+
+                                {!! Form::label('duration_label', 'Duration: ') !!}<br>
+                                @php
+                                    $wannaTrim = $itinerary->duration;
+                                    $duration = $wannaTrim[0];
+                                @endphp
+                                @if($duration >= 6)
+                                    Full-day <br><br>
+                                @else
+                                    Half-day <br><br>
+                                @endif
+                                {!! Form::label('price_currency_label', 'Price Currency:') !!}<br>
                                 <div class="row form-group">
                                     {!! Form::open(['method'=>'GET', 'action'=> 'ItineraryController@changeCurrency']) !!}
                                     <div class="col-sm-10">
@@ -144,7 +182,35 @@
                                 @if(Auth::guest())
                                     <button type="button" class="btn btn-primary" onclick="location.href='{{url('/login')}}'">Book Now</button>
                                 @else
-                                    <button type="button" class="btn btn-primary" onclick="location.href='{{route('reservation.createItinerary', $itinerary->id)}}'">Book Now</button>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#option">Book Now</button>
+
+                                    <div class="modal fade" id="option" role="dialog">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Choose option for pickup and dropoff</h4>
+                                                </div>
+                                                <div class="row modal-body">
+                                                    <div class="col-sm-10">
+                                                        {!! Form::open(['method'=>'POST', 'action'=> 'ReservationController@createItinerary']) !!}
+                                                            {!! Form::hidden('id', $itinerary->id) !!}
+                                                            @if($itinerary->option2_pickup_place != null)
+                                                                {!! Form::select('option', [''=>'Choose Options', '1'=>'Option 1', '2'=>'Option 2'], null, [ 'class'=>'form-control']) !!}
+                                                            @else
+                                                                {!! Form::select('option', [''=>'Choose Options', '1'=>'Option 1'], null, [ 'class'=>'form-control']) !!}
+                                                            @endif
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                            {!! Form::submit('Submit', ['class'=>'btn btn-primary']) !!}
+                                                        {!! Form::close() !!}
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 @endif
                             </div>
                         </div>

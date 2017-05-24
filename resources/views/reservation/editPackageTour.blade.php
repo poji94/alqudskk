@@ -66,35 +66,40 @@
                                         Public Group
                                     </label>
                                 @endif
-                            @else
-                                @if($reservation->price_type == 'personal')
-                                    Personal
-                                @elseif($reservation->price_type == 'private_group')
-                                    Private Group
-                                @elseif($reservation->price_type == 'public_group')
-                                    Public Group
-                                @endif
                             @endif
                             @if ($errors->has('price_type'))
                                 <span class="help-block">
                                         <strong>{{ $errors->first('price_type') }}</strong>
                                     </span>
                             @endif
-
                             <script type="text/javascript">
-                                $("#adult_no").hide();
-                                $("#children_no").hide();
-                                $("#personal").click(function(){
-                                    $("#adult_no").slideUp();
-                                    $("#children_no").slideUp();
-                                });
-                                $("#private_group").click(function(){
-                                    $("#adult_no").slideDown();
-                                    $("#children_no").slideDown();
-                                });
-                                $("#public_group").click(function(){
-                                    $("#adult_no").slideDown();
-                                    $("#children_no").slideDown();
+                                $(document).ready(function () {
+                                    $("#adult_no").hide();
+                                    $("#children_no").hide();
+                                    if(document.getElementById('personal').checked) {
+                                        $("#adult_no").slideUp();
+                                        $("#children_no").slideUp();
+                                    }
+                                    else if(document.getElementById('private_group').checked) {
+                                        $("#adult_no").slideDown();
+                                        $("#children_no").slideDown();
+                                    }
+                                    else if(document.getElementById('public_group').checked) {
+                                        $("#adult_no").slideDown();
+                                        $("#children_no").slideDown();
+                                    }
+                                    $("#personal").click(function(){
+                                        $("#adult_no").slideUp();
+                                        $("#children_no").slideUp();
+                                    });
+                                    $("#private_group").click(function(){
+                                        $("#adult_no").slideDown();
+                                        $("#children_no").slideDown();
+                                    });
+                                    $("#public_group").click(function(){
+                                        $("#adult_no").slideDown();
+                                        $("#children_no").slideDown();
+                                    });
                                 });
                             </script>
                         </div>
@@ -121,7 +126,7 @@
                         <div class="row">
                             <div class="col-sm-6 form-group{{ $errors->has('reservation_start') ? ' has-error' : '' }}">
                                 {!! Form::label('reservation_start', 'Start date') !!}
-                                {!! Form::date('reservation_start', $reservation->reservation_start, ['class'=>'form-control']) !!}
+                                {!! Form::date('reservation_start', $reservation->reservation_start, ['class'=>'form-control', 'min'=>\Carbon\Carbon::today()->toDateString(), 'onkeydown'=>'return false']) !!}
                                 @if ($errors->has('reservation_start'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('reservation_start') }}</strong>

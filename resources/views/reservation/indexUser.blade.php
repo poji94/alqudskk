@@ -137,7 +137,7 @@
                                 @endif
                                 </tbody>
                             </table>
-                            <button type="button" class="btn btn-primary" onclick="location.href='{{route('reservation.create')}}'">Create</button>
+                            <p>Reservation can be created through activity / tour package cart.</p>
                         </div>
                     </div>
                 </div>

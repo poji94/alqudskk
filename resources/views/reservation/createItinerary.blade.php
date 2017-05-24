@@ -22,11 +22,20 @@
                         @php
                             $i = 1;
                         @endphp
-                        @if($reservedItineraries)
+                        @if($reservedItineraries && $reservedItinerariesOption)
                             @foreach($reservedItineraries as $reservedItinerary)
                                 <div class="row form-group" id="itinerary-form{{$i}}">
                                     {!! Form::label('itinerary_id', 'Activity ' . $i, ['class'=>'col-sm-2']) !!}
                                     {!! Form::select('itinerary_id[]', $itineraries, $reservedItinerary['id'], ['class'=>'col-sm-8', 'multiple'=>'multiple']) !!}
+
+                                    <div class="col-sm-8">
+                                        {!! Form::label('option_label', 'Pickup & dropoff option: ') !!}
+                                        @if($reservedItinerariesOption[$i] == 1)
+                                            {{$reservedItinerariesOption[$i]}} ( {{$reservedItinerary['option1_pickup_time']}} -> {{$reservedItinerary['option1_dropoff_time']}} )
+                                        @else
+                                            {{$reservedItinerariesOption[$i]}} ( {{$reservedItinerary['option2_pickup_time']}} -> {{$reservedItinerary['option2_dropoff_time']}} )
+                                        @endif
+                                    </div>
                                     <button type="button" class="btn btn-danger" onclick="location.href='{{route('reservation.removeItineraryFromSession', $i)}}'">Remove</button>
                                 </div>
                                 @php
@@ -98,11 +107,20 @@
                         </div>
                         <div class="form-group{{ $errors->has('reservation_start') ? ' has-error' : '' }}">
                             {!! Form::label('reservation_start', 'Start date') !!}
-                            {!! Form::date('reservation_start', null, ['class'=>'form-control']) !!}
+                            {!! Form::date('reservation_start', null, ['class'=>'form-control', 'min'=>\Carbon\Carbon::today()->toDateString(), 'onkeydown'=>'return false']) !!}
                             @if ($errors->has('reservation_start'))
                                 <span class="help-block">
                                         <strong>{{ $errors->first('reservation_start') }}</strong>
                                     </span>
+                            @endif
+                        </div>
+                        <div class="form-group{{ $errors->has('other_details') ? ' has-error' : '' }}">
+                            {!! Form::label('other_details_label', 'Other details:') !!}
+                            {!! Form::textarea('other_details', null, ['class'=>'form-control', 'rows'=>'4', 'placeholder'=>'Any information regarding the reserved activities']) !!}
+                            @if ($errors->has('other_details'))
+                                <span class="help-block">
+                                        <strong>{{ $errors->first('other_details') }}</strong>
+                                </span>
                             @endif
                         </div>
                         <div class="form-group">

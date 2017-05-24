@@ -9,10 +9,10 @@
         <div class="row">
             <div class="col-sm-6 col-md-offset-3">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Itineraries</div>
+                    <div class="panel-heading">Activities</div>
 
                     <div class="panel-body">
-                        List of itineraries available
+                        {!! Form::label('title_label', 'List of activities available') !!}
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>

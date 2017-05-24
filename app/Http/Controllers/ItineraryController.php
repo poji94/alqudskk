@@ -10,6 +10,7 @@ use App\TypeVacation;
 use App\Currency;
 
 use App\Http\Requests;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 
@@ -124,6 +125,18 @@ class ItineraryController extends Controller
                 $i++;
             }
         }
+
+        $duration = $itinerary->duration;
+        $trimDuration = $duration[0];
+
+        $option1DropOffTime = Carbon::parse($itinerary->option1_pickup_time)->addHours($trimDuration)->toTimeString();
+        $itinerary->update(['option1_dropoff_time'=>$option1DropOffTime]);
+
+        if($input['option2_pickup_time'] != null) {
+            $option2DropOffTime = Carbon::parse($itinerary->option2_pickup_time)->addHours($trimDuration)->toTimeString();
+            $itinerary->update(['option2_dropoff_time'=>$option2DropOffTime]);
+        }
+
         $itinerary->places()->save($placetourism);
         $itinerary->types()->save($typevacation);
         return redirect(route('itinerary.index'));
@@ -246,6 +259,18 @@ class ItineraryController extends Controller
                 $i++;
             }
         }
+
+        $duration = $itinerary->duration;
+        $trimDuration = $duration[0];
+
+        $option1DropOffTime = Carbon::parse($itinerary->option1_pickup_time)->addHours($trimDuration)->toTimeString();
+        $itinerary->update(['option1_dropoff_time'=>$option1DropOffTime]);
+
+        if($input['option2_pickup_time'] != null) {
+            $option2DropOffTime = Carbon::parse($itinerary->option2_pickup_time)->addHours($trimDuration)->toTimeString();
+            $itinerary->update(['option2_dropoff_time'=>$option2DropOffTime]);
+        }
+
         return redirect(route('itinerary.index'));
     }
 

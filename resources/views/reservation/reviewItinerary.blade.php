@@ -57,26 +57,40 @@
                                 Public Group
                             @endif
                         </div>
-                        <div class="row">
-                            <div id="adult_no" class="col-sm-6 form-group{{ $errors->has('adult_no') ? ' has-error' : '' }}">
-                                {!! Form::label('adult_no', 'Number of adult') !!}
-                                {!! Form::number('adult_no', $reservation->adult_no, ['class'=>'form-control', 'readonly']) !!}
-                                @if ($errors->has('adult_no'))
-                                    <span class="help-block">
+                        @if($reservation->price_type == 'personal')
+                            <div class="row">
+                                <div id="adult_no" class="col-sm-6 form-group{{ $errors->has('adult_no') ? ' has-error' : '' }}">
+                                    {!! Form::label('adult_no', 'Number of adult') !!}
+                                    {!! Form::number('adult_no', $reservation->adult_no, ['class'=>'form-control', 'readonly']) !!}
+                                    @if ($errors->has('adult_no'))
+                                        <span class="help-block">
                                         <strong>{{ $errors->first('adult_no') }}</strong>
                                     </span>
-                                @endif
+                                    @endif
+                                </div>
                             </div>
-                            <div id="children_no" class="col-sm-6 form-group{{ $errors->has('children_no') ? ' has-error' : '' }}">
-                                {!! Form::label('children_no', 'Number of children') !!}
-                                {!! Form::number('children_no', $reservation->children_no, ['class'=>'form-control', 'readonly']) !!}
-                                @if ($errors->has('children_no'))
-                                    <span class="help-block">
+                        @else
+                            <div class="row">
+                                <div id="adult_no" class="col-sm-6 form-group{{ $errors->has('adult_no') ? ' has-error' : '' }}">
+                                    {!! Form::label('adult_no', 'Number of adult') !!}
+                                    {!! Form::number('adult_no', $reservation->adult_no, ['class'=>'form-control', 'readonly']) !!}
+                                    @if ($errors->has('adult_no'))
+                                        <span class="help-block">
+                                        <strong>{{ $errors->first('adult_no') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                                <div id="children_no" class="col-sm-6 form-group{{ $errors->has('children_no') ? ' has-error' : '' }}">
+                                    {!! Form::label('children_no', 'Number of children') !!}
+                                    {!! Form::number('children_no', $reservation->children_no, ['class'=>'form-control', 'readonly']) !!}
+                                    @if ($errors->has('children_no'))
+                                        <span class="help-block">
                                         <strong>{{ $errors->first('children_no') }}</strong>
                                     </span>
-                                @endif
+                                    @endif
+                                </div>
                             </div>
-                        </div>
+                        @endif
                         <div class="row">
                             <div class="col-sm-6 form-group{{ $errors->has('reservation_start') ? ' has-error' : '' }}">
                                 {!! Form::label('reservation_start', 'Start date') !!}
@@ -96,9 +110,14 @@
                             {!! Form::label('price', 'Price') !!}
                             {!! Form::text('price', currency($reservation->price, 'MYR', $currency['code']), ['class'=>'form-control', 'readonly']) !!}
                         </div>
-                        <div class="form group">
+                        <div class="form-group{{ $errors->has('remarks') ? ' has-error' : '' }}">
                             {!! Form::label('remarks_label', 'Remark:') !!}
-                            {!! Form::textarea('remarks', null, ['class'=>'form-control', 'rows'=>'4']) !!}
+                            {!! Form::textarea('remarks', null, ['class'=>'form-control', 'rows'=>'4', 'placeholder'=>'Other details like flight ticket, no plat of car, etc.']) !!}
+                            @if ($errors->has('remarks'))
+                                <span class="help-block">
+                                        <strong>{{ $errors->first('remarks') }}</strong>
+                                </span>
+                            @endif
                         </div>
                         <div class="form-group">
                             <br>
