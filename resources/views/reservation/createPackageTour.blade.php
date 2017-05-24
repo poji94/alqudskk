@@ -104,6 +104,15 @@
                                     </span>
                             @endif
                         </div>
+                        <div class="form-group{{ $errors->has('other_details') ? ' has-error' : '' }}">
+                            {!! Form::label('other_details_label', 'Other details:') !!}
+                            {!! Form::textarea('other_details', null, ['class'=>'form-control', 'rows'=>'4', 'placeholder'=>'Any information regarding the reserved activities']) !!}
+                            @if ($errors->has('other_details'))
+                                <span class="help-block">
+                                        <strong>{{ $errors->first('other_details') }}</strong>
+                                </span>
+                            @endif
+                        </div>
                         <div class="form-group">
                             {!! Form::submit('Create Reservation', ['class'=>'btn btn-primary']) !!}
                             <button type="button" class="btn btn-primary" onclick="location.href='{{url()->previous()}}'">Cancel</button>

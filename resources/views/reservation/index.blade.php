@@ -44,6 +44,119 @@
                                 </div>
                             </div>
                         </div>
+
+                        <br>
+                        @if(Session::has('created_reservation'))
+                            <script type="text/javascript">
+                                $(window).on('load',function(){
+                                    $('#created_reservation').modal('show');
+                                });
+                            </script>
+                            <div class="modal fade" id="created_reservation" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Reservation created</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            {{session('created_reservation')}}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                        @if(Session::has('updated_reservation'))
+                            <script type="text/javascript">
+                                $(window).on('load',function(){
+                                    $('#updated_reservation').modal('show');
+                                });
+                            </script>
+                            <div class="modal fade" id="updated_reservation" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Reservation updated</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            {{session('updated_reservation')}}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                        @if(Session::has('paid_reservation'))
+                            <script type="text/javascript">
+                                $(window).on('load',function(){
+                                    $('#paid_reservation').modal('show');
+                                });
+                            </script>
+                            <div class="modal fade" id="paid_reservation" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Reservation paid</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            {{session('paid_reservation')}}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                        @if(Session::has('reviewed_reservation'))
+                            <script type="text/javascript">
+                                $(window).on('load',function(){
+                                    $('#reviewed_reservation').modal('show');
+                                });
+                            </script>
+                            <div class="modal fade" id="reviewed_reservation" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Reservation reviewed</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            {{session('reviewed_reservation')}}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                        @if(Session::has('deleted_reservation'))
+                            <script type="text/javascript">
+                                $(window).on('load',function(){
+                                    $('#deleted_reservation').modal('show');
+                                });
+                            </script>
+                            <div class="modal fade" id="deleted_reservation" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Reservation deleted</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            {{session('deleted_reservation')}}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
@@ -102,13 +215,25 @@
                                                     </div>
                                                     {!! Form::close() !!}
                                                 </td>
-                                                <td>
-                                                    <div class="form-group">
-                                                        {!!  Form::open(['method' => 'DELETE', 'action' => ['ReservationController@destroy', $reservation->id]])!!}
-                                                        {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
-                                                        {!! Form::close() !!}
+                                                <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#{{$reservation->id}}">Delete</button></td>
+                                                <div class="modal fade" id="{{$reservation->id}}" role="dialog">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title">Delete reservation confirmation</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                Reservation for {{$reservation->reserveUser->name}} will be deleted. Continue?
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                {!!  Form::open(['method' => 'DELETE', 'action' => ['ReservationController@destroy', $reservation->id]])!!}
+                                                                    {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
+                                                                {!! Form::close() !!}
+                                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </td>
+                                                </div>
                                             @elseif($reservation->reserveStatus->id ==2 || $reservation->reserveStatus->id ==3)
                                                 @if(Auth::user()->role_user_id == 3)
                                                     @if($reservation->reserveType->id ==1)
@@ -135,13 +260,26 @@
                                                         <td><button type="button" class="btn btn-primary" onclick="location.href='{{route('reservation.reviewItinerary', $reservation->id)}}'">Review</button></td>
                                                     @else
                                                         <td><button type="button" class="btn btn-primary" onclick="location.href='{{route('reservation.reviewPackageTour', $reservation->id)}}'">Review</button></td>
-                                                    @endif                                                    <td>
-                                                        <div class="form-group">
-                                                            {!!  Form::open(['method' => 'DELETE', 'action' => ['ReservationController@destroy', $reservation->id]])!!}
-                                                            {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
-                                                            {!! Form::close() !!}
+                                                    @endif
+                                                        <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#{{$reservation->id}}">Delete</button></td>
+                                                        <div class="modal fade" id="{{$reservation->id}}" role="dialog">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h4 class="modal-title">Delete reservation confirmation</h4>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        Reservation for {{$reservation->reserveUser->name}} will be deleted. Continue?
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        {!!  Form::open(['method' => 'DELETE', 'action' => ['ReservationController@destroy', $reservation->id]])!!}
+                                                                        {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
+                                                                        {!! Form::close() !!}
+                                                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                    </td>
                                                 @endif
                                             @endif
                                         </tr>

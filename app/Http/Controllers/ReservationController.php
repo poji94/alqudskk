@@ -18,6 +18,7 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Session;
 use Redis;
 
 use App\Http\Requests;
@@ -297,6 +298,8 @@ class ReservationController extends Controller
 
         $reservationEnd = Carbon::parse($reservation->reservation_start)->addDays($trimDuration)->toDateString();
         $reservation->update(['price' => $sumPrice, 'reservation_end'=>$reservationEnd]);
+
+        Session::flash('created_reservation', 'Reservation for ' . $reservation->reserveUser->name . ' successfully created');
         if(Auth::user()->role_user_id == 3) {
             return redirect(route('reservation.getUserReservation'));
         }
@@ -508,6 +511,8 @@ class ReservationController extends Controller
 
         $reservationEnd = Carbon::parse($reservation->reservation_start)->addDays($trimDuration)->toDateString();
         $reservation->update(['price' => $sumPrice, 'reservation_end'=>$reservationEnd]);
+
+        Session::flash('updated_reservation', 'Reservation for ' . $reservation->reserveUser->name . ' successfully updated');
         if(Auth::user()->role_user_id == 3) {
             return redirect(route('reservation.getUserReservation'));
         }
@@ -562,6 +567,7 @@ class ReservationController extends Controller
         $input = $request -> all();
         $reservation = Reservation::findOrFail($id);
         $reservation->update(['reservation_status_id'=>$input['reservation_status_id'], 'remarks'=>$input['remarks'], 'remarks_by'=>Auth::user()->id]);
+        Session::flash('reviewed_reservation', 'Reservation for ' . $reservation->reserveUser->name . ' successfully reviewed');
         return redirect(route('reservation.index'));
     }
 
@@ -595,6 +601,8 @@ class ReservationController extends Controller
         $reservation->delete();
         $reservation->packageTours()->detach();
         $reservation->itineraries()->detach();
+
+        Session::flash('deleted_reservation', 'Reservation for ' . $reservation->reserveUser->name . ' successfully deleted');
         if(Auth::user()->role_user_id == 3) {
             return redirect(route('reservation.getUserReservation'));
         }
@@ -683,13 +691,9 @@ class ReservationController extends Controller
         $reservation->update(['user_id'=>Auth::user()->id, 'reservation_status_id'=>2]);
 
         $reservations = Reservation::where('user_id', Auth::user()->id)->get();
-//        Order::create([
-//            'email' => Auth::user()->email,
-//            'product' => $product_name
-//        ]);
 
+        Session::flash('paid_reservation', 'Reservation for ' . $reservation->reserveUser->name . ' successfully paid');
         return redirect()
-            ->route('reservation.getUserReservation', compact('currency', 'reservations'))
-            ->with('msg', 'Thanks for your purchase!');
+            ->route('reservation.getUserReservation', compact('currency', 'reservations'));
     }
 }
