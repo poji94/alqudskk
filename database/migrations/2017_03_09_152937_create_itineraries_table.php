@@ -16,13 +16,13 @@ class CreateItinerariesTable extends Migration
             $table->increments('id');
             $table->string('name')->unique();
             $table->string('option1_pickup_place');
-            $table->time('option1_pickup_time');
+            $table->string('option1_pickup_time');
             $table->string('option1_dropoff_place');
-            $table->time('option1_dropoff_time')->nullable();
+            $table->string('option1_dropoff_time');
             $table->string('option2_pickup_place');
-            $table->time('option2_pickup_time')->nullable();
+            $table->string('option2_pickup_time');
             $table->string('option2_dropoff_place');
-            $table->time('option2_dropoff_time');
+            $table->string('option2_dropoff_time');
             $table->text('description');
             $table->string('duration');
             $table->timestamps();

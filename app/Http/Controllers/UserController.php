@@ -55,7 +55,7 @@ class UserController extends Controller
         //create the user object
         $input = $request -> all();
         User::create($input);
-        Session::flash('created_user', 'User successfully created');
+        Session::flash('created_user', 'User ' . $input['name'] .' successfully created');
         return redirect(route('user.index'));
     }
 
@@ -108,7 +108,7 @@ class UserController extends Controller
         }
 
         $user->update($input);
-        Session::flash('updated_user', 'User successfully updated');
+        Session::flash('updated_user', 'User ' . $user->name .' successfully updated');
         return redirect(route('user.index'));
     }
 
@@ -130,7 +130,7 @@ class UserController extends Controller
         foreach($reservations as $reservation) {
             $reservation->delete();
         }
-        Session::flash('deleted_user', 'User successfully deleted');
+        Session::flash('deleted_user', 'User ' . $user->name .' successfully deleted');
         return redirect(route('user.index'));
     }
 }

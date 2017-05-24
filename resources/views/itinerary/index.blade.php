@@ -13,6 +13,73 @@
 
                     <div class="panel-body">
                         {!! Form::label('title_label', 'List of activities available') !!}
+
+                        <br>
+                        @if(Session::has('created_itinerary'))
+                            <script type="text/javascript">
+                                $(window).on('load',function(){
+                                    $('#created_itinerary').modal('show');
+                                });
+                            </script>
+                            <div class="modal fade" id="created_itinerary" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Activity created</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            {{session('created_itinerary')}}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                        @if(Session::has('updated_itinerary'))
+                            <script type="text/javascript">
+                                $(window).on('load',function(){
+                                    $('#updated_itinerary').modal('show');
+                                });
+                            </script>
+                            <div class="modal fade" id="updated_itinerary" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Activity updated</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            {{session('updated_itinerary')}}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                        @if(Session::has('deleted_itinerary'))
+                            <script type="text/javascript">
+                                $(window).on('load',function(){
+                                    $('#deleted_itinerary').modal('show');
+                                });
+                            </script>
+                            <div class="modal fade" id="deleted_itinerary" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Activity deleted</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            {{session('deleted_itinerary')}}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                        @endif
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
@@ -33,13 +100,25 @@
                                             <td>{{$itinerary->created_at->diffForHumans()}}</td>
                                             <td>{{$itinerary->updated_at->diffForHumans()}}</td>
                                             <td><button type="button" class="btn btn-primary" onclick="location.href='{{route('itinerary.edit', $itinerary->id)}}'">View</button></td>
-                                            <td>
-                                                <div class="form-group">
-                                                    {!! Form::open(['method' => 'DELETE', 'action' => ['ItineraryController@destroy', $itinerary->id]])!!}
-                                                    {!! Form::submit('Delete', ['class' => ' btn btn-danger']) !!}
-                                                    {!! Form::close() !!}
+                                            <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#{{$itinerary->id}}">Delete</button></td>
+                                            <div class="modal fade" id="{{$itinerary->id}}" role="dialog">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title">Delete activity confirmation</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            Activity {{$itinerary->name}} will be deleted. Continue?
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            {!! Form::open(['method' => 'DELETE', 'action' => ['ItineraryController@destroy', $itinerary->id]])!!}
+                                                                {!! Form::submit('Delete', ['class' => ' btn btn-danger']) !!}
+                                                            {!! Form::close() !!}
+                                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </td>
+                                            </div>
                                         </tr>
                                     @endforeach
                                 @endif

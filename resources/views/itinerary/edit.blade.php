@@ -262,7 +262,6 @@
                             </div>
                         </div>
                         <p>
-                            <input type="button" class="btn btn-primary" id="add-media" value="Add Photo">
                             <script type="text/javascript">
                                 $(document).ready(function () {
                                     $("#media-form").hide();
@@ -284,11 +283,11 @@
                         </p>
 
                         <div class="form-group">
+                            <input type="button" class="btn btn-primary" id="add-media" value="Add Photo">
                             {!! Form::submit('Edit Activity', ['class'=>'btn btn-primary']) !!}
+                            <button type="button" class="btn btn-primary" onclick="location.href='{{route('itinerary.index')}}'">Cancel</button>
                         </div>
                         {!! Form::close() !!}
-
-                        <button type="button" class="btn btn-primary" onclick="location.href='{{route('itinerary.index')}}'">Cancel</button>
                     </div>
                 </div>
             </div>

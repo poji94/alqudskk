@@ -13,6 +13,7 @@ use App\Http\Requests;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Session;
 
 class ItineraryController extends Controller
 {
@@ -130,15 +131,21 @@ class ItineraryController extends Controller
         $trimDuration = $duration[0];
 
         $option1DropOffTime = Carbon::parse($itinerary->option1_pickup_time)->addHours($trimDuration)->toTimeString();
-        $itinerary->update(['option1_dropoff_time'=>$option1DropOffTime]);
+        $option1PickupTime = Carbon::parse($itinerary->option1_pickup_time)->format('g:i A');
+        $option1DropOffTime = Carbon::parse($option1DropOffTime)->format('g:i A');
+        $itinerary->update(['option1_pickup_time'=>$option1PickupTime, 'option1_dropoff_time'=>$option1DropOffTime]);
 
         if($input['option2_pickup_time'] != null) {
             $option2DropOffTime = Carbon::parse($itinerary->option2_pickup_time)->addHours($trimDuration)->toTimeString();
-            $itinerary->update(['option2_dropoff_time'=>$option2DropOffTime]);
+            $option2PickupTime = Carbon::parse($itinerary->option2_pickup_time)->format('g:i A');
+            $option2DropOffTime = Carbon::parse($option2DropOffTime)->format('g:i A');
+            $itinerary->update(['option2_pickup_time'=>$option2PickupTime, 'option2_dropoff_time'=>$option2DropOffTime]);
         }
 
         $itinerary->places()->save($placetourism);
         $itinerary->types()->save($typevacation);
+
+        Session::flash('created_itinerary', 'Activity ' . $itinerary->name . ' successfully created');
         return redirect(route('itinerary.index'));
     }
 
@@ -215,6 +222,15 @@ class ItineraryController extends Controller
         foreach ($itinerary->types as $type) {
             $type_vacation = $type->pivot->type_vacation_id;
         }
+
+        $itinerary->option1_pickup_time = Carbon::parse($itinerary->option1_pickup_time)->format('H:i');
+        $itinerary->option1_pickup_time = Carbon::parse($itinerary->option1_pickup_time)->format('H:i');
+
+        if($itinerary->option2_pickup_time != null) {
+            $itinerary->option2_pickup_time = Carbon::parse($itinerary->option2_pickup_time)->format('H:i');
+            $itinerary->option2_pickup_time = Carbon::parse($itinerary->option2_pickup_time)->format('H:i');
+        }
+
         $placetourism = PlaceTourism::lists('name', 'id')->all();
         $typevacation = TypeVacation::lists('name', 'id')->all();
         return view('itinerary.edit', compact('itinerary', 'placetourism', 'place_tourism', 'typevacation', 'type_vacation'));
@@ -264,13 +280,18 @@ class ItineraryController extends Controller
         $trimDuration = $duration[0];
 
         $option1DropOffTime = Carbon::parse($itinerary->option1_pickup_time)->addHours($trimDuration)->toTimeString();
-        $itinerary->update(['option1_dropoff_time'=>$option1DropOffTime]);
+        $option1PickupTime = Carbon::parse($itinerary->option1_pickup_time)->format('g:i A');
+        $option1DropOffTime = Carbon::parse($option1DropOffTime)->format('g:i A');
+        $itinerary->update(['option1_pickup_time'=>$option1PickupTime, 'option1_dropoff_time'=>$option1DropOffTime]);
 
         if($input['option2_pickup_time'] != null) {
             $option2DropOffTime = Carbon::parse($itinerary->option2_pickup_time)->addHours($trimDuration)->toTimeString();
-            $itinerary->update(['option2_dropoff_time'=>$option2DropOffTime]);
+            $option2PickupTime = Carbon::parse($itinerary->option2_pickup_time)->format('g:i A');
+            $option2DropOffTime = Carbon::parse($option2DropOffTime)->format('g:i A');
+            $itinerary->update(['option2_pickup_time'=>$option2PickupTime, 'option2_dropoff_time'=>$option2DropOffTime]);
         }
 
+        Session::flash('updated_itinerary', 'Activity ' . $itinerary->name . ' successfully updated');
         return redirect(route('itinerary.index'));
     }
 
@@ -295,6 +316,8 @@ class ItineraryController extends Controller
             unlink(public_path(). $media->path);
         }
         $itinerary->medias()->delete();
+
+        Session::flash('deleted_itinerary', 'Activity ' . $itinerary->name . ' successfully updated');
         return redirect(route('itinerary.index'));
     }
 }
