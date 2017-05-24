@@ -103,30 +103,35 @@
                                 </div>
                             </div>
                             <div class="col-sm-6">
-                                Name:<br> {{ $packageTour ->name }} <br><br>
-                                Description:<br> {{$packageTour->description}} <br><br>
-                                Duration:<br> {{ $packageTour->duration }} <br><br>
-                                Activities included: <br>
+                                {!! Form::label('title_label', 'Name: ') !!}<br>
+                                {{ $packageTour ->name }} <br><br>
+
+                                {!! Form::label('activity_label', 'Activities included: ') !!}<br>
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead>
-                                            <tr>
-                                                <th>Activity</th>
-                                                <th>Action</th>
-                                            </tr>
+                                        <tr>
+                                            <th>Activity</th>
+                                            <th>Action</th>
+                                        </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach($packageTour->itineraries as $itinerary)
+                                        @foreach($packageTour->itineraries as $itinerary)
                                             <tr>
                                                 <td>{{$itinerary->name}}</td>
                                                 <td> <button type="button" class=" btn btn-primary" onclick="location.href='{{ route('itinerary.show', $itinerary->id) }}'">View</button></td>
                                             </tr>
-                                            @endforeach
+                                        @endforeach
                                         </tbody>
                                     </table>
                                 </div>
-                                Price :<br>
-                                {!! Form::label('currency_drop_down', 'Currency') !!}
+                                {!! Form::label('description_label', 'Description: ') !!}<br>
+                                {{$packageTour->description}} <br><br>
+
+                                {!! Form::label('duration_label', 'Duration') !!}<br>
+                                {{ $packageTour->duration }} <br><br>
+
+                                {!! Form::label('currency_drop_down', 'Price Currency: ') !!}<br>
                                 <div class="row form-group">
                                     {!! Form::open(['method'=>'GET', 'action'=> 'PackageTourController@changeCurrency']) !!}
                                         <div class="col-sm-10">

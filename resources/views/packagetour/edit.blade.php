@@ -203,7 +203,6 @@
                                 @endphp
                             @endforeach
                             <p>
-                                <input type="button" class="btn btn-primary" id="add-itinerary" value="Add Activity">
                                 <script type="text/javascript">
                                     $(document).ready(function () {
                                         $("#itinerary-form").hide();
@@ -225,10 +224,11 @@
                             </p>
                         </div>
                             <div class="form-group">
+                                <input type="button" class="btn btn-primary" id="add-itinerary" value="Add Activity">
                                 {!! Form::submit('Edit Tour Package', ['class'=>'btn btn-primary']) !!}
+                                <button type="button" class="btn btn-primary" onclick="location.href='{{route('packagetour.index')}}'">Cancel</button>
                             </div>
                         {!! Form::close() !!}
-                        <button type="button" class="btn btn-primary" onclick="location.href='{{route('packagetour.index')}}'">Cancel</button>
                     </div>
                 </div>
             </div>

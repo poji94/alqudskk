@@ -136,7 +136,6 @@
                                 <input type="button" class="btn btn-danger" id="remove-itinerary" value="Remove">
                             </div>
                             <p>
-                                <input type="button" class="btn btn-primary" id="add-itinerary" value="Add Activity">
                                 <script type="text/javascript">
                                     $(document).ready(function () {
                                         $("#itinerary-form").hide();
@@ -158,6 +157,7 @@
                             </p>
 
                         <div class="form-group">
+                            <input type="button" class="btn btn-primary" id="add-itinerary" value="Add Activity">
                             {!! Form::submit('Create Tour Package', ['class'=>'btn btn-primary']) !!}
                             <button type="button" class="btn btn-primary" onclick="location.href='{{route('packagetour.index')}}'">Cancel</button>
                         </div>

@@ -79,7 +79,8 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>                        @endif
+                            </div>
+                        @endif
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>

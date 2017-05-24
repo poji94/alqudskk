@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('head')
-    Itineraries
+    Activities
 @endsection
 
 @section('styles')
@@ -19,7 +19,7 @@
                     <div class="panel-heading">Activity selection</div>
 
                     <div class="panel-body">
-                        Please choose your selection
+                        {!! Form::label('title_label', 'Please choose your selection') !!}
                         {!! Form::open(['method'=>'GET', 'action'=> 'ItineraryController@filterSelection']) !!}
                             <div class="row">
                                 <div class="col-sm-6 form-group">

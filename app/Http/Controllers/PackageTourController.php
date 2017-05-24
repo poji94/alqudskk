@@ -13,6 +13,7 @@ use App\TypeVacation;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Session;
 
 class PackageTourController extends Controller
 {
@@ -128,6 +129,8 @@ class PackageTourController extends Controller
                 $packagetour->types()->save($type);
             }
         }
+
+        Session::flash('created_packagetour', 'Tour package ' . $packagetour->name . ' successfully created');
         return redirect(route('packagetour.index'));
     }
 
@@ -248,6 +251,8 @@ class PackageTourController extends Controller
                 $packagetour->types()->save($type);
             }
         }
+
+        Session::flash('updated_packagetour', 'Tour package ' . $packagetour->name . ' successfully updated');
         return redirect(route('packagetour.index'));
     }
 
@@ -271,6 +276,8 @@ class PackageTourController extends Controller
         $packagetour->medias()->delete();
         $packagetour->places()->detach();
         $packagetour->types()->detach();
+
+        Session::flash('deleted_packagetour', 'Tour package ' . $packagetour->name . ' successfully deleted');
         return redirect(route('packagetour.index'));
     }
 }

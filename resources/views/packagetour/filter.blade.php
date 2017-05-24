@@ -12,7 +12,7 @@
                     <div class="panel-heading">Tour package selection</div>
 
                     <div class="panel-body">
-                        Please choose your selection
+                        {!! Form::label('title_label', 'Please choose your selection') !!}
                         {!! Form::open(['method'=>'GET', 'action'=> 'PackageTourController@filterSelection']) !!}
                             <div class="row">
                                 <div class="col-sm-6 form-group">
