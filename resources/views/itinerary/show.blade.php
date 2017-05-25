@@ -72,7 +72,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-6">
-                                {!! Form::label('name_label', 'Name: ') !!}
+                                {!! Form::label('name_label', 'Name: ') !!}<br>
                                 {{ $itinerary ->name }} <br><br>
 
                                 {!! Form::label('pickup_dropoff_label', 'Pickup and Dropoff: ') !!}
@@ -80,9 +80,9 @@
                                     <table class="table">
                                         <thead>
                                         <tr>
-                                            <th>Option 1</th>
-                                            <th>Place</th>
-                                            <th>Time</th>
+                                            <th class="col-sm-2">Option 1</th>
+                                            <th class="col-sm-6">Place</th>
+                                            <th class="col-sm-2">Time</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -104,9 +104,9 @@
                                         <table class="table">
                                             <thead>
                                             <tr>
-                                                <th>Option 2</th>
-                                                <th>Place</th>
-                                                <th>Time</th>
+                                                <th class="col-sm-2">Option 2</th>
+                                                <th class="col-sm-6">Place</th>
+                                                <th class="col-sm-2">Time</th>
                                             </tr>
                                             </thead>
                                             <tbody>

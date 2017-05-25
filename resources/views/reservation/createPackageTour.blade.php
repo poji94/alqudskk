@@ -18,14 +18,18 @@
                             {!! Form::label('reservation_type_id_label', 'Type of Reservation:  ') !!}
                                 Tour package
                         </div>
+                        <br>
                         @php
                             $i = 1;
                         @endphp
                         @if($reservedPackageTours)
                             @foreach($reservedPackageTours as $reservedPackageTour)
+                                {!! Form::label('packagetour_id', 'Tour Package ' . $i) !!}
                                 <div class="row form-group" id="packagetour-form{{$i}}">
-                                    {!! Form::label('packagetour_id', 'Tour Package ' . $i, ['class'=>'col-sm-2']) !!}
-                                    {!! Form::select('packagetour_id[]', $packagetours, $reservedPackageTour['id'], ['class'=>'col-sm-8', 'multiple'=>'multiple']) !!}
+                                    <div class="col-sm-10">
+                                        {!! Form::hidden('packagetour_id[]', $reservedPackageTour['id'], ['multiple'=>'multiple']) !!}
+                                        {!! Form::text('packagetour_name[]', $reservedPackageTour['name'], ['class'=>'form-control', 'disabled']) !!}
+                                    </div>
                                     <button type="button" class="btn btn-danger" onclick="location.href='{{route('reservation.removePackageTourFromSession', $reservedPackageTour['id'])}}'">Remove</button>
                                 </div>
                                 @php

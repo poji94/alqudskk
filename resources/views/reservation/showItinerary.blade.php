@@ -86,12 +86,17 @@
                             {!! Form::label('price', 'Price: ') !!}
                             {{currency($reservation->price, currency()->config('default'), $currency['code'])}}
                         </div>
+                        @if($reservation->other_details != null)
+                            <div class="from-group">
+                                {!! Form::label('other_details_label', 'Other details from user: ') !!}<br>
+                                {{ $reservation->other_details }}<br><br>
+                            </div>
+                        @endif
                         @if($reservation->reserveStatus->id != 2)
-                            <div class="form group">
+                            <div class="form-group">
                                 {!! Form::label('remarks_label', 'Remark: ') !!}<br>
                                 {{ $reservation->remarks }}<br>
                             </div>
-                            <br>
                             <div class="form-group">
                                 {!! Form::label('reviewer_name', 'More info, please enquire: ') !!}<br>
                                 {{$remarksBy->name}}<br>

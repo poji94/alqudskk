@@ -36,6 +36,6 @@ class Itinerary extends Model
 
     //many-to-many polymorphic relationship itinerary <-> reservation through reservable pivot table
     public function reserves() {
-        return $this->morphToMany('App\Reservation', 'reservable');
+        return $this->morphToMany('App\Reservation', 'reservable')->withPivot('option');
     }
 }

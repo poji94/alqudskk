@@ -111,8 +111,8 @@
                                     <table class="table">
                                         <thead>
                                         <tr>
-                                            <th>Activity</th>
-                                            <th>Action</th>
+                                            <th class="col-sm-6">Activity</th>
+                                            <th class="col-sm-2">Action</th>
                                         </tr>
                                         </thead>
                                         <tbody>

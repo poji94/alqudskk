@@ -23,9 +23,10 @@
                         @endphp
                         @foreach($reservation->itineraries as $itinerary)
                             <div class="form-group" id="itinerary-form">
-                                {!! Form::label('packagetour_id', 'Activity ' . $i) !!}
-                                    {!! Form::select('itinerary_id', [''=>'Choose Options'] + $itineraries, $itinerary->id, ['class'=>'form-control', 'readonly']) !!}
-                            </div>
+                                {!! Form::label('itinerary_label', 'Activity ' . $i) !!}
+                                {!! Form::hidden('itinerary_id[]', $itinerary->id, ['multiple'=>'multiple']) !!}
+                                {!! Form::text('itinerary_name[]', $itinerary->name, ['class'=>'form-control', 'disabled']) !!}
+                            </div>                            
                             @php
                                 $i++;
                             @endphp
@@ -135,12 +136,21 @@
                             </div>
                             <div class="col-sm-6 form-group">
                                 {!! Form::label('reservation_end', 'End date') !!}
-                                {!! Form::date('reservation_end', $reservation->reservation_end, ['class'=>'form-control', 'readonly']) !!}
+                                {!! Form::date('reservation_end', $reservation->reservation_end, ['class'=>'form-control', 'disabled']) !!}
                             </div>
                         </div>
                         <div class="form-group">
                             {!! Form::label('price', 'Price') !!}
-                            {!! Form::text('price', currency($reservation->price, 'MYR', $currency['code']), ['class'=>'form-control', 'readonly']) !!}
+                            {!! Form::text('price', currency($reservation->price, 'MYR', $currency['code']), ['class'=>'form-control', 'disabled']) !!}
+                        </div>
+                        <div class="form-group{{ $errors->has('other_details') ? ' has-error' : '' }}">
+                            {!! Form::label('other_details_label', 'Other details:') !!}
+                            {!! Form::textarea('other_details', null, ['class'=>'form-control', 'rows'=>'4', 'placeholder'=>'Any information regarding the reserved activities']) !!}
+                            @if ($errors->has('other_details'))
+                                <span class="help-block">
+                                        <strong>{{ $errors->first('other_details') }}</strong>
+                                </span>
+                            @endif
                         </div>
                         <div class="form-group">
                             {!! Form::submit('Edit Reservation', ['class'=>'btn btn-primary']) !!}

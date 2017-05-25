@@ -74,24 +74,27 @@
                             <div class="col-sm-6 form-group{{ $errors->has('reservation_start') ? ' has-error' : '' }}">
                                 {!! Form::label('reservation_start', 'Start date: ') !!}
                                 {{$reservation->reservation_start}}
-{{--                                {{Carbon\Carbon::createFromFormat('d-m-Y', $reservation->reservation_start)}}--}}
                             </div>
                             <div class="col-sm-6 form-group">
                                 {!! Form::label('reservation_end', 'End date: ') !!}
                                 {{$reservation->reservation_end}}
-{{--                                {{Carbon\Carbon::createFromFormat('d/m/Y', $reservation->reservation_end)}}--}}
                             </div>
                         </div>
                         <div class="form-group">
                             {!! Form::label('price', 'Price: ') !!}
                             {{currency($reservation->price, currency()->config('default'), $currency['code'])}}
                         </div>
+                        @if($reservation->other_details != null)
+                            <div class="from-group">
+                                {!! Form::label('other_details_label', 'Other details from user: ') !!}<br>
+                                {{ $reservation->other_details }}<br><br>
+                            </div>
+                        @endif
                         @if($reservation->reserveStatus->id != 2)
-                            <div class="form group">
+                            <div class="form-group">
                                 {!! Form::label('remarks_label', 'Remark: ') !!}<br>
                                 {{ $reservation->remarks }}<br>
                             </div>
-                            <br>
                             <div class="form-group">
                                 {!! Form::label('reviewer_name', 'More info, please enquire: ') !!}<br>
                                 {{$remarksBy->name}}<br>

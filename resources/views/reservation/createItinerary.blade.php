@@ -24,10 +24,12 @@
                         @endphp
                         @if($reservedItineraries && $reservedItinerariesOption)
                             @foreach($reservedItineraries as $reservedItinerary)
+                                {!! Form::label('itinerary_id', 'Activity ' . $i) !!}
                                 <div class="row form-group" id="itinerary-form{{$i}}">
-                                    {!! Form::label('itinerary_id', 'Activity ' . $i, ['class'=>'col-sm-2']) !!}
-                                    {!! Form::select('itinerary_id[]', $itineraries, $reservedItinerary['id'], ['class'=>'col-sm-8', 'multiple'=>'multiple']) !!}
-
+                                    <div class="col-sm-10">
+                                        {!! Form::hidden('packagetour_id[]', $reservedPackageTour['id'], ['multiple'=>'multiple']) !!}
+                                        {!! Form::text('itinerary_id', $reservedItinerary['name'], ['class'=>'form-control', 'disabled']) !!}
+                                    </div>
                                     <div class="col-sm-8">
                                         {!! Form::label('option_label', 'Pickup & dropoff option: ') !!}
                                         @if($reservedItinerariesOption[$i] == 1)
@@ -37,6 +39,7 @@
                                         @endif
                                     </div>
                                     <button type="button" class="btn btn-danger" onclick="location.href='{{route('reservation.removeItineraryFromSession', $i)}}'">Remove</button>
+
                                 </div>
                                 @php
                                     $i++;
