@@ -17,16 +17,27 @@
                             {!! Form::hidden('reservation_type_id', 1) !!}
                             {!! Form::label('reservation_type_id_label', 'Type of Reservation:  ') !!}
                             Activity
+
                         </div>
                         @php
                             $i = 1;
                         @endphp
+                        <br>
+                        {!! Form::label('itinerary_label', 'Itinerary') !!}<br>
                         @foreach($reservation->itineraries as $itinerary)
-                            <div class="form-group" id="itinerary-form">
-                                {!! Form::label('itinerary_label', 'Activity ' . $i) !!}
-                                {!! Form::hidden('itinerary_id[]', $itinerary->id, ['multiple'=>'multiple']) !!}
-                                {!! Form::text('itinerary_name[]', $itinerary->name, ['class'=>'form-control', 'disabled']) !!}
-                            </div>                            
+                            @if($itinerary->pivot->option == 1)
+                                {!! Form::label('day_itinerary_label', 'Day ' . $itinerary->pivot->day) !!} ( {{$itinerary->option1_pickup_time}} -> {{$itinerary->option1_dropoff_time}} )<br>
+                            @elseif($itinerary->pivot->option == 2)
+                                {!! Form::label('day_itinerary_label', 'Day ' . $itinerary->pivot->day) !!} ( {{$itinerary->option2_pickup_time}} -> {{$itinerary->option2_dropoff_time}} )<br>
+                            @endif
+                            {!! Form::label('itinerary_label', 'Activity ' . $i) !!}
+                            <div class="row form-group" id="itinerary-form">
+                                <div class="col-sm-10">
+                                    {!! Form::hidden('itinerary_id[]', $itinerary->id, ['multiple'=>'multiple']) !!}
+                                    {!! Form::text('itinerary_name[]', $itinerary->name, ['class'=>'form-control', 'disabled']) !!}
+                                </div>
+                                <button type="button" class="btn btn-primary" onclick="location.href='{{route('itinerary.show', $itinerary->id)}}'">View</button>
+                            </div>
                             @php
                                 $i++;
                             @endphp

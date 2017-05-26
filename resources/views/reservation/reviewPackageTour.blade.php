@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('head')
-    View Reservation
+    Review Reservation
 @endsection
 
 @section('content')
@@ -39,10 +39,13 @@
                             $i = 1;
                         @endphp
                         @foreach($reservation->packageTours as $packagetour)
-                            <div class="form-group" id="package-tour-form">
-                                {!! Form::label('packagetour_id', 'Tour Package ' . $i) !!}
-                                {!! Form::hidden('packagetour_id[]', $packagetour->id, ['multiple'=>'multiple']) !!}
-                                {!! Form::text('packagetour_name[]', $packagetour->name, ['class'=>'form-control', 'disabled']) !!}
+                            {!! Form::label('packagetour_id', 'Tour Package ' . $i) !!}
+                            <div class="row form-group" id="package-tour-form">
+                                <div class="col-sm-10">
+                                    {!! Form::hidden('packagetour_id[]', $packagetour->id, ['multiple'=>'multiple']) !!}
+                                    {!! Form::text('packagetour_name[]', $packagetour->name, ['class'=>'form-control', 'disabled']) !!}
+                                </div>
+                                <button type="button" class="btn btn-primary" onclick="location.href='{{route('packagetour.show', $packagetour->id)}}'">View</button>
                             </div>
 
                             @php
@@ -50,7 +53,7 @@
                             @endphp
                         @endforeach
                         <div class="form-group{{ $errors->has('price_type') ? ' has-error' : '' }}" style="display: inline-block">
-                            {!! Form::label('price_type_label', 'Please choose:  ') !!}
+                            {!! Form::label('price_type_label', 'Price type:  ') !!}
                             @if($reservation->price_type == 'personal')
                                 Personal
                             @elseif($reservation->price_type == 'private_group')

@@ -21,11 +21,15 @@
                         @php
                             $i=1;
                         @endphp
+                        <br>
                         @foreach($reservation->packageTours as $packagetour)
-                            <div class="form-group" id="package-tour-form">
-                                {!! Form::label('packagetour_id', 'Tour Package ' . $i) !!}
-                                {!! Form::hidden('packagetour_id[]', $packagetour->id, ['multiple'=>'multiple']) !!}
-                                {!! Form::text('packagetour_name[]', $packagetour->name, ['class'=>'form-control', 'disabled']) !!}
+                            {!! Form::label('packagetour_id', 'Tour Package ' . $i) !!}
+                            <div class="row form-group" id="package-tour-form">
+                                <div class="col-sm-10">
+                                    {!! Form::hidden('packagetour_id[]', $packagetour->id, ['multiple'=>'multiple']) !!}
+                                    {!! Form::text('packagetour_name[]', $packagetour->name, ['class'=>'form-control', 'disabled']) !!}
+                                </div>
+                                <button type="button" class="btn btn-primary" onclick="location.href='{{route('packagetour.show', $packagetour->id)}}'">View</button>
                             </div>
                             @php
                                 $i++;

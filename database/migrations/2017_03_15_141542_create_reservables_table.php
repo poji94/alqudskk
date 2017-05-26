@@ -17,6 +17,7 @@ class CreateReservablesTable extends Migration
             $table->integer('reservation_id');
             $table->integer('reservable_id');
             $table->string('reservable_type');
+            $table->integer('day');
             $table->integer('option');
             $table->timestamps();
         });

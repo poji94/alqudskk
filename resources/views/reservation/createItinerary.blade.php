@@ -22,27 +22,26 @@
                         @php
                             $i = 1;
                         @endphp
+                        {!! Form::label('itinerary_label', 'Itinerary') !!}<br>
                         @if($reservedItineraries && $reservedItinerariesOption)
                             @foreach($reservedItineraries as $reservedItinerary)
                                 @if($reservedDayItineraries)
-                                    {!! Form::label('day_itinerary_label', 'Day ' . $reservedDayItineraries[$i]) !!}<br>
+                                    @if($reservedItinerariesOption[$i] == 1)
+                                        {!! Form::label('day_itinerary_label', 'Day ' . $reservedDayItineraries[$i]) !!} ( {{$reservedItinerary['option1_pickup_time']}} -> {{$reservedItinerary['option1_dropoff_time']}} )
+                                        <br>
+                                    @else
+                                        {!! Form::label('day_itinerary_label', 'Day ' . $reservedDayItineraries[$i]) !!} ( {{$reservedItinerary['option2_pickup_time']}} -> {{$reservedItinerary['option2_dropoff_time']}} )
+                                        <br>
+                                    @endif
                                 @endif
                                 {!! Form::label('itinerary_id', 'Activity ' . $i) !!}
                                 <div class="row form-group" id="itinerary-form{{$i}}">
-                                    <div class="col-sm-10">
+                                    <div class="col-sm-9">
                                         {!! Form::hidden('itinerary_id[]', $reservedItinerary['id'], ['multiple'=>'multiple']) !!}
                                         {!! Form::text('itinerary_id', $reservedItinerary['name'], ['class'=>'form-control', 'disabled']) !!}
                                     </div>
-                                    <div class="col-sm-8">
-                                        {!! Form::label('option_label', 'Pickup & dropoff option: ') !!}
-                                        @if($reservedItinerariesOption[$i] == 1)
-                                            {{$reservedItinerariesOption[$i]}} ( {{$reservedItinerary['option1_pickup_time']}} -> {{$reservedItinerary['option1_dropoff_time']}} )
-                                        @else
-                                            {{$reservedItinerariesOption[$i]}} ( {{$reservedItinerary['option2_pickup_time']}} -> {{$reservedItinerary['option2_dropoff_time']}} )
-                                        @endif
-                                    </div>
+                                    <button type="button" class="btn btn-primary" onclick="location.href='{{route('itinerary.show', $reservedItinerary['id'])}}'">View</button>
                                     <button type="button" class="btn btn-danger" onclick="location.href='{{route('reservation.removeItineraryFromSession', $i)}}'">Remove</button>
-
                                 </div>
                                 @php
                                     $i++;

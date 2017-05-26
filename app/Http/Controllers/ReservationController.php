@@ -213,10 +213,9 @@ class ReservationController extends Controller
                 }
 
                 if($sessionDayItinerary == $dayItineraries) {
-                    if(Carbon::parse($pickupCurrentItinerary)->lessThan(Carbon::parse($dropOffPreviousItinerary))) {
+                    if(Carbon::parse($pickupCurrentItinerary)->lessThanOrEqualTo(Carbon::parse($dropOffPreviousItinerary))) {
                         $dayItineraries++;
                     }
-//                    $dayItineraries++;
                 }
                 $i++;
             }
@@ -290,21 +289,20 @@ class ReservationController extends Controller
             session()->put('collectionReservedItinerariesOption', $reservedItinerariesOption);
         }
 
-        $dayItineraries = 1;
+        $dayItineraries = 0;
         $i = 0;
         if($sessionDayItineraries != []) {
             $sessionDayItineraries = array_values($sessionDayItineraries);
             foreach($sessionDayItineraries as $sessionDayItinerary) {
-                if($sessionDayItineraries[$i] == $dayItineraries) {
-//                    $dayItineraries++;
+                if($sessionDayItineraries[$i] == ($dayItineraries + 1)) {
+                    $dayItineraries++;
                 }
-                elseif($sessionDayItineraries[$i] == ($dayItineraries - 1)) {
-                    $sessionDayItineraries[$i] = ($sessionDayItineraries[$i] + 1);
+
+                if($sessionDayItineraries[$i] == ($dayItineraries + 2)) {
+                    $dayItineraries++;
+                    $sessionDayItineraries[$i] = $dayItineraries;
                 }
-                elseif($sessionDayItineraries[$i] == ($dayItineraries + 1)) {
-                    $sessionDayItineraries[$i] = ($sessionDayItineraries[$i] - 1);
-                }
-                $dayItineraries++;
+                $i++;
             }
             session()->put('dayItineraries', $sessionDayItineraries);
             $sessionDayItineraries = session()->get('dayItineraries');
@@ -394,10 +392,9 @@ class ReservationController extends Controller
         //automate the user_id, reservation_status_id to pending, associate the itineraries/packagetour, durations
         //Note: reservation_type_id == 1 - Ground(activity). Else 2-full boat(packagetour)
 
-        $reservedItinerariesOption =  session()->get('collectionReservedItinerariesOption');
-        session()->forget('collectionReservedItinerariesOption');
+        $reservedItinerariesOption =  session()->pull('collectionReservedItinerariesOption');
+        $reservedDayItineraries = session()->pull('dayItineraries');
         session()->forget('collectionReservedItineraries');
-        session()->forget('dayItineraries');
         $sumPrice = 0;
         $input = $request -> all();
         $reservation = Reservation::create($input);
@@ -405,7 +402,7 @@ class ReservationController extends Controller
 
         $i=0;
         foreach($input['itinerary_id'] as $itinerary_id) {
-            $reservation->itineraries()->attach($itinerary_id, ['option'=>$reservedItinerariesOption[$i]]);                  //since package tour only receive string instead of array, must create an array bracket
+            $reservation->itineraries()->attach($itinerary_id, ['day'=>$reservedDayItineraries[$i] ,'option'=>$reservedItinerariesOption[$i]]);                  //since package tour only receive string instead of array, must create an array bracket
             $i++;
         }
 
@@ -622,6 +619,8 @@ class ReservationController extends Controller
         $trimDuration = $duration / 2 + ($duration % 2);
         $reservationEnd = Carbon::parse($reservation->reservation_start)->addDays($trimDuration)->toDateString();
         $reservation->update(['price' => $sumPrice, 'reservation_end'=>$reservationEnd]);
+
+        Session::flash('updated_reservation', 'Reservation for ' . $reservation->reserveUser->name . ' successfully updated');
         if(Auth::user()->role_user_id == 3) {
             return redirect(route('reservation.getUserReservation'));
         }
@@ -637,6 +636,7 @@ class ReservationController extends Controller
         $input = $request -> all();
         $reservation = Reservation::findOrFail($id);
         $reservation->update(['reservation_status_id'=>$input['reservation_status_id'], 'remarks'=>$input['remarks'], 'remarks_by'=>Auth::user()->id]);
+
         Session::flash('reviewed_reservation', 'Reservation for ' . $reservation->reserveUser->name . ' successfully reviewed');
         return redirect(route('reservation.index'));
     }
@@ -648,6 +648,8 @@ class ReservationController extends Controller
         $input = $request -> all();
         $reservation = Reservation::findOrFail($id);
         $reservation->update(['reservation_status_id'=>$input['reservation_status_id'], 'remarks'=>$input['remarks'], 'remarks_by'=>Auth::user()->id]);
+
+        Session::flash('reviewed_reservation', 'Reservation for ' . $reservation->reserveUser->name . ' successfully reviewed');
         return redirect(route('reservation.index'));
     }
 

@@ -32,11 +32,17 @@
                         @php
                             $i = 1;
                         @endphp
+                        <br>
+                        {!! Form::label('itinerary_label', 'Itinerary') !!}<br>
                         @foreach($reservation->itineraries as $itinerary)
-                            <div class="form-group" id="package-tour-form">
-                                {!! Form::label('$itinerary_id', 'Activity ' . $i . ': ') !!}
-                                    {{$itinerary->name}}
-                            </div>
+                            @if($itinerary->pivot->option == 1)
+                                {!! Form::label('day_itinerary_label', 'Day ' . $itinerary->pivot->day) !!} ( {{$itinerary->option1_pickup_time}} -> {{$itinerary->option1_dropoff_time}} )<br>
+                            @elseif($itinerary->pivot->option == 2)
+                                {!! Form::label('day_itinerary_label', 'Day ' . $itinerary->pivot->day) !!} ( {{$itinerary->option2_pickup_time}} -> {{$itinerary->option2_dropoff_time}} )<br>
+                            @endif
+                            {!! Form::label('itinerary_label', 'Activity ' . $i . ': ') !!}
+                            {{$itinerary->name}}
+                            <br><br>
                             @php
                                 $i++;
                             @endphp

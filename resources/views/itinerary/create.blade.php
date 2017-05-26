@@ -32,13 +32,23 @@
                             @endif
                         </div>
                         <div class="form-group{{ $errors->has('duration') ? ' has-error' : '' }}">
-                            {!! Form::label('duration', 'Duration') !!}
-                            {!! Form::text('duration', null, ['class'=>'form-control']) !!}
+                            {!! Form::label('duration', 'Duration (in hours)') !!}
+                            {!! Form::text('duration', null, ['class'=>'form-control', 'onkeypress'=>'return isNumber(event)']) !!}
                             @if ($errors->has('duration'))
                                 <span class="help-block">
                                         <strong>{{ $errors->first('duration') }}</strong>
                                     </span>
                             @endif
+                            <script type="text/javascript">
+                                function isNumber(evt) {
+                                    evt = (evt) ? evt : window.event;
+                                    var charCode = (evt.which) ? evt.which : evt.keyCode;
+                                    if ( (charCode > 31 && charCode < 48) || charCode > 57) {
+                                        return false;
+                                    }
+                                    return true;
+                                }
+                            </script>
                         </div>
                         <div>
                             {!! Form::label('option1_pickup_label', 'Pick up option 1') !!}

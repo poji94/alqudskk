@@ -33,7 +33,7 @@ class ItineraryStoreRequest extends Request
             'option1_pickup_time' => 'required',
             'option1_dropoff_place' => 'required',
             'description' => 'required | max:5000',
-            'duration' => 'required',
+            'duration' => 'required | numeric',
             'personal' => 'required | integer | min:1',
             'private_group_children' => 'required | integer | min:1',
             'private_group_adult' => 'required | integer | min:1',

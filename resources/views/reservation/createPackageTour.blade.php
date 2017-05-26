@@ -26,10 +26,11 @@
                             @foreach($reservedPackageTours as $reservedPackageTour)
                                 {!! Form::label('packagetour_id', 'Tour Package ' . $i) !!}
                                 <div class="row form-group" id="packagetour-form{{$i}}">
-                                    <div class="col-sm-10">
+                                    <div class="col-sm-9">
                                         {!! Form::hidden('packagetour_id[]', $reservedPackageTour['id'], ['multiple'=>'multiple']) !!}
                                         {!! Form::text('packagetour_name[]', $reservedPackageTour['name'], ['class'=>'form-control', 'disabled']) !!}
                                     </div>
+                                    <button type="button" class="btn btn-primary" onclick="location.href='{{route('packagetour.show', $reservedPackageTour['id'])}}'">View</button>
                                     <button type="button" class="btn btn-danger" onclick="location.href='{{route('reservation.removePackageTourFromSession', $reservedPackageTour['id'])}}'">Remove</button>
                                 </div>
                                 @php

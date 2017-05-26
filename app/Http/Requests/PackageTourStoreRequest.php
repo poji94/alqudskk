@@ -26,7 +26,7 @@ class PackageTourStoreRequest extends Request
         return [
             'name' => 'required | min:5 | max:50 | unique:package_tours',
             'description' => 'required | max:5000',
-            'duration' => 'required',
+            'duration' => 'required | numeric',
             'personal' => 'required | integer | min:1',
             'private_group_children' => 'required | integer | min:1',
             'private_group_adult' => 'required | integer | min:1',
