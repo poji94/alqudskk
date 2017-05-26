@@ -24,10 +24,13 @@
                         @endphp
                         @if($reservedItineraries && $reservedItinerariesOption)
                             @foreach($reservedItineraries as $reservedItinerary)
+                                @if($reservedDayItineraries)
+                                    {!! Form::label('day_itinerary_label', 'Day ' . $reservedDayItineraries[$i]) !!}<br>
+                                @endif
                                 {!! Form::label('itinerary_id', 'Activity ' . $i) !!}
                                 <div class="row form-group" id="itinerary-form{{$i}}">
                                     <div class="col-sm-10">
-                                        {!! Form::hidden('packagetour_id[]', $reservedPackageTour['id'], ['multiple'=>'multiple']) !!}
+                                        {!! Form::hidden('itinerary_id[]', $reservedItinerary['id'], ['multiple'=>'multiple']) !!}
                                         {!! Form::text('itinerary_id', $reservedItinerary['name'], ['class'=>'form-control', 'disabled']) !!}
                                     </div>
                                     <div class="col-sm-8">
