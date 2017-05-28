@@ -106,6 +106,7 @@ class ReservationController extends Controller
     {
         $i = 1;
         $reservedPackageTours = [];
+
         $sessionPackageTours = session()->get('collectionReservedPackageTours');
 
         if($sessionPackageTours != null) {
@@ -154,11 +155,13 @@ class ReservationController extends Controller
         return view('reservation.createItinerary', compact('reservedItineraries', 'reservedItinerariesOption', 'reservedDayItineraries'));
     }
 
-    public function createPackageTour(Request $request, $id)
+    public function createPackageTour($id)
     {
         $i = 1;
         $reservedPackageTours = [];
-        $request->session()->push('collectionReservedPackageTours', $id);
+
+        session()->push('collectionReservedPackageTours', $id);
+
         $sessionPackageTours = session()->get('collectionReservedPackageTours');
         foreach($sessionPackageTours as $sessionPackageTour) {
             $reservedPackageTours[$i] = PackageTour::where('id', $sessionPackageTour)->first();

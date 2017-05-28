@@ -112,6 +112,9 @@ class PackageTourController extends Controller
         $packagetour->itineraries()->sync($input['itinerary_id']);
         $packagetour->places()->detach();
         $packagetour->types()->detach();
+        $collectionPlaces = collect();
+        $collectionTypes = collect();
+
         if($medias = $request->file('media_id')) {
             $i = 0;
             foreach($medias as $media) {
@@ -121,13 +124,38 @@ class PackageTourController extends Controller
                 $i++;
             }
         }
+
         foreach($packagetour->itineraries as $itinerary) {
             foreach($itinerary->places as $place) {
-                $packagetour->places()->save($place);
+                $collectionPlaces->push($place);
             }
             foreach($itinerary->types as $type) {
-                $packagetour->types()->save($type);
+                $collectionTypes->push($type);
             }
+        }
+
+        $collectionPlacesUnique = $collectionPlaces->unique('id');
+        $numberCollectionPlaces = $collectionPlacesUnique->count();
+        $collectionPlacesToArray = [];
+
+        for ($i = 0; $i < $numberCollectionPlaces; $i++) {
+            $collectionPlacesToArray[$i] = $collectionPlacesUnique[$i]->id;
+        }
+
+        $collectionTypesUnique = $collectionTypes->unique('id');
+        $numberCollectionTypes = $collectionTypesUnique->count();
+        $collectionTypesToArray = [];
+
+        for ($i = 0; $i < $numberCollectionTypes; $i++) {
+            $collectionTypesToArray[$i] = $collectionTypesUnique[$i]->id;
+        }
+
+        for($i = 0; $i < $numberCollectionPlaces; $i++) {
+            $packagetour->places()->save(PlaceTourism::findOrFail($collectionPlacesToArray[$i]));
+        }
+
+        for($i = 0; $i < $numberCollectionTypes; $i++) {
+            $packagetour->types()->save(TypeVacation::findOrFail($collectionTypesToArray[$i]));
         }
 
         Session::flash('created_packagetour', 'Tour package ' . $packagetour->name . ' successfully created');
@@ -229,6 +257,8 @@ class PackageTourController extends Controller
         $packagetour->itineraries()->sync($input['itinerary_id']);
         $packagetour->places()->detach();
         $packagetour->types()->detach();
+        $collectionPlaces = collect();
+        $collectionTypes = collect();
 
         foreach($packagetour->medias as $media) {
             unlink(public_path(). $media->path);
@@ -243,13 +273,38 @@ class PackageTourController extends Controller
                 $i++;
             }
         }
+
         foreach($packagetour->itineraries as $itinerary) {
             foreach($itinerary->places as $place) {
-                $packagetour->places()->save($place);
+                $collectionPlaces->push($place);
             }
             foreach($itinerary->types as $type) {
-                $packagetour->types()->save($type);
+                $collectionTypes->push($type);
             }
+        }
+
+        $collectionPlacesUnique = $collectionPlaces->unique('id');
+        $numberCollectionPlaces = $collectionPlacesUnique->count();
+        $collectionPlacesToArray = [];
+
+        for ($i = 0; $i < $numberCollectionPlaces; $i++) {
+            $collectionPlacesToArray[$i] = $collectionPlacesUnique[$i]->id;
+        }
+
+        $collectionTypesUnique = $collectionTypes->unique('id');
+        $numberCollectionTypes = $collectionTypesUnique->count();
+        $collectionTypesToArray = [];
+
+        for ($i = 0; $i < $numberCollectionTypes; $i++) {
+            $collectionTypesToArray[$i] = $collectionTypesUnique[$i]->id;
+        }
+
+        for($i = 0; $i < $numberCollectionPlaces; $i++) {
+            $packagetour->places()->save(PlaceTourism::findOrFail($collectionPlacesToArray[$i]));
+        }
+
+        for($i = 0; $i < $numberCollectionTypes; $i++) {
+            $packagetour->types()->save(TypeVacation::findOrFail($collectionTypesToArray[$i]));
         }
 
         Session::flash('updated_packagetour', 'Tour package ' . $packagetour->name . ' successfully updated');
