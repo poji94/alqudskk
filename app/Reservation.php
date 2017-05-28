@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Reservation extends Model
 {
     //setting mass assignments
-    protected $fillable = ['user_id', 'reservation_type_id', 'reservation_start', 'reservation_end',
+    protected $fillable = ['user_id', 'reservation_type_id', 'main_reservation_start', 'main_reservation_end', 'alternate_reservation_start', 'alternate_reservation_end', 'chosen_date',
                             'children_no', 'adult_no', 'price_type', 'price', 'reservation_status_id', 'other_details', 'remarks', 'remarks_by'];
 
     //one-to-one relationship reservation <-> user

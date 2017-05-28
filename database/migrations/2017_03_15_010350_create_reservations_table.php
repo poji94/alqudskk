@@ -16,8 +16,11 @@ class CreateReservationsTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->integer('reservation_type_id');
-            $table->string('reservation_start');
-            $table->string('reservation_end');
+            $table->string('main_reservation_start');
+            $table->string('main_reservation_end');
+            $table->string('alternate_reservation_start');
+            $table->string('alternate_reservation_end');
+            $table->string('chosen_date');
             $table->integer('children_no');
             $table->integer('adult_no');
             $table->string('price_type');

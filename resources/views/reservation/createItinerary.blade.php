@@ -18,6 +18,13 @@
                             {!! Form::label('reservation_type_id_label', 'Type of Reservation:  ') !!}
                             Activity
                         </div>
+                        @if($errors->has('itinerary_id'))
+                            <div class="alert alert-danger">
+                                <ul>
+                                    <strong>{{ $errors->first('itinerary_id') }}</strong>
+                                </ul>
+                            </div>
+                        @endif
                         <br>
                         @php
                             $i = 1;
@@ -25,22 +32,19 @@
                         {!! Form::label('itinerary_label', 'Itinerary') !!}<br>
                         @if($reservedItineraries && $reservedItinerariesOption)
                             @foreach($reservedItineraries as $reservedItinerary)
-                                @if($reservedDayItineraries)
-                                    @if($reservedItinerariesOption[$i] == 1)
-                                        {!! Form::label('day_itinerary_label', 'Day ' . $reservedDayItineraries[$i]) !!} ( {{$reservedItinerary['option1_pickup_time']}} -> {{$reservedItinerary['option1_dropoff_time']}} )
-                                        <br>
-                                    @else
-                                        {!! Form::label('day_itinerary_label', 'Day ' . $reservedDayItineraries[$i]) !!} ( {{$reservedItinerary['option2_pickup_time']}} -> {{$reservedItinerary['option2_dropoff_time']}} )
-                                        <br>
-                                    @endif
+                                @if($reservedDayItineraries[$i] == 1)
+                                    <label for="day_itinerary_label">Day {{$reservedDayItineraries[$i]}}</label> ( {{$reservedItinerary['option1_pickup_time']}} -> {{$reservedItinerary['option1_dropoff_time']}} )
+                                @elseif($reservedDayitineraries[$i] == 2)
+                                    <label for="day_itinerary_label">Day {{$reservedDayItineraries[$i]}}</label> ( {{$reservedItinerary['option2_pickup_time']}} -> {{$reservedItinerary['option2_dropoff_time']}} )
                                 @endif
+                                <br>
                                 {!! Form::label('itinerary_id', 'Activity ' . $i) !!}
                                 <div class="row form-group" id="itinerary-form{{$i}}">
                                     <div class="col-sm-9">
-                                        {!! Form::hidden('itinerary_id[]', $reservedItinerary['id'], ['multiple'=>'multiple']) !!}
-                                        {!! Form::text('itinerary_id', $reservedItinerary['name'], ['class'=>'form-control', 'disabled']) !!}
+                                        <input name="itinerary_id[]" type="hidden" mutltiple="multiple" value="{{$reservedItinerary['id']}}">
+                                        <input class="form-control" disabled="disabled" name="itinerary_name[]" type="text" value="{{$reservedItinerary['name']}}" id="itinerary_id">
                                     </div>
-                                    <button type="button" class="btn btn-primary" onclick="location.href='{{route('itinerary.show', $reservedItinerary['id'])}}'">View</button>
+                                    <button type="button" class="btn btn-primary" onclick="location.href='{{route('itinerary.show', $reservedItinerary[$i])}}'">View</button>
                                     <button type="button" class="btn btn-danger" onclick="location.href='{{route('reservation.removeItineraryFromSession', $i)}}'">Remove</button>
                                 </div>
                                 @php
@@ -110,14 +114,25 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="form-group{{ $errors->has('reservation_start') ? ' has-error' : '' }}">
-                            {!! Form::label('reservation_start', 'Start date') !!}
-                            {!! Form::date('reservation_start', null, ['class'=>'form-control', 'min'=>\Carbon\Carbon::today()->toDateString(), 'onkeydown'=>'return false']) !!}
-                            @if ($errors->has('reservation_start'))
-                                <span class="help-block">
-                                        <strong>{{ $errors->first('reservation_start') }}</strong>
+                        <div class="row">
+                            <div class="col-sm-6 form-group{{ $errors->has('main_reservation_start') ? ' has-error' : '' }}">
+                                {!! Form::label('main_reservation_start_label', 'Start date') !!}
+                                {!! Form::date('main_reservation_start', null, ['class'=>'form-control', 'min'=>\Carbon\Carbon::today()->toDateString(), 'onkeydown'=>'return false']) !!}
+                                @if ($errors->has('main_reservation_start'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('main_reservation_start') }}</strong>
                                     </span>
-                            @endif
+                                @endif
+                            </div>
+                            <div class="col-sm-6 form-group{{ $errors->has('alternate_reservation_start') ? ' has-error' : '' }}">
+                                {!! Form::label('alternate_reservation_start_label', 'Alternative start date') !!}
+                                {!! Form::date('alternate_reservation_start', null, ['class'=>'form-control', 'min'=>\Carbon\Carbon::today()->toDateString(), 'onkeydown'=>'return false']) !!}
+                                @if ($errors->has('alternate_reservation_start'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('alternate_reservation_start') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
                         </div>
                         <div class="form-group{{ $errors->has('other_details') ? ' has-error' : '' }}">
                             {!! Form::label('other_details_label', 'Other details:') !!}

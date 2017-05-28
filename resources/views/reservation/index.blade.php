@@ -185,8 +185,8 @@
                                             <td>{{$reservation->reserveType->name}}</td>
                                             <td>{{currency($reservation->price, currency()->config('default'), $currency['code'])}}</td>>
                                             <td>{{$reservation->reserveStatus->name}}</td>
-                                            <td>{{$reservation->reservation_start}}</td>
-                                            <td>{{$reservation->reservation_end}}</td>
+                                            <td>{{$reservation->main_reservation_start}}</td>
+                                            <td>{{$reservation->main_reservation_end}}</td>
                                             <td>{{$reservation->created_at->diffForHumans()}}</td>
                                             <td>{{$reservation->updated_at->diffForHumans()}}</td>
                                             @if($reservation->reserveStatus->id == 1)

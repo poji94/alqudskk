@@ -70,16 +70,54 @@
                                 </div>
                             </div>
                         @endif
-                        <div class="row">
-                            <div class="col-sm-6 form-group{{ $errors->has('reservation_start') ? ' has-error' : '' }}">
-                                {!! Form::label('reservation_start', 'Start date: ') !!}
-                                {{$reservation->reservation_start}}
+                        @if($reservation->reservation_status_id == 4)
+                            @if($reservation->chosen_date == 1)
+                                {!! Form::label('chosen_date_label', 'Chosen Date: Main') !!}
+                                <div class="row">
+                                    <div class="col-sm-6 form-group{{ $errors->has('reservation_start') ? ' has-error' : '' }}">
+                                        {!! Form::label('reservation_start', 'Start date: ') !!}
+                                        {{$reservation->main_reservation_start}}
+                                    </div>
+                                    <div class="col-sm-6 form-group">
+                                        {!! Form::label('reservation_end', 'End date: ') !!}
+                                        {{$reservation->main_reservation_end}}
+                                    </div>
+                                </div>
+                            @elseif($reservation->chosen_date == 2)
+                                {!! Form::label('chosen_date_label', 'Chosen Date: Alternative') !!}
+                                <div class="row">
+                                    <div class="col-sm-6 form-group{{ $errors->has('reservation_start') ? ' has-error' : '' }}">
+                                        {!! Form::label('reservation_start', 'Start date: ') !!}
+                                        {{$reservation->alternate_reservation_start}}
+                                    </div>
+                                    <div class="col-sm-6 form-group">
+                                        {!! Form::label('reservation_end', 'End date: ') !!}
+                                        {{$reservation->alternate_reservation_end}}
+                                    </div>
+                                </div>
+                            @endif
+                        @else
+                            <div class="row">
+                                <div class="col-sm-6 form-group{{ $errors->has('reservation_start') ? ' has-error' : '' }}">
+                                    {!! Form::label('reservation_start', 'Main Start date: ') !!}
+                                    {{$reservation->main_reservation_start}}
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    {!! Form::label('reservation_end', 'Main End date: ') !!}
+                                    {{$reservation->main_reservation_end}}
+                                </div>
                             </div>
-                            <div class="col-sm-6 form-group">
-                                {!! Form::label('reservation_end', 'End date: ') !!}
-                                {{$reservation->reservation_end}}
+                            <div class="row">
+                                <div class="col-sm-6 form-group{{ $errors->has('reservation_start') ? ' has-error' : '' }}">
+                                    {!! Form::label('reservation_start', 'Alternative Start date: ') !!}
+                                    {{$reservation->alternate_reservation_start}}
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    {!! Form::label('reservation_end', 'Alternative End date: ') !!}
+                                    {{$reservation->alternate_reservation_end}}
+                                </div>
                             </div>
-                        </div>
+                        @endif
                         <div class="form-group">
                             {!! Form::label('price', 'Price: ') !!}
                             {{currency($reservation->price, currency()->config('default'), $currency['code'])}}

@@ -72,6 +72,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-6">
+                                @include('includes.form_error')
                                 {!! Form::label('name_label', 'Name: ') !!}<br>
                                 {{ $itinerary ->name }} <br><br>
 
@@ -128,14 +129,10 @@
                                 {{$itinerary->description}} <br><br>
 
                                 {!! Form::label('duration_label', 'Duration: ') !!}<br>
-                                @php
-                                    $wannaTrim = $itinerary->duration;
-                                    $duration = $wannaTrim[0];
-                                @endphp
-                                @if($duration >= 6)
+                                @if($itinerary->duration >= 6)
                                     Full-day <br><br>
                                 @else
-                                    Half-day <br><br>
+                                    {{$itinerary->duration}} Hour <br><br>
                                 @endif
                                 {!! Form::label('price_currency_label', 'Price Currency:') !!}<br>
                                 <div class="row form-group">
@@ -195,9 +192,9 @@
                                                         {!! Form::open(['method'=>'POST', 'action'=> 'ReservationController@createItinerary']) !!}
                                                             {!! Form::hidden('id', $itinerary->id) !!}
                                                             @if($itinerary->option2_pickup_place != null)
-                                                                {!! Form::select('option', [''=>'Choose Options', '1'=>'Option 1', '2'=>'Option 2'], null, [ 'class'=>'form-control']) !!}
+                                                                {!! Form::select('option', [''=>'Choose Options', '1'=>'Option 1 ('. $itinerary->option1_pickup_time . ' -> ' . $itinerary->option1_dropoff_time .')', '2'=>'Option 2 ('. $itinerary->option2_pickup_time . ' -> ' . $itinerary->option2_dropoff_time .')'], null, [ 'class'=>'form-control']) !!}
                                                             @else
-                                                                {!! Form::select('option', [''=>'Choose Options', '1'=>'Option 1'], null, [ 'class'=>'form-control']) !!}
+                                                                {!! Form::select('option', [''=>'Choose Options', '1'=>'Option 1 ('. $itinerary->option1_pickup_time . ' -> ' . $itinerary->option1_dropoff_time .')'], null, [ 'class'=>'form-control']) !!}
                                                             @endif
                                                     </div>
                                                     <div class="col-sm-2">

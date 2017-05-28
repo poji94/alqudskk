@@ -28,7 +28,8 @@ class ReservationStoreItineraryRequest extends Request
             'adult_no' => 'integer | min:1',
             'children_no' => 'integer',
             'price_type' => 'required',
-            'reservation_start' => 'required',
+            'main_reservation_start' => 'required',
+            'alternate_reservation_start' => 'required | different:main_reservation_start',
         ];
     }
 }

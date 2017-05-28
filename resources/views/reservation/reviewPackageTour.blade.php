@@ -34,6 +34,27 @@
                                         <strong>{{ $errors->first('reservation_status_id') }}</strong>
                                 </span>
                             @endif
+                            <script type="text/javascript">
+                                $(document).ready(function () {
+                                    $("#chosen_date").hide();
+                                    $("#reservation_status_id option[value='1']").attr("disabled", true);
+                                    $("#reservation_status_id option[value='2']").attr("disabled", true);
+
+                                    if($("#reservation_status_id").val() == 4) {
+                                        $("#chosen_date").slideDown();
+                                    }
+
+                                    $("#reservation_status_id").change(function() {
+                                        var value = $(this).find('option:selected').attr('value');
+                                        if(value == 4) {
+                                            $("#chosen_date").slideDown();
+                                        }
+                                        else {
+                                            $("#chosen_date").slideUp();
+                                        }
+                                    });
+                                });
+                            </script>
                         </div>
                         @php
                             $i = 1;
@@ -98,18 +119,23 @@
                             </div>
                         @endif
                         <div class="row">
-                            <div class="col-sm-6 form-group{{ $errors->has('reservation_start') ? ' has-error' : '' }}">
-                                {!! Form::label('reservation_start', 'Start date') !!}
-                                {!! Form::date('reservation_start', $reservation->reservation_start, ['class'=>'form-control', 'disabled']) !!}
-                                @if ($errors->has('reservation_start'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('reservation_start') }}</strong>
-                                    </span>
-                                @endif
+                            <div class="col-sm-6 form-group">
+                                {!! Form::label('main_reservation_start_label', 'Start date') !!}
+                                {!! Form::date('main_reservation_start', null, ['class'=>'form-control', 'disabled']) !!}
                             </div>
                             <div class="col-sm-6 form-group">
-                                {!! Form::label('reservation_end', 'End date') !!}
-                                {!! Form::date('reservation_end', $reservation->reservation_end, ['class'=>'form-control', 'disabled']) !!}
+                                {!! Form::label('main_reservation_end_label', 'End date') !!}
+                                {!! Form::date('main_reservation_end', $reservation->main_reservation_end, ['class'=>'form-control', 'disabled']) !!}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 form-group">
+                                {!! Form::label('alternate_reservation_start_label', 'Alternative start date') !!}
+                                {!! Form::date('alternate_reservation_start', null, ['class'=>'form-control', 'disabled']) !!}
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                {!! Form::label('alternate_reservation_end', 'Alternative end date') !!}
+                                {!! Form::date('alternate_reservation_end', $reservation->alternate_reservation_end, ['class'=>'form-control', 'disabled']) !!}
                             </div>
                         </div>
                         <div class="form-group">
@@ -122,6 +148,10 @@
                                 {!! Form::textarea('other_details', null, ['class'=>'form-control', 'rows'=>'4', 'disabled']) !!}
                             </div>
                         @endif
+                        <div id="chosen_date" class="form-group{{ $errors->has('chosen_date') ? ' has-error' : ''}}">
+                            {!! Form::label('chosen_date_label', 'Choose date: ') !!}
+                            {!! Form::select('chosen_date', ['1'=>'Main date', '2'=>'Alternate date'], $reservation->chosen_date, ['id'=>'chosen_date_dropdown', 'class'=>'form-control']) !!}
+                        </div>
                         <div class="form-group{{ $errors->has('remarks') ? ' has-error' : '' }}">
                             {!! Form::label('remarks_label', 'Remark:') !!}
                             {!! Form::textarea('remarks', null, ['class'=>'form-control', 'rows'=>'4', 'placeholder'=>'Other details like flight ticket, no plat of car, etc.']) !!}

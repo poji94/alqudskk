@@ -128,15 +128,14 @@ class ItineraryController extends Controller
         }
 
         $duration = $itinerary->duration;
-        $trimDuration = $duration[0];
 
-        $option1DropOffTime = Carbon::parse($itinerary->option1_pickup_time)->addHours($trimDuration)->toTimeString();
+        $option1DropOffTime = Carbon::parse($itinerary->option1_pickup_time)->addHours($duration)->toTimeString();
         $option1PickupTime = Carbon::parse($itinerary->option1_pickup_time)->format('g:i A');
         $option1DropOffTime = Carbon::parse($option1DropOffTime)->format('g:i A');
         $itinerary->update(['option1_pickup_time'=>$option1PickupTime, 'option1_dropoff_time'=>$option1DropOffTime]);
 
         if($input['option2_pickup_time'] != null) {
-            $option2DropOffTime = Carbon::parse($itinerary->option2_pickup_time)->addHours($trimDuration)->toTimeString();
+            $option2DropOffTime = Carbon::parse($itinerary->option2_pickup_time)->addHours($duration)->toTimeString();
             $option2PickupTime = Carbon::parse($itinerary->option2_pickup_time)->format('g:i A');
             $option2DropOffTime = Carbon::parse($option2DropOffTime)->format('g:i A');
             $itinerary->update(['option2_pickup_time'=>$option2PickupTime, 'option2_dropoff_time'=>$option2DropOffTime]);
@@ -277,15 +276,14 @@ class ItineraryController extends Controller
         }
 
         $duration = $itinerary->duration;
-        $trimDuration = $duration[0];
 
-        $option1DropOffTime = Carbon::parse($itinerary->option1_pickup_time)->addHours($trimDuration)->toTimeString();
+        $option1DropOffTime = Carbon::parse($itinerary->option1_pickup_time)->addHours($duration)->toTimeString();
         $option1PickupTime = Carbon::parse($itinerary->option1_pickup_time)->format('g:i A');
         $option1DropOffTime = Carbon::parse($option1DropOffTime)->format('g:i A');
         $itinerary->update(['option1_pickup_time'=>$option1PickupTime, 'option1_dropoff_time'=>$option1DropOffTime]);
 
         if($input['option2_pickup_time'] != null) {
-            $option2DropOffTime = Carbon::parse($itinerary->option2_pickup_time)->addHours($trimDuration)->toTimeString();
+            $option2DropOffTime = Carbon::parse($itinerary->option2_pickup_time)->addHours($duration)->toTimeString();
             $option2PickupTime = Carbon::parse($itinerary->option2_pickup_time)->format('g:i A');
             $option2DropOffTime = Carbon::parse($option2DropOffTime)->format('g:i A');
             $itinerary->update(['option2_pickup_time'=>$option2PickupTime, 'option2_dropoff_time'=>$option2DropOffTime]);

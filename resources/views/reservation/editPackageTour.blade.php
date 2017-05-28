@@ -26,8 +26,8 @@
                             {!! Form::label('packagetour_id', 'Tour Package ' . $i) !!}
                             <div class="row form-group" id="package-tour-form">
                                 <div class="col-sm-10">
-                                    {!! Form::hidden('packagetour_id[]', $packagetour->id, ['multiple'=>'multiple']) !!}
-                                    {!! Form::text('packagetour_name[]', $packagetour->name, ['class'=>'form-control', 'disabled']) !!}
+                                    <input name="packagetour_id[]" multiple="multiple" type="hidden" value="{{$packagetour->id}}">
+                                    <input class="form-control" disabled="disabled" name="packagetour_name[]" type="text" value="{{$packagetour->name}}" id="itinerary_id">
                                 </div>
                                 <button type="button" class="btn btn-primary" onclick="location.href='{{route('packagetour.show', $packagetour->id)}}'">View</button>
                             </div>
@@ -129,20 +129,36 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-6 form-group{{ $errors->has('reservation_start') ? ' has-error' : '' }}">
-                                {!! Form::label('reservation_start', 'Start date') !!}
-                                {!! Form::date('reservation_start', $reservation->reservation_start, ['class'=>'form-control', 'min'=>\Carbon\Carbon::today()->toDateString(), 'onkeydown'=>'return false']) !!}
-                                @if ($errors->has('reservation_start'))
+                            <div class="col-sm-6 form-group{{ $errors->has('main_reservation_start') ? ' has-error' : '' }}">
+                                {!! Form::label('main_reservation_start_label', 'Start date') !!}
+                                {!! Form::date('main_reservation_start', null, ['class'=>'form-control', 'min'=>\Carbon\Carbon::today()->toDateString(), 'onkeydown'=>'return false']) !!}
+                                @if ($errors->has('main_reservation_start'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('reservation_start') }}</strong>
+                                        <strong>{{ $errors->first('main_reservation_start') }}</strong>
                                     </span>
                                 @endif
                             </div>
                             <div class="col-sm-6 form-group">
-                                {!! Form::label('reservation_end', 'End date') !!}
-                                {!! Form::date('reservation_end', $reservation->reservation_end, ['class'=>'form-control', 'disabled']) !!}
+                                {!! Form::label('main_reservation_end_label', 'End date') !!}
+                                {!! Form::date('main_reservation_end', $reservation->main_reservation_end, ['class'=>'form-control', 'disabled']) !!}
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-sm-6 form-group{{ $errors->has('alternate_reservation_start') ? ' has-error' : '' }}">
+                                {!! Form::label('alternate_reservation_start_label', 'Alternative start date') !!}
+                                {!! Form::date('alternate_reservation_start', null, ['class'=>'form-control', 'min'=>\Carbon\Carbon::today()->toDateString(), 'onkeydown'=>'return false']) !!}
+                                @if ($errors->has('alternate_reservation_start'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('alternate_reservation_start') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                {!! Form::label('alternate_reservation_end', 'Alternative end date') !!}
+                                {!! Form::date('alternate_reservation_end', $reservation->alternate_reservation_end, ['class'=>'form-control', 'disabled']) !!}
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             {!! Form::label('price', 'Price') !!}
                             {!! Form::text('price', currency($reservation->price, 'MYR', $currency['code']), ['class'=>'form-control', 'disabled']) !!}

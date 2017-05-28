@@ -18,6 +18,13 @@
                             {!! Form::label('reservation_type_id_label', 'Type of Reservation:  ') !!}
                                 Tour package
                         </div>
+                        @if($errors->has('packagetour_id'))
+                            <div class="alert alert-danger">
+                                <ul>
+                                    <strong>{{ $errors->first('packagetour_id') }}</strong>
+                                </ul>
+                            </div>
+                        @endif
                         <br>
                         @php
                             $i = 1;
@@ -27,8 +34,8 @@
                                 {!! Form::label('packagetour_id', 'Tour Package ' . $i) !!}
                                 <div class="row form-group" id="packagetour-form{{$i}}">
                                     <div class="col-sm-9">
-                                        {!! Form::hidden('packagetour_id[]', $reservedPackageTour['id'], ['multiple'=>'multiple']) !!}
-                                        {!! Form::text('packagetour_name[]', $reservedPackageTour['name'], ['class'=>'form-control', 'disabled']) !!}
+                                        <input name="packagetour_id[]" multiple="multiple" type="hidden" value="{{$reservedPackageTour['id']}}">
+                                        <input class="form-control" disabled="disabled" name="packagetour_name[]" type="text" value="{{$reservedPackageTour['name']}}" id="itinerary_id">
                                     </div>
                                     <button type="button" class="btn btn-primary" onclick="location.href='{{route('packagetour.show', $reservedPackageTour['id'])}}'">View</button>
                                     <button type="button" class="btn btn-danger" onclick="location.href='{{route('reservation.removePackageTourFromSession', $reservedPackageTour['id'])}}'">Remove</button>
@@ -85,7 +92,7 @@
                                 {!! Form::label('adult_no', 'Number of adult') !!}
                                 {!! Form::number('adult_no', 1, ['class'=>'form-control']) !!}
                                 @if ($errors->has('adult_no'))
-                                    <span class="help-block">
+                                    <span class="help-block">r
                                         <strong>{{ $errors->first('adult_no') }}</strong>
                                     </span>
                                 @endif
@@ -100,14 +107,25 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="form-group{{ $errors->has('reservation_start') ? ' has-error' : '' }}">
-                            {!! Form::label('reservation_start', 'Start date') !!}
-                            {!! Form::date('reservation_start', null, ['class'=>'form-control', 'min'=>\Carbon\Carbon::today()->toDateString(), 'onkeydown'=>'return false']) !!}
-                            @if ($errors->has('reservation_start'))
-                                <span class="help-block">
-                                        <strong>{{ $errors->first('reservation_start') }}</strong>
+                        <div class="row">
+                            <div class="col-sm-6 form-group{{ $errors->has('main_reservation_start') ? ' has-error' : '' }}">
+                                {!! Form::label('main_reservation_start_label', 'Start date') !!}
+                                {!! Form::date('main_reservation_start', null, ['class'=>'form-control', 'min'=>\Carbon\Carbon::today()->toDateString(), 'onkeydown'=>'return false']) !!}
+                                @if ($errors->has('main_reservation_start'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('main_reservation_start') }}</strong>
                                     </span>
-                            @endif
+                                @endif
+                            </div>
+                            <div class="col-sm-6 form-group{{ $errors->has('alternate_reservation_start') ? ' has-error' : '' }}">
+                                {!! Form::label('alternate_reservation_start_label', 'Alternative start date') !!}
+                                {!! Form::date('alternate_reservation_start', null, ['class'=>'form-control', 'min'=>\Carbon\Carbon::today()->toDateString(), 'onkeydown'=>'return false']) !!}
+                                @if ($errors->has('alternate_reservation_start'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('alternate_reservation_start') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
                         </div>
                         <div class="form-group{{ $errors->has('other_details') ? ' has-error' : '' }}">
                             {!! Form::label('other_details_label', 'Other details:') !!}

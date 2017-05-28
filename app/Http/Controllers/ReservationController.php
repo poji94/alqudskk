@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ItineraryCreateReservationRequest;
 use App\Http\Requests\ReservationReviewItineraryRequest;
 use App\Http\Requests\ReservationStoreItineraryRequest;
 use App\Http\Requests\ReservationStorePackageTourRequest;
@@ -118,8 +119,6 @@ class ReservationController extends Controller
 
     public function cartItinerary()
     {
-//        return $sessionDayItineraries = session()->get('dayItineraries');
-        $i = 1;
         $reservedItineraries = [];
         $reservedItinerariesOption = [];
         $reservedDayItineraries = [];
@@ -128,6 +127,15 @@ class ReservationController extends Controller
         $sessionItinerariesOption = session()->get('collectionReservedItinerariesOption');
         $sessionDayItineraries = session()->get('dayItineraries');
 
+        $i = 1;
+        if($sessionDayItineraries != []) {
+            foreach($sessionDayItineraries as $sessionDayItinerary) {
+                $reservedDayItineraries[$i] = $sessionDayItinerary;
+                $i++;
+            }
+        }
+
+        $i = 1;
         if($sessionItineraries != null) {
             foreach ($sessionItineraries as $sessionItinerary) {
                 $reservedItineraries[$i] = Itinerary::where('id', $sessionItinerary)->first();
@@ -139,14 +147,6 @@ class ReservationController extends Controller
         if($sessionItinerariesOption != []) {
             foreach($sessionItinerariesOption as $sessionItineraryOption) {
                 $reservedItinerariesOption[$i] = $sessionItineraryOption;
-                $i++;
-            }
-        }
-
-        $i = 1;
-        if($sessionDayItineraries != []) {
-            foreach($sessionDayItineraries as $sessionDayItinerary) {
-                $reservedDayItineraries[$i] = $sessionDayItinerary;
                 $i++;
             }
         }
@@ -168,7 +168,7 @@ class ReservationController extends Controller
         return view('reservation.createPackageTour', compact('reservedPackageTours'));
     }
 
-    public function createItinerary(Request $request)
+    public function createItinerary(ItineraryCreateReservationRequest $request)
     {
         $input = $request->all();
         $reservedItineraries = [];
@@ -256,7 +256,6 @@ class ReservationController extends Controller
 
     public function removeItineraryFromSession($id)
     {
-        $i = 1;
         $reservedItineraries = [];
         $reservedItinerariesOption = [];
         $reservedDayItineraries = [];
@@ -270,6 +269,7 @@ class ReservationController extends Controller
         unset($sessionItinerariesOption[$id]);
         unset($sessionDayItineraries[$id]);
 
+        $i = 1;
         if($sessionItineraries != []) {
             $sessionItineraries = array_values($sessionItineraries);
             foreach ($sessionItineraries as $sessionItinerary) {
@@ -345,7 +345,7 @@ class ReservationController extends Controller
 
         session()->forget('collectionReservedPackageTours');
         $sumPrice = 0;
-        $trimDuration = 0;
+        $duration = 0;
         $input = $request -> all();
         $reservation = Reservation::create($input);
         $reservation->update(['user_id'=>Auth::user()->id, 'reservation_status_id'=>1]);
@@ -369,12 +369,12 @@ class ReservationController extends Controller
                     $sumPrice += ($input['adult_no'] * $price->public_group_adult) + ($input['children_no'] * $price->public_group_children);
                 }
             }
-            $duration = $packageTour->duration;
-            $trimDuration += $duration[0];
+            $duration += $packageTour->duration;
         }
 
-        $reservationEnd = Carbon::parse($reservation->reservation_start)->addDays($trimDuration)->toDateString();
-        $reservation->update(['price' => $sumPrice, 'reservation_end'=>$reservationEnd]);
+        $mainReservationEnd = Carbon::parse($reservation->main_reservation_start)->addDays($duration)->toDateString();
+        $alternateReservationEnd = Carbon::parse($reservation->alternate_reservation_start)->addDays($duration)->toDateString();
+        $reservation->update(['price' => $sumPrice, 'main_reservation_end'=>$mainReservationEnd, 'alternate_reservation_end'=>$alternateReservationEnd]);
 
         Session::flash('created_reservation', 'Reservation for ' . $reservation->reserveUser->name . ' successfully created');
         if(Auth::user()->role_user_id == 3) {
@@ -424,10 +424,11 @@ class ReservationController extends Controller
             }
         }
 
-        $duration = count($reservation->itineraries);
-        $trimDuration = $duration / 2 + ($duration % 2);
-        $reservationEnd = Carbon::parse($reservation->reservation_start)->addDays($trimDuration)->toDateString();
-        $reservation->update(['price' => $sumPrice, 'reservation_end'=>$reservationEnd]);
+        $dayItineraries = count($reservedDayItineraries);
+
+        $mainReservationEnd = Carbon::parse($reservation->main_reservation_start)->addDays($reservedDayItineraries[$dayItineraries - 1])->toDateString();
+        $alternateReservationEnd = Carbon::parse($reservation->alternate_reservation_start)->addDays($reservedDayItineraries[$dayItineraries - 1])->toDateString();
+        $reservation->update(['price' => $sumPrice, 'main_reservation_end'=>$mainReservationEnd, 'alternate_reservation_end'=>$alternateReservationEnd]);
 
         Session::flash('created_reservation', 'Reservation for ' . $reservation->reserveUser->name . ' successfully created');
         if(Auth::user()->role_user_id == 3) {
@@ -553,7 +554,7 @@ class ReservationController extends Controller
         //pretty much similar to the store reservation
         //this updates the particular reservation
         $sumPrice = 0;
-        $trimDuration = 0;
+        $duration = 0;
         $input = $request -> all();
         $reservation = Reservation::findOrFail($id);
         $reservation->update($input);
@@ -572,12 +573,12 @@ class ReservationController extends Controller
                     $sumPrice += ($input['adult_no'] * $price->public_group_adult) + ($input['children_no'] * $price->public_group_children);
                 }
             }
-            $duration = $packageTour->duration;
-            $trimDuration += $duration[0];
+            $duration += $packageTour->duration;
         }
 
-        $reservationEnd = Carbon::parse($reservation->reservation_start)->addDays($trimDuration)->toDateString();
-        $reservation->update(['price' => $sumPrice, 'reservation_end'=>$reservationEnd]);
+        $mainReservationEnd = Carbon::parse($reservation->main_reservation_start)->addDays($duration)->toDateString();
+        $alternateReservationEnd = Carbon::parse($reservation->alternate_reservation_start)->addDays($duration)->toDateString();
+        $reservation->update(['price' => $sumPrice, 'main_reservation_end'=>$mainReservationEnd, 'alternate_reservation_end'=>$alternateReservationEnd]);
 
         Session::flash('updated_reservation', 'Reservation for ' . $reservation->reserveUser->name . ' successfully updated');
         if(Auth::user()->role_user_id == 3) {
@@ -613,12 +614,12 @@ class ReservationController extends Controller
                     $sumPrice += ($input['adult_no'] * $price->public_group_adult) + ($input['children_no'] * $price->public_group_children);
                 }
             }
+            $dayItineraries = $itinerary->pivot->day;
         }
 
-        $duration = count($reservation->itineraries);
-        $trimDuration = $duration / 2 + ($duration % 2);
-        $reservationEnd = Carbon::parse($reservation->reservation_start)->addDays($trimDuration)->toDateString();
-        $reservation->update(['price' => $sumPrice, 'reservation_end'=>$reservationEnd]);
+        $mainReservationEnd = Carbon::parse($reservation->main_reservation_start)->addDays($dayItineraries)->toDateString();
+        $alternateReservationEnd = Carbon::parse($reservation->alternate_reservation_start)->addDays($dayItineraries)->toDateString();
+        $reservation->update(['price' => $sumPrice, 'main_reservation_end'=>$mainReservationEnd, 'alternate_reservation_end'=>$alternateReservationEnd]);
 
         Session::flash('updated_reservation', 'Reservation for ' . $reservation->reserveUser->name . ' successfully updated');
         if(Auth::user()->role_user_id == 3) {
@@ -635,7 +636,7 @@ class ReservationController extends Controller
         //this updates the particular reservation
         $input = $request -> all();
         $reservation = Reservation::findOrFail($id);
-        $reservation->update(['reservation_status_id'=>$input['reservation_status_id'], 'remarks'=>$input['remarks'], 'remarks_by'=>Auth::user()->id]);
+        $reservation->update(['reservation_status_id'=>$input['reservation_status_id'], 'chosen_date'=>$input['chosen_date'], 'remarks'=>$input['remarks'], 'remarks_by'=>Auth::user()->id]);
 
         Session::flash('reviewed_reservation', 'Reservation for ' . $reservation->reserveUser->name . ' successfully reviewed');
         return redirect(route('reservation.index'));
@@ -647,7 +648,7 @@ class ReservationController extends Controller
         //this updates the particular reservation
         $input = $request -> all();
         $reservation = Reservation::findOrFail($id);
-        $reservation->update(['reservation_status_id'=>$input['reservation_status_id'], 'remarks'=>$input['remarks'], 'remarks_by'=>Auth::user()->id]);
+        $reservation->update(['reservation_status_id'=>$input['reservation_status_id'], 'chosen_date'=>$input['chosen_date'], 'remarks'=>$input['remarks'], 'remarks_by'=>Auth::user()->id]);
 
         Session::flash('reviewed_reservation', 'Reservation for ' . $reservation->reserveUser->name . ' successfully reviewed');
         return redirect(route('reservation.index'));
