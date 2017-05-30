@@ -16,10 +16,6 @@
 @endsection
 
 @section('content')
-    <body class="index-page">
-        @include('layouts.navigationBar')
-
-    </body>
     <div class="content-center brand">
         {{--<img class="n-logo" src="./assets/img/now-logo.png" alt="">--}}
         <h1 class="h1-seo">Hello There.</h1>

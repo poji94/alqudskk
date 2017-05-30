@@ -15,7 +15,7 @@
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
     <link href="/assets/css/now-ui-kit.css" rel="stylesheet" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
-    <link href="/assets/css/demo.css" rel="stylesheet" />
+    {{--<link href="/assets/css/demo.css" rel="stylesheet" />--}}
 </head>
 
 <body class="@yield('bodyclass')">
@@ -53,11 +53,11 @@
 <script src="./assets/js/plugins/bootstrap-datepicker.js" type="text/javascript"></script>
 <!-- Control Center for Now Ui Kit: parallax effects, scripts for the example pages etc -->
 <script src="./assets/js/now-ui-kit.js" type="text/javascript"></script>
-<script type="text/javascript">
-    $(document).ready(function() {
-        // the body of this function is in assets/js/now-ui-kit.js
-        nowuiKit.initSliders();
-    });
-</script>
+{{--<script type="text/javascript">--}}
+    {{--$(document).ready(function() {--}}
+        {{--// the body of this function is in assets/js/now-ui-kit.js--}}
+        {{--nowuiKit.initSliders();--}}
+    {{--});--}}
+{{--</script>--}}
 
 </html>

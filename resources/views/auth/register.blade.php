@@ -75,16 +75,6 @@
                 <div class="footer text-center">
                     <button type="submit" class="btn btn-primary btn-round btn-lg btn-block">Register</button>
                 </div>
-                {{--<div class="pull-left">--}}
-                    {{--<h6>--}}
-                        {{--<a href="#pablo" class="link" style="color: white;">Create Account</a>--}}
-                    {{--</h6>--}}
-                {{--</div>--}}
-                {{--<div class="pull-right">--}}
-                    {{--<h6>--}}
-                        {{--<a href="#pablo" class="link" style="color: white;">Need Help?</a>--}}
-                    {{--</h6>--}}
-                {{--</div>--}}
             </form>
         </div>
     </div>

@@ -2,7 +2,7 @@
 <nav class="navbar navbar-toggleable-md bg-primary fixed-top navbar-transparent " color-on-scroll="100">
     <div class="container">
         <div class="navbar-header">
-            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-bar bar1"></span>
                 <span class="navbar-toggler-bar bar2"></span>
                 <span class="navbar-toggler-bar bar3"></span>
@@ -49,19 +49,18 @@
                     </li>
                 @else
                     @if(Auth::user()->role_user_id == 1 || Auth::user()->role_user_id == 2)
-                        <li class="dropdown">
-                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="itineraryDropDown">
+                        <li class="nav-item dropdown" style="color: white;">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="itineraryDropDown" aria-haspopup="true" aria-expanded="false">
                                 Plan on My Own
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="itineraryDropDown">
                                 <a class="dropdown-item" href="{{ route('itinerary.getSelection') }}">View Activities</a>
                                 <a class="dropdown-item" href="{{ url('/itinerary') }}">Manage Activities</a>
                                 <a class="dropdown-item" href="{{ url('/itinerary/create') }}">Add Activity</a>
-                                <div class="dropdown-divider"></div>
                             </ul>
                         </li>
-                        <div class="dropdown">
-                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="packageTourDropDown">
+                        <li class="nav-item dropdown" style="color: white;">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="packageTourDropDown" aria-haspopup="true" aria-expanded="false">
                                 Tour Packages
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="packageTourDropDown">
@@ -69,9 +68,9 @@
                                 <a class="dropdown-item" href="{{ url('/packagetour') }}">Manage Tour Packages</a>
                                 <a class="dropdown-item" href="{{ url('/packagetour/create') }}">Add Tour Package</a>
                             </ul>
-                        </div>
-                        <div class="dropdown">
-                            <a class="nav-link dropdown-toggle " data-toggle="dropdown" id="reservationDropDown">
+                        </li>
+                        <li class="nav-item dropdown" style="color: white;">
+                            <a class="nav-link dropdown-toggle " data-toggle="dropdown" id="reservationDropDown" aria-haspopup="true" aria-expanded="false">
                                 Booking
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="reservationDropDown">
@@ -81,17 +80,17 @@
                                 <a class="dropdown-item" href="{{route('reservation.cartItinerary')}}">Plan My Own Cart</a>
                                 <a class="dropdown-item" href="{{route('reservation.cartPackageTour')}}">Tour Package Cart</a>
                             </ul>
-                        </div>
+                        </li>
                         @if(Auth::user()->role_user_id == 1)
-                            <div class="nav dropdown">
-                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="userDropDown">
+                            <li class="nav-item dropdown" style="color: white;">
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="userDropDown" aria-haspopup="true" aria-expanded="false">
                                     Users
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="userDropDown">
                                     <a class="dropdown-item" href="{{url('/user')}}">View All Users</a>
                                     <a class="dropdown-item" href="{{url('/user/create')}}">Add User</a>
                                 </ul>
-                            </div>
+                            </li>
                         @endif
                     @else
                         <li class="nav-item">
@@ -104,8 +103,8 @@
                                 <p>Tour Package</p>
                             </a>
                         </li>
-                        <div class="nav dropdown">
-                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="reservationDropDown">
+                        <div class="nav-item dropdown" style="color: white;">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="reservationDropDown" aria-haspopup="true" aria-expanded="false">
                                 My Booking
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="reservationDropdown">
@@ -116,8 +115,8 @@
                             </ul>
                         </div>
                     @endif
-                    <div class="nav dropdown">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="userAccountDropDown">
+                    <div class="nav-item dropdown" style="color: white;">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="userAccountDropDown" aria-haspopup="true" aria-expanded="false">
                             Hello, {{ Auth::user()->name }}
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="userAccountDropdown">

@@ -1783,8 +1783,8 @@ textarea.form-control {
   margin-top: 0; }
 
 .checkbox-primary input[type="checkbox"]:checked + label::before {
-  background-color: #428bca;
-  border-color: #428bca; }
+  background-color: #9c27b0;
+  border-color: #9c27b0; }
 
 .checkbox-primary input[type="checkbox"]:checked + label::after {
   color: #fff; }
