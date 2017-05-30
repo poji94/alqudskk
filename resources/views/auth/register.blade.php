@@ -1,110 +1,91 @@
-@extends('layouts.app')
+@extends('layouts.backbone')
 
 @section('head')
     Tourist Registration
 @endsection
 
+@section('bodyclass')
+    login-page
+@endsection
+
 @section('content')
-<div class="container" style="padding-top: 75px">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Register</div>
-                <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}">
-                        {{ csrf_field() }}
-
-                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label for="name" class="col-md-4 control-label">Name</label>
-
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}">
-
-                                @if ($errors->has('name'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}">
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password">
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-                            <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation">
-
-                                @if ($errors->has('password_confirmation'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password_confirmation') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('phone_number') ? ' has-error' : '' }}">
-                            <label for="phone-number" class="col-md-4 control-label">Phone Number</label>
-
-                            <div class="col-md-6">
-                                <input id="phone-number" type="text" class="form-control" name="phone_number" onkeypress="return isNumber(event)">
-                                <script type="text/javascript">
-                                    function isNumber(evt) {
-                                        evt = (evt) ? evt : window.event;
-                                        var charCode = (evt.which) ? evt.which : evt.keyCode;
-                                        if ( (charCode > 31 && charCode < 48) || charCode > 57) {
-                                            return false;
-                                        }
-                                        return true;
-                                    }
-                                </script>
-
-                                @if ($errors->has('phone_number'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('phone_number') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Register
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+    <div class="col-md-4 content-center" style="margin-top: 25px;">
+        <div class="card card-login card-plain">
+            <form class="form" method="POST" action="{{url('/register')}}">
+                {{ csrf_field() }}
+                <div class="header header-primary text-center">
+                    {{--<div class="logo-container">--}}
+                        {{--<img src="../assets/img/now-logo.png" alt="">--}}
+                    {{--</div>--}}
+                    <h3>Are you new here?<br>
+                        Feel free to register.</h3>
                 </div>
-            </div>
+                <div class="content">
+                    <div class="input-group form-group-no-border input-lg{{ $errors->has('name') ? ' has-error' : '' }}">
+                        <input id="name" name="name" type="text" class="form-control" placeholder="Your Name">
+                        @if ($errors->has('name'))
+                            <span class="form-control form-control-danger">
+                                {{ $errors->first('name') }}
+                            </span>
+                        @endif
+                    </div>
+                    <div class="input-group form-group-no-border input-lg{{ $errors->has('email') ? ' has-error' : '' }}">
+                        <input id="email" name="email" type="text" class="form-control" placeholder="Your E-Mail">
+                        @if ($errors->has('email'))
+                            <span class="form-control form-control-danger">
+                                {{ $errors->first('email') }}
+                            </span>
+                        @endif
+                    </div>
+                    <div class="input-group form-group-no-border input-lg{{ $errors->has('password') ? ' has-error' : '' }}">
+                        <input id="password" name="password" type="password" class="form-control" placeholder="Your Password">
+                        @if ($errors->has('password'))
+                            <span class="form-control form-control-danger">
+                                {{ $errors->first('password') }}
+                            </span>
+                        @endif
+                    </div>
+                    <div class="input-group form-group-no-border input-lg{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
+                        <input id="password-confirm" name="password-confirm" type="password" class="form-control" placeholder="Confirm Your Password">
+                        @if ($errors->has('password_confirmation'))
+                            <span class="form-control form-control-danger">
+                                {{ $errors->first('password_confirmation') }}
+                            </span>
+                        @endif
+                    </div>
+                    <div class="input-group form-group-no-border input-lg{{ $errors->has('phone_number') ? ' has-error' : '' }}">
+                        <input id="phone-number" name="phone_number" type="text" class="form-control" placeholder="Your Phone Number" onkeypress="return isNumber(event)">
+                        <script type="text/javascript">
+                            function isNumber(evt) {
+                                evt = (evt) ? evt : window.event;
+                                var charCode = (evt.which) ? evt.which : evt.keyCode;
+                                if ( (charCode > 31 && charCode < 48) || charCode > 57) {
+                                    return false;
+                                }
+                                return true;
+                            }
+                        </script>
+                        @if ($errors->has('phone_number'))
+                            <span class="form-control form-control-danger">
+                                {{ $errors->first('phone_number') }}
+                            </span>
+                        @endif
+                    </div>
+                </div>
+                <div class="footer text-center">
+                    <button type="submit" class="btn btn-primary btn-round btn-lg btn-block">Register</button>
+                </div>
+                {{--<div class="pull-left">--}}
+                    {{--<h6>--}}
+                        {{--<a href="#pablo" class="link" style="color: white;">Create Account</a>--}}
+                    {{--</h6>--}}
+                {{--</div>--}}
+                {{--<div class="pull-right">--}}
+                    {{--<h6>--}}
+                        {{--<a href="#pablo" class="link" style="color: white;">Need Help?</a>--}}
+                    {{--</h6>--}}
+                {{--</div>--}}
+            </form>
         </div>
     </div>
-</div>
 @endsection
