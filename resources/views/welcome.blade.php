@@ -11,17 +11,34 @@
     {{--}--}}
 {{--@endsection--}}
 
-@section('bodyclass')
+@section('bodyClass')
     index-page
 @endsection
 
-@section('content')
-    <div class="content-center brand">
-        {{--<img class="n-logo" src="./assets/img/now-logo.png" alt="">--}}
-        <h1 class="h1-seo">Hello There.</h1>
-        <h3>If you want to find something leisuring, <br>
-            You come on the right place.</h3>
+
+@section('titlePage')
+    <div class="wrapper">
+        <div class="page-header">
+            <div class="page-header-image" data-parallax="true" style="background-image: url('/preset/background.jpg');"></div>
+            <div class="container">
+                <div class="content-center brand">
+                    {{--<img class="n-logo" src="./assets/img/now-logo.png" alt="">--}}
+                    <h1 class="h1-seo">Hello There.</h1>
+                    <h3>If you want to find something leisuring, <br>
+                        You come on the right place.</h3>
+                </div>
+                {{--<h6 class="category category-absolute">Designed by--}}
+                {{--<a href="http://invisionapp.com/" target="_blank">--}}
+                {{--<img src="./assets/img/invision-white-slim.png" class="invision-logo" />--}}
+                {{--</a>. Coded by--}}
+                {{--<a href="https://www.creative-tim.com" target="_blank">--}}
+                {{--<img src="./assets/img/creative-tim-white-slim2.png" class="creative-tim-logo" />--}}
+                {{--</a>.--}}
+                {{--</h6>--}}
+            </div>
+        </div>
     </div>
+
 
 {{--<div class="container" style="padding-top: 75px">--}}
     {{--<div class="row">--}}
