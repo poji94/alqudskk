@@ -8,12 +8,12 @@
     login-page
 @endsection
 
-@section('authentication')
+@section('form')
     <div class="wrapper">
         <div class="page-header">
             <div class="page-header-image" data-parallax="true" style="background-image: url('/preset/background.jpg');" style="opacity:0.5;"></div>
             <div class="container">
-                <div class="col-md-4 content-center" style="margin-top: 25px;">
+                <div class="col-md-4 content-center" style="margin-top: 35px;">
                     <div class="card card-login card-plain">
                         <form class="form" method="POST" action="{{url('/register')}}">
                             {{ csrf_field() }}

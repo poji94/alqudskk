@@ -29,13 +29,17 @@
     <script src="/assets/js/plugins/bootstrap-datepicker.js" type="text/javascript"></script>
     <!-- Control Center for Now Ui Kit: parallax effects, scripts for the example pages etc -->
     <script src="/assets/js/now-ui-kit.js" type="text/javascript"></script>
+
+    <style>
+        @yield('style')
+    </style>
 </head>
 
 <body class="@yield('bodyClass')">
     @include('layouts.navigationBar')
 
-    @yield('authentication')
     @yield('titlePage')
+    @yield('form')
 
     <div class="main">
         @yield('content')
