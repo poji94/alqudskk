@@ -1,183 +1,192 @@
-@extends('layouts.app')
+@extends('layouts.backbone')
 
 @section('head')
     View Reservation
 @endsection
 
-@section('content')
-    <div class="container" style="padding-top: 75px">
-        <div class="row">
-            <div class="col-sm-6 col-md-offset-3">
-                <div class="panel panel-default">
-                    <div class="panel-heading">View Reservation</div>
+@section('style')
+    body {
+    background: url('/preset/backgroundDarken.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    }
+@endsection
 
-                    <div class="panel-body">
-                        {!! Form::model($reservation, ['method'=>'POST', 'action'=> ['ReservationController@updatePackageTour', $reservation->id], 'files' => true]) !!}
+@section('bodyClass')
+    login-page
+@endsection
+
+@section('titlePage')
+    <div class="wrapper">
+        <div class="container col-md-6">
+            <div class="content-center" style="margin-top: 75px;">
+                <div class="card card-plain">
+                    <form class="form" method="POST" action="{{url('reservation/editPackageTour/' . $reservation->id)}}">
+                        {{ csrf_field() }}
+                        <div class="header header-primary text-center">
+                            <h3 style="color: white;">Please update booking tour package information.</h3>
+                        </div>
                         <div class="form-group{{ $errors->has('reservation_type_id') ? ' has-error' : '' }}" style="display: inline-block">
                             {!! Form::hidden('reservation_type_id', 2) !!}
-                            {!! Form::label('reservation_type_id_label', 'Type of Reservation:  ') !!}
-                            Tour package
+                            {!! Form::label('reservation_type_id_label', 'Type of Reservation:  ', ['style'=>'color: white;']) !!}
+                            <p style="color: white; display: inline;">Tour Package</p>
                         </div>
-                        @php
-                            $i=1;
-                        @endphp
-                        <br>
-                        @foreach($reservation->packageTours as $packagetour)
-                            {!! Form::label('packagetour_id', 'Tour Package ' . $i) !!}
-                            <div class="row form-group" id="package-tour-form">
-                                <div class="col-sm-10">
-                                    <input name="packagetour_id[]" multiple="multiple" type="hidden" value="{{$packagetour->id}}">
-                                    <input class="form-control" disabled="disabled" name="packagetour_name[]" type="text" value="{{$packagetour->name}}" id="itinerary_id">
-                                </div>
-                                <button type="button" class="btn btn-primary" onclick="location.href='{{route('packagetour.show', $packagetour->id)}}'">View</button>
-                            </div>
+                        <div class="content">
                             @php
-                                $i++;
+                                $i = 1;
                             @endphp
-                        @endforeach
-                        <div class="form-group{{ $errors->has('price_type') ? ' has-error' : '' }}" style="display: inline-block">
-                            {!! Form::label('price_type_label', 'Please choose:  ') !!}
-                            @if($reservation->reserveStatus->id == 1)
+                            @foreach($reservation->packageTours as $packageTour)
+                                <br>
+                                <div>
+                                    {!! Form::label('packagetour_num_id', 'Tour Package ' . $i, ['style'=>'color:white;']) !!}
+                                </div>
+                                <div class="row form-group form-group-no-border" id="itinerary-form{{$i}}">
+                                    <div class="col-sm-9">
+                                        <input name="packagetour_id[]" id="packagetour_id" type="hidden" mutltiple="multiple" value="{{$packageTour->id}}">
+                                        <input class="form-control" disabled="disabled" mutltiple="multiple" name="packagetour_name[]" type="text" value="{{$packageTour->name}}" style="color: white;">
+                                    </div>
+                                    <button type="button" class="btn btn-primary btn-round" onclick="location.href='{{route('packagetour.show', $packageTour->id)}}'">View</button>
+                                </div>
+                                @php
+                                    $i++;
+                                @endphp
+                            @endforeach
+                            <div>
+                                {!! Form::label('price_type', 'Choose price type', ['style'=>'color:white;']) !!}
+                            </div>
+                            <div class="radio radio-primary">
                                 @if($reservation->price_type == 'personal')
-                                    <label class="radio-inline">
-                                        {!! Form::radio('price_type', 'personal', true, ['id'=>'personal', 'style'=>'display:inline-block']) !!}
-                                        Personal
-                                    </label>
+                                    <input type="radio" name="price_type" id="personal" value="personal" checked="checked">
                                 @else
-                                    <label class="radio-inline">
-                                        {!! Form::radio('price_type', 'personal', false, ['id'=>'personal', 'style'=>'display:inline-block']) !!}
-                                        Personal
-                                    </label>
+                                    <input type="radio" name="price_type" id="personal" value="personal">
                                 @endif
+                                <label for="personal">
+                                    <p style="color: white">Personal</p>
+                                </label>
                                 @if($reservation->price_type == 'private_group')
-                                    <label class="radio-inline">
-                                        {!! Form::radio('price_type', 'private_group', true, ['id'=>'private_group', 'style'=>'display:inline-block']) !!}
-                                        Private Group
-                                    </label>
+                                    <input type="radio" name="price_type" id="private_group" value="private_group" checked="checked">
                                 @else
-                                    <label class="radio-inline">
-                                        {!! Form::radio('price_type', 'private_group', false, ['id'=>'private_group', 'style'=>'display:inline-block']) !!}
-                                        Private Group
-                                    </label>
+                                    <input type="radio" name="price_type" id="private_group" value="private_group">
                                 @endif
-                                @if($reservation->price_type == 'public_group')
-                                    <label class="radio-inline">
-                                        {!! Form::radio('price_type', 'public_group', true, ['id'=>'public_group', 'style'=>'display:inline-block']) !!}
-                                        Public Group
-                                    </label>
+                                <label for="private_group">
+                                    <p style="color: white">Private Group     </p>
+                                </label>
+                                @if($reservation->price_type == 'private_group')
+                                    <input type="radio" name="price_type" id="public_group" value="public_group" checked="checked">
                                 @else
-                                    <label class="radio-inline">
-                                        {!! Form::radio('price_type', 'public_group', false, ['id'=>'public_group', 'style'=>'display:inline-block']) !!}
-                                        Public Group
-                                    </label>
+                                    <input type="radio" name="price_type" id="public_group" value="public_group">
                                 @endif
-                            @endif
-                            @if ($errors->has('price_type'))
-                                <span class="help-block">
+                                <label for="public_group">
+                                    <p style="color: white">Public Group</p>
+                                </label>
+                                @if ($errors->has('price_type'))
+                                    <span class="form-group form-group-no-border input-group">
                                         <strong>{{ $errors->first('price_type') }}</strong>
                                     </span>
-                            @endif
-                            <script type="text/javascript">
-                                $(document).ready(function () {
-                                    $("#adult_no").hide();
-                                    $("#children_no").hide();
-                                    if(document.getElementById('personal').checked) {
-                                        $("#adult_no").slideUp();
-                                        $("#children_no").slideUp();
-                                    }
-                                    else if(document.getElementById('private_group').checked) {
-                                        $("#adult_no").slideDown();
-                                        $("#children_no").slideDown();
-                                    }
-                                    else if(document.getElementById('public_group').checked) {
-                                        $("#adult_no").slideDown();
-                                        $("#children_no").slideDown();
-                                    }
-                                    $("#personal").click(function(){
-                                        $("#adult_no").slideUp();
-                                        $("#children_no").slideUp();
+                                @endif
+                                <script type="text/javascript">
+                                    $(document).ready(function () {
+                                        $("#adult_no").hide();
+                                        $("#children_no").hide();
+                                        if(document.getElementById('personal').checked) {
+                                            $("#adult_no").slideUp();
+                                            $("#children_no").slideUp();
+                                        }
+                                        else if(document.getElementById('private_group').checked) {
+                                            $("#adult_no").slideDown();
+                                            $("#children_no").slideDown();
+                                        }
+                                        else if(document.getElementById('public_group').checked) {
+                                            $("#adult_no").slideDown();
+                                            $("#children_no").slideDown();
+                                        }
+                                        $("#personal").click(function(){
+                                            $("#adult_no").slideUp();
+                                            $("#children_no").slideUp();
+                                        });
+                                        $("#private_group").click(function(){
+                                            $("#adult_no").slideDown();
+                                            $("#children_no").slideDown();
+                                        });
+                                        $("#public_group").click(function(){
+                                            $("#adult_no").slideDown();
+                                            $("#children_no").slideDown();
+                                        });
                                     });
-                                    $("#private_group").click(function(){
-                                        $("#adult_no").slideDown();
-                                        $("#children_no").slideDown();
-                                    });
-                                    $("#public_group").click(function(){
-                                        $("#adult_no").slideDown();
-                                        $("#children_no").slideDown();
-                                    });
-                                });
-                            </script>
-                        </div>
-                        <div class="row">
-                            <div id="adult_no" class="col-sm-6 form-group{{ $errors->has('adult_no') ? ' has-error' : '' }}">
-                                {!! Form::label('adult_no', 'Number of adult') !!}
-                                {!! Form::number('adult_no', $reservation->adult_no, ['class'=>'form-control']) !!}
-                                @if ($errors->has('adult_no'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('adult_no') }}</strong>
+                                </script>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6 input-group form-group-no-border input-lg{{ $errors->has('adult_no') ? ' has-error' : '' }}">
+                                    <input id="adult_no" name="adult_no" type="number" class="form-control" placeholder="Number of Adult" style="color: white" value="{{$reservation->adult_no}}">
+                                    @if ($errors->has('adult_no'))
+                                        <span class="form-control form-control-danger" style="color: white;">
+                                            {{ $errors->first('adult_no') }}
+                                        </span>
+                                    @endif
+                                </div>
+                                <div class="col-sm-6 input-group form-group-no-border input-lg{{ $errors->has('children_no') ? ' has-error' : '' }}">
+                                    <input id="children_no" name="children_no" type="number" class="form-control" placeholder="Number of Children" style="color: white" value="{{$reservation->children_no}}">
+                                    @if ($errors->has('children_no'))
+                                        <span class="form-control form-control-danger" style="color: white;">
+                                            {{ $errors->first('children_no') }}
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6 form-group form-group-no-border input-lg{{ $errors->has('main_reservation_start') ? ' has-error' : '' }}">
+                                    <div>
+                                        {!! Form::label('main_date', 'Main Reservation Start Date', ['style'=>'color:white;']) !!}
+                                    </div>
+                                    {!! Form::date('main_reservation_start', $reservation->main_reservation_start, ['class'=>'form-control', 'min'=>\Carbon\Carbon::today()->toDateString(), 'onkeydown'=>'return false', 'style'=>'color:white;']) !!}
+                                    @if ($errors->has('main_reservation_start'))
+                                        <span class="form-control form-control-danger" style="color: white;">
+                                            {{ $errors->first('main_reservation_start') }}
+                                        </span>
+                                    @endif
+                                </div>
+                                <div class="col-sm-6 form-group form-group-no-border input-lg{{ $errors->has('main_reservation_end') ? ' has-error' : '' }}">
+                                    <div>
+                                        {!! Form::label('main_date_end', 'Main Reservation End Date', ['style'=>'color:white;']) !!}
+                                    </div>
+                                    {!! Form::date('main_reservation_start', $reservation->main_reservation_end, ['class'=>'form-control', 'min'=>\Carbon\Carbon::today()->toDateString(), 'disabled','onkeydown'=>'return false', 'style'=>'color:white;']) !!}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6 form-group form-group-no-border input-lg{{ $errors->has('alternate_reservation_start') ? ' has-error' : '' }}">
+                                    <div>
+                                        {!! Form::label('alternate_date', 'Alternative Reservation Start Date', ['style'=>'color:white;']) !!}
+                                    </div>
+                                    {!! Form::date('alternate_reservation_start', $reservation->alternate_reservation_start, ['class'=>'form-control', 'min'=>\Carbon\Carbon::today()->toDateString(), 'onkeydown'=>'return false', 'style'=>'color:white;']) !!}
+                                    @if ($errors->has('alternate_reservation_start'))
+                                        <span class="form-control form-control-danger" style="color: white;">
+                                            {{ $errors->first('alternate_reservation_start') }}
+                                        </span>
+                                    @endif
+                                </div>
+                                <div class="col-sm-6 form-group form-group-no-border input-lg{{ $errors->has('alternate_reservation_end') ? ' has-error' : '' }}">
+                                    <div>
+                                        {!! Form::label('main_date_end', 'Alternate Reservation End Date', ['style'=>'color:white;']) !!}
+                                    </div>
+                                    {!! Form::date('main_reservation_start', $reservation->alternate_reservation_end, ['class'=>'form-control', 'min'=>\Carbon\Carbon::today()->toDateString(), 'disabled','onkeydown'=>'return false', 'style'=>'color:white;']) !!}
+                                </div>
+                            </div>
+                            <div class="input-group form-group-no-border input-lg{{ $errors->has('other_details') ? ' has-error' : '' }}">
+                                <textarea id="other_details" name="other_details" type="text" class="form-control" rows="4" placeholder="Other details for the reservation" style="color: white">{{$reservation->other_details}}</textarea>
+                                @if ($errors->has('other_details'))
+                                    <span class="form-control form-control-danger" style="color: white;">
+                                        {{ $errors->first('other_details') }}
                                     </span>
                                 @endif
                             </div>
-                            <div id="children_no" class="col-sm-6 form-group{{ $errors->has('children_no') ? ' has-error' : '' }}">
-                                {!! Form::label('children_no', 'Number of children') !!}
-                                {!! Form::number('children_no', $reservation->children_no, ['class'=>'form-control']) !!}
-                                @if ($errors->has('children_no'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('children_no') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
                         </div>
-                        <div class="row">
-                            <div class="col-sm-6 form-group{{ $errors->has('main_reservation_start') ? ' has-error' : '' }}">
-                                {!! Form::label('main_reservation_start_label', 'Start date') !!}
-                                {!! Form::date('main_reservation_start', null, ['class'=>'form-control', 'min'=>\Carbon\Carbon::today()->toDateString(), 'onkeydown'=>'return false']) !!}
-                                @if ($errors->has('main_reservation_start'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('main_reservation_start') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                            <div class="col-sm-6 form-group">
-                                {!! Form::label('main_reservation_end_label', 'End date') !!}
-                                {!! Form::date('main_reservation_end', $reservation->main_reservation_end, ['class'=>'form-control', 'disabled']) !!}
-                            </div>
+                        <div class="row footer text-center">
+                            <button type="submit" class="col-sm-6 btn btn-primary btn-round btn-lg btn-block">Edit Reservation</button>
+                            <button type="button" class="col-sm-6 btn btn-warning btn-round" onclick="location.href='{{url()->previous()}}'">Cancel</button>
                         </div>
-                        <div class="row">
-                            <div class="col-sm-6 form-group{{ $errors->has('alternate_reservation_start') ? ' has-error' : '' }}">
-                                {!! Form::label('alternate_reservation_start_label', 'Alternative start date') !!}
-                                {!! Form::date('alternate_reservation_start', null, ['class'=>'form-control', 'min'=>\Carbon\Carbon::today()->toDateString(), 'onkeydown'=>'return false']) !!}
-                                @if ($errors->has('alternate_reservation_start'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('alternate_reservation_start') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                            <div class="col-sm-6 form-group">
-                                {!! Form::label('alternate_reservation_end', 'Alternative end date') !!}
-                                {!! Form::date('alternate_reservation_end', $reservation->alternate_reservation_end, ['class'=>'form-control', 'disabled']) !!}
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            {!! Form::label('price', 'Price') !!}
-                            {!! Form::text('price', currency($reservation->price, 'MYR', $currency['code']), ['class'=>'form-control', 'disabled']) !!}
-                        </div>
-                        <div class="form-group{{ $errors->has('other_details') ? ' has-error' : '' }}">
-                            {!! Form::label('other_details_label', 'Other details:') !!}
-                            {!! Form::textarea('other_details', null, ['class'=>'form-control', 'rows'=>'4', 'placeholder'=>'Any information regarding the reserved activities']) !!}
-                            @if ($errors->has('other_details'))
-                                <span class="help-block">
-                                        <strong>{{ $errors->first('other_details') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                        <div class="form-group">
-                            {!! Form::submit('Edit Reservation', ['class'=>'btn btn-primary']) !!}
-                            <button type="button" class="btn btn-primary" onclick="location.href='{{url()->previous()}}'">Cancel</button>
-                        </div>
-                        {!! Form::close() !!}
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>

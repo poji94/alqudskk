@@ -234,10 +234,16 @@
                             </div>
                             @if($reservation->other_details)
                                 <div class="input-group form-group-no-border input-lg{{ $errors->has('other_details') ? ' has-error' : '' }}">
+                                    <div>
+                                        {!! Form::label('other_details', 'Other Details: ', ['style'=>'color:white;']) !!}
+                                    </div>
                                     <textarea id="other_details" name="other_details" type="text" class="form-control" rows="4" placeholder="Other details for the reservation" style="color: white">{{$reservation->other_details}}</textarea>
                                 </div>
                             @endif
                             <div class="input-group form-group-no-border input-lg{{ $errors->has('remarks') ? ' has-error' : '' }}">
+                                <div>
+                                    {!! Form::label('remarks', 'Remarks: ', ['style'=>'color:white;']) !!}
+                                </div>
                                 <textarea id="remarks" name="remarks" type="text" class="form-control" rows="4" placeholder="Other details like flight ticket, no plat of car, etc." style="color: white">{{$reservation->remarks}}</textarea>
                                 @if ($errors->has('remarks'))
                                     <span class="form-control form-control-danger" style="color: white;">

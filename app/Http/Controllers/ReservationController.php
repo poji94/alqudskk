@@ -155,12 +155,13 @@ class ReservationController extends Controller
         return view('reservation.createItinerary', compact('reservedItineraries', 'reservedItinerariesOption', 'reservedDayItineraries'));
     }
 
-    public function createPackageTour($id)
+    public function createPackageTour(Request $request)
     {
+        $input = $request->all();
         $i = 1;
         $reservedPackageTours = [];
 
-        session()->push('collectionReservedPackageTours', $id);
+        session()->push('collectionReservedPackageTours', $input['id']);
 
         $sessionPackageTours = session()->get('collectionReservedPackageTours');
         foreach($sessionPackageTours as $sessionPackageTour) {

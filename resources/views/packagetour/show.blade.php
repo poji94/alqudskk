@@ -270,7 +270,13 @@
                                             @if(Auth::guest())
                                                 <button type="button" class="btn btn-primary" onclick="location.href='{{url('/login')}}'">Book Now</button>
                                             @else
-                                                <button type="button" class="btn btn-primary" onclick="location.href='{{url('/reservation/create')}}'">Book Now</button>
+                                                <div>
+                                                    {!! Form::open(['method'=>'POST', 'action'=> 'ReservationController@createPackageTour']) !!}
+                                                        {!! Form::hidden('id', $packagetour->id) !!}
+                                                        {!! Form::submit('Submit', ['class'=>'btn btn-primary']) !!}
+                                                    {!! Form::close() !!}
+                                                </div>
+                                                {{--<button type="button" class="btn btn-primary" onclick="location.href='{{url('/reservation/create')}}'">Book Now</button>--}}
                                             @endif
                                         </div>
                                     </div>

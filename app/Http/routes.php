@@ -55,7 +55,7 @@ Route::post('/reservation/reviewItinerary/{reservation}', 'ReservationController
 
 Route::get('/cartPackageTour', 'ReservationController@cartPackageTour')->name('reservation.cartPackageTour');
 Route::get('/reservation/removePackageTourFromSession/{id}', 'ReservationController@removePackageTourFromSession')->name('reservation.removePackageTourFromSession');
-Route::get('/reservation/createPackageTour/{packagetour}', 'ReservationController@createPackageTour')->name('reservation.createPackageTour');
+Route::post('/reservation/createPackageTour/', 'ReservationController@createPackageTour')->name('reservation.createPackageTour');
 Route::post('/reservation/storedPackageTour', 'ReservationController@storePackageTour')->name('reservation.storePackageTour');
 Route::get('/reservation/editPackageTour/{reservation}', 'ReservationController@editPackageTour')->name('reservation.editPackageTour');
 Route::post('/reservation/editPackageTour/{reservation}', 'ReservationController@updatePackageTour')->name('reservation.updatePackageTour');

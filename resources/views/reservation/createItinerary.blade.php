@@ -116,7 +116,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm-6 input-group form-group-no-border input-lg{{ $errors->has('adult_no') ? ' has-error' : '' }}">
-                                    <input id="adult_no" name="adult_no" type="number" class="form-control" placeholder="Number of Adult" style="color: white">
+                                    <input id="adult_no" name="adult_no" type="number" class="form-control" placeholder="Number of Adult" value="1" style="color: white">
                                     @if ($errors->has('adult_no'))
                                         <span class="form-control form-control-danger" style="color: white;">
                                             {{ $errors->first('adult_no') }}
@@ -124,7 +124,7 @@
                                     @endif
                                 </div>
                                 <div class="col-sm-6 input-group form-group-no-border input-lg{{ $errors->has('children_no') ? ' has-error' : '' }}">
-                                    <input id="children_no" name="children_no" type="number" class="form-control" placeholder="Number of Children" style="color: white">
+                                    <input id="children_no" name="children_no" type="number" class="form-control" placeholder="Number of Children" value="0" style="color: white">
                                     @if ($errors->has('children_no'))
                                         <span class="form-control form-control-danger" style="color: white;">
                                             {{ $errors->first('children_no') }}
