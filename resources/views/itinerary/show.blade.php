@@ -42,7 +42,7 @@
                     @foreach($itinerary->medias as $media)
                         @if($i == 0)
                             <div class="carousel-item active">
-                                <img src="{{ $media->path }}" alt="" style="height: 100vh; width: 100vw;">
+                                <img src="{{ $media->path }}" alt="" style="height: 150vh; width: 100vw;">
                             </div>
                             {{--<div class="carousel-caption d-none d-md-block">--}}
                             {{--<h5>Nature, United States</h5>--}}
@@ -269,7 +269,7 @@
             </div>
         </div>
         <div class="section" style="margin-top: -70px;">
-            <h3 class="title text-center">You also may interested other {{$itinerary->types->first()->name}} like..</h3>
+            <h3 class="title text-center">You may also interested other {{$itinerary->types->first()->name}} like..</h3>
             <div class="card" style="background-color: rgb(171, 71, 188); width:100vw;">
                 <div class="row" style=" overflow: auto;">
                     @if($selectedTypeItineraries)

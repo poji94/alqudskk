@@ -209,7 +209,7 @@
             </div>
         </div>
         <div class="section" style="margin-top: -70px;">
-            <h3 class="title text-center">You also may interested other {{$packageTour->types->first()->name}} like..</h3>
+            <h3 class="title text-center">You may also interested other {{$packageTour->types->first()->name}} like..</h3>
             <div class="card" style="background-color: rgb(171, 71, 188); width:100vw;">
                 <div class="row" style=" overflow: auto;">
                     @if($selectedTypePackageTours)

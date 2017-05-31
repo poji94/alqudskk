@@ -19,7 +19,7 @@
     <div class="section" id="backgroundUser" data-parallax="true" style="background-image:url('/preset/backgroundDarken.jpg'); background-size: 100% 100%; background-repeat: no-repeat; height: 100vh;">
         <div class="container" style="margin-top: 35px;">
             <div class="row">
-                <div class="col-md-4 offset-md-0" style="margin-top: 110px;">
+                <div class="col-md-4" style="margin-top: 50px;">
                     <div class="card ">
                         <br>
                         <p class="category" style="color: black; text-align: center;">Activity Selection</p>
@@ -49,7 +49,7 @@
                     </div>
                 </div>
                 <div class="col-md-8">
-                    <div class="card" style="height: 80vh;">
+                    <div class="card" style="height: 70vh;">
                         <br>
                         <p class="category" style="color: black; text-align: center;">List of activites found</p>
                         <br>

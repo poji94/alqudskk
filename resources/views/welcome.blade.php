@@ -23,9 +23,15 @@
             <div class="container">
                 <div class="content-center brand">
                     {{--<img class="n-logo" src="./assets/img/now-logo.png" alt="">--}}
-                    <h1 class="h1-seo">Hello There.</h1>
-                    <h3>If you want to find something leisuring, <br>
-                        You come on the right place.</h3>
+                    @if(Auth::guest())
+                        <h1 class="h1-seo">Hello There.</h1>
+                        <h3>If you want to find something leisuring, <br>
+                            You come on the right place.</h3>
+                    @else
+                        <h1 class="h1-seo">Hey, {{Auth::user()->name}}</h1>
+                        <h3>It is nice to see you here,<br>
+                            we hope you are delighted in here.</h3>
+                    @endif
                 </div>
                 {{--<h6 class="category category-absolute">Designed by--}}
                 {{--<a href="http://invisionapp.com/" target="_blank">--}}
@@ -38,90 +44,69 @@
             </div>
         </div>
     </div>
+    <div class="main">
+        <div class="section" style="margin-top: -70px; background-image: url('/preset/backgroundDarken.jpg'); background-size: 100% 100%; background-repeat: no-repeat;">
+            <h3 class="title text-center" style="color: white;">
+                We do provide some activities and plan your vacation by your own <br>
+                Click <a href="{{route('itinerary.getSelection')}}" style="color: rgb(206, 147, 216);">here</a> to see more.
+            </h3>
+            {{--<div class="card" style="background-color: rgb(171, 71, 188); width:100vw;">--}}
+            <div class="card" style="background-color: transparent; width:100vw;">
+                <div class="row" style=" overflow: auto;">
+                    @if($itineraries)
+                        @foreach($itineraries as $itinerary)
+                                @php
+                                    $i = 0;
+                                @endphp
+                                @foreach($itinerary->medias as $media)
+                                    @if($i == 0)
+                                    <div class="col-sm-3" style="margin-top: 15px;">
+                                        <a href="{{route('itinerary.show', $itinerary->id)}}">
+                                            <img src="{{$media->path}}" class="img-responsive img-rounded" alt="" style="width: 100vw; height: 35vh;">
+                                            <p class="category text-center" style="color: white;">{{$itinerary->name}}</p>
+                                        </a>
+                                    </div>
+                                    @endif
+                                    @php
+                                        $i++;
+                                    @endphp
+                                @endforeach
+                        @endforeach
+                    @endif
 
-
-{{--<div class="container" style="padding-top: 75px">--}}
-    {{--<div class="row">--}}
-        {{--<div class="col-sm-8 col-md-offset-2">--}}
-            {{--<div class="panel panel-default">--}}
-                {{--<div class="panel-heading">List of activities</div>--}}
-                {{--<div class="panel-body">We provide activities to choose for you--}}
-                    {{--@if($itineraries)--}}
-                        {{--@foreach($itineraries as $itinerary)--}}
-                            {{--<div class="row page-header">--}}
-                                {{--@php--}}
-                                    {{--$i = 0;--}}
-                                {{--@endphp--}}
-                                {{--@foreach($itinerary->medias as $media)--}}
-                                    {{--@if($i == 0)--}}
-                                        {{--<div class="col-sm-4">--}}
-                                            {{--<img src="{{$media->path}}" alt="" class="img-responsive img-rounded" style="height: 150px; width: 230px;">--}}
-                                        {{--</div>--}}
-                                    {{--@endif--}}
-                                    {{--@php--}}
-                                        {{--$i++;--}}
-                                    {{--@endphp--}}
-                                {{--@endforeach--}}
-                                {{--<div class="col-sm-6">--}}
-                                    {{--Name: {{ $itinerary->name }} <br>--}}
-                                    {{--Duration: {{ $itinerary->duration }} <br>--}}
-                                    {{--Price per Adult: RM {{ $itinerary->price_adult }} <br>--}}
-                                    {{--Price per Child: RM {{ $itinerary->price_children }} <br>--}}
-                                    {{--<button type="button" class="btn btn-primary" onclick="location.href='{{route('itinerary.show', $itinerary->id)}}'">View</button>--}}
-                                    {{--@if(Auth::guest())--}}
-                                        {{--<button type="button" class="btn btn-primary" onclick="location.href='{{url('/login')}}'">Book Now</button>--}}
-                                    {{--@else--}}
-                                        {{--<button type="button" class="btn btn-primary" onclick="location.href='{{url('/reservation/create')}}'">Book Now</button>--}}
-                                    {{--@endif--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                        {{--@endforeach--}}
-                    {{--@endif--}}
-                {{--</div>--}}
-            {{--</div>--}}
-        {{--</div>--}}
-    {{--</div>--}}
-{{--</div>--}}
-    {{--<div class="container">--}}
-        {{--<div class="row">--}}
-            {{--<div class="col-sm-8 col-md-offset-2">--}}
-                {{--<div class="panel panel-default">--}}
-                    {{--<div class="panel-heading">List of tour packages</div>--}}
-                    {{--<div class="panel-body">We do also supply collection of activities with reasonable prices--}}
-                        {{--@if($packageTours)--}}
-                            {{--@foreach($packageTours as $packageTour)--}}
-                                {{--<div class="row page-header">--}}
-                                    {{--@php--}}
-                                        {{--$i = 0;--}}
-                                    {{--@endphp--}}
-                                    {{--@foreach($packageTour->itineraries as $itinerary)--}}
-                                        {{--@foreach($itinerary->medias as $media)--}}
-                                            {{--@if($i == 0)--}}
-                                                {{--<div class="col-sm-4">--}}
-                                                    {{--<img src="{{$media->path}}" class="img-responsive img-rounded" alt="" style="height: 150px; width: 230px;">--}}
-                                                {{--</div>--}}
-                                            {{--@endif--}}
-                                            {{--@php--}}
-                                                {{--$i++;--}}
-                                            {{--@endphp--}}
-                                        {{--@endforeach--}}
-                                    {{--@endforeach--}}
-                                    {{--<div class="col-sm-6">--}}
-                                        {{--Name: {{ $packageTour->name }} <br>--}}
-                                        {{--Duration: {{ $packageTour->duration }} <br>--}}
-                                        {{--<button type="button" class="btn btn-primary" onclick="location.href='{{route('packagetour.show', $packageTour->id)}}'">View</button>--}}
-                                        {{--@if(Auth::guest())--}}
-                                            {{--<button type="button" class="btn btn-primary" onclick="location.href='{{url('/login')}}'">Book Now</button>--}}
-                                        {{--@else--}}
-                                            {{--<button type="button" class="btn btn-primary" onclick="location.href='{{route('reservation.createPackageTour', $packageTour->id)}}'">Book Now</button>--}}
-                                        {{--@endif--}}
-                                    {{--</div>--}}
-                                {{--</div>--}}
-                            {{--@endforeach--}}
-                        {{--@endif--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-        {{--</div>--}}
-    {{--</div>--}}
+                </div>
+            </div>
+        </div>
+        <div class="section" style="margin-top: -70px; background-image: url('/preset/backgroundDarken.jpg'); background-size: 100% 100%; background-repeat: no-repeat;">
+            <h3 class="title text-center" style="color: white;">
+                You want easy and fast? <br>
+                We got that for you. More on <a href="{{route('packagetour.getSelection')}}" style="color: rgb(206, 147, 216);">here</a>
+            </h3>
+            {{--<div class="card" style="background-color: rgb(171, 71, 188); width:100vw;">--}}
+            <div class="card" style="background-color: transparent; width:100vw;">
+                <div class="row"  style=" overflow: auto;">
+                    @if($packageTours)
+                        @foreach($packageTours as $packageTour)
+                                @php
+                                    $i = 0;
+                                @endphp
+                                @foreach($packageTour->medias as $media)
+                                    @if($i == 0)
+                                        <div class="col-sm-3" style="margin-top: 15px;">
+                                            <a href="{{route('packagetour.show', $packageTour->id)}}">
+                                                <img src="{{$media->path}}" class="img-responsive img-rounded" alt="" style="width: 100vw; height: 35vh;">
+                                                <p class="category text-center" style="color: white;">{{$packageTour->name}}</p>
+                                            </a>
+                                        </div>
+                                    @endif
+                                    @php
+                                        $i++;
+                                    @endphp
+                                @endforeach
+                        @endforeach
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
