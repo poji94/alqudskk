@@ -81,7 +81,7 @@
                         {!! Form::label('activity_label', 'Activities included: ') !!}<br>
                         <div class="table-responsive">
                             <table class="table">
-                                <thead>
+                                <thead style="background-color: #9c27b0; color:white;">
                                 <tr>
                                     <th class="col-sm-6">Activity</th>
                                     <th class="col-sm-2">Action</th>
@@ -167,9 +167,9 @@
                             </table>
                         </div>
                         @if(Auth::guest())
-                            <button type="button" class="btn btn-primary" onclick="location.href='{{url('/login')}}'">Book Now</button>
+                            <button type="button" class="btn btn-info btn-round" onclick="location.href='{{url('/login')}}'">Book Now</button>
                         @else
-                            <button type="button" class="btn btn-primary" onclick="location.href='{{route('reservation.createPackageTour', $packageTour->id)}}'">Book Now</button>
+                            <button type="button" class="btn btn-info btn-round" onclick="location.href='{{route('reservation.createPackageTour', $packageTour->id)}}'">Book Now</button>
                         @endif
                     </div>
                     <div class="col-md-8">
@@ -180,7 +180,8 @@
         </div>
         <div class="section">
             <h3 class="title text-center">Activities nearby {{$packageTour->places->first()->name}}</h3>
-            <div class="card" style="background-color: rgb(171, 71, 188); width:100vw;">
+            {{--<div class="card" style="background-color: rgb(171, 71, 188); width:100vw;">--}}
+            <div class="card" style="background-image: url('/preset/backgroundItineraryMoreDarken.png'); background-size: 100% 100%; width:100vw;">
                 <div class="row" style=" overflow: auto;">
                     @if($selectedPlacePackageTours)
                         @foreach($selectedPlacePackageTours as $selectedPlacePackageTour)
@@ -210,7 +211,8 @@
         </div>
         <div class="section" style="margin-top: -70px;">
             <h3 class="title text-center">You may also interested other {{$packageTour->types->first()->name}} like..</h3>
-            <div class="card" style="background-color: rgb(171, 71, 188); width:100vw;">
+            {{--<div class="card" style="background-color: rgb(171, 71, 188); width:100vw;">--}}
+            <div class="card" style="background-image: url('/preset/backgroundPackageTourMoreDarken.jpg'); background-size: 100% 100%; width:100vw;">
                 <div class="row" style=" overflow: auto;">
                     @if($selectedTypePackageTours)
                         @foreach($selectedTypePackageTours as $selectedTypePackageTour)

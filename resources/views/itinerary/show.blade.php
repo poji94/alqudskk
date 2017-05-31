@@ -240,7 +240,8 @@
         </div>
         <div class="section">
             <h3 class="title text-center">Activities nearby {{$itinerary->places->first()->name}}</h3>
-            <div class="card" style="background-color: rgb(171, 71, 188); width:100vw;">
+            {{--<div class="card" style="background-color: rgb(171, 71, 188); width:100vw;">--}}
+            <div class="card" style="background-image: url('/preset/backgroundItineraryMoreDarken.png'); background-size: 100% 100%; width:100vw;">
                 <div class="row" style=" overflow: auto;">
                     @if($selectedPlaceItineraries)
                         @foreach($selectedPlaceItineraries as $selectedPlaceItinerary)
@@ -270,7 +271,8 @@
         </div>
         <div class="section" style="margin-top: -70px;">
             <h3 class="title text-center">You may also interested other {{$itinerary->types->first()->name}} like..</h3>
-            <div class="card" style="background-color: rgb(171, 71, 188); width:100vw;">
+            {{--<div class="card" style="background-color: rgb(171, 71, 188); width:100vw;">--}}
+            <div class="card" style="background-image: url('/preset/backgroundPackageTourMoreDarken.jpg'); background-size: 100% 100%; width:100vw;">
                 <div class="row" style=" overflow: auto;">
                     @if($selectedTypeItineraries)
                         @foreach($selectedTypeItineraries as $selectedTypeItinerary)

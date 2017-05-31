@@ -6,7 +6,7 @@
 
 @section('style')
     body {
-    background: url('/preset/backgroundDarken.jpg') no-repeat center center fixed;
+    background: url('/preset/backgroundReservationDarken.jpg') no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -19,11 +19,11 @@
 @endsection
 
 @section('content')
-    <div class="section" id="backgroundUser" data-parallax="true" style="background-image:url('/preset/backgroundDarken.jpg'); background-size: 100% 100%; background-repeat: no-repeat; height: 100vh;">
+    <div class="section" id="backgroundUser" data-parallax="true" style="background-image:url('/preset/backgroundReservationDarken.jpg'); background-size: 100% 100%; background-repeat: no-repeat; height: 100vh;">
         <div class="container" style="margin-top: 30px;">
             <div class="row">
                 <div class="col-md-12 offset-md-0">
-                    <div class="card">
+                    <div class="card" style="height: 75vh;">
                         <br>
                         <h3 class="category" style="color: black; text-align: center;">Reservation Management</h3>
                         <p class="category" style="color: black; text-align: center;">List of created reservation.</p>
@@ -38,7 +38,7 @@
                                 {!! Form::close() !!}
                             </div>
                         </div>
-                        <div class="card-block">
+                        <div class="card-block" style="height: 60vh; overflow:scroll;">
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead style="background-color: #9c27b0; color:white;">

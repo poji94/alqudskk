@@ -43,6 +43,24 @@
 
     <div class="main">
         @yield('content')
+        <footer class="footer" style="background-color:#9c27b0; color: white; margin-top: -20px;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-1">
+                        <img src="/preset/icon.png" alt="" style="height: 75px; width:75px;">
+                    </div>
+                    <div class="col-sm-4">
+                        AlQuds Travel (KK Branch) <br>
+                        No A-2-7. 2nd Floor, Block A, Sulaman Sentral, <br>
+                        Jalan Sepanggar Bay, 88450 Kota Kinabalu, Sabah. <br>
+                        &copy;
+                        <script>
+                            document.write(new Date().getFullYear())
+                        </script> AlQuds Travel KK
+                    </div>
+                </div>
+            </div>
+        </footer>
     </div>
 </body>
 </html>

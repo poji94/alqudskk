@@ -19,7 +19,7 @@
 @section('titlePage')
     <div class="wrapper">
         <div class="page-header">
-            <div class="page-header-image" data-parallax="true" style="background-image: url('/preset/background.jpg');"></div>
+            <div class="page-header-image" data-parallax="true" style="background-image: url('/preset/backgroundDarken.jpg');"></div>
             <div class="container">
                 <div class="content-center brand">
                     {{--<img class="n-logo" src="./assets/img/now-logo.png" alt="">--}}
@@ -29,7 +29,7 @@
                             You come on the right place.</h3>
                     @else
                         <h1 class="h1-seo">Hey, {{Auth::user()->name}}</h1>
-                        <h3>It is nice to see you here,<br>
+                        <h3>It is nice to see you,<br>
                             we hope you are delighted in here.</h3>
                     @endif
                 </div>
@@ -45,7 +45,7 @@
         </div>
     </div>
     <div class="main">
-        <div class="section" style="margin-top: -70px; background-image: url('/preset/backgroundDarken.jpg'); background-size: 100% 100%; background-repeat: no-repeat;">
+        <div class="section" style="margin-top: -70px; background-image: url('/preset/backgroundItineraryDarken.png'); background-size: 100% 100%; background-repeat: no-repeat;">
             <h3 class="title text-center" style="color: white;">
                 We do provide some activities and plan your vacation by your own <br>
                 Click <a href="{{route('itinerary.getSelection')}}" style="color: rgb(206, 147, 216);">here</a> to see more.
@@ -77,7 +77,7 @@
                 </div>
             </div>
         </div>
-        <div class="section" style="margin-top: -70px; background-image: url('/preset/backgroundDarken.jpg'); background-size: 100% 100%; background-repeat: no-repeat;">
+        <div class="section" style="margin-top: -70px; background-image: url('/preset/backgroundPackageTourDarken.jpg'); background-size: 100% 100%; background-repeat: no-repeat;">
             <h3 class="title text-center" style="color: white;">
                 You want easy and fast? <br>
                 We got that for you. More on <a href="{{route('packagetour.getSelection')}}" style="color: rgb(206, 147, 216);">here</a>

@@ -11,7 +11,7 @@
 @section('form')
     <div class="wrapper">
         <div class="page-header">
-            <div class="page-header-image" data-parallax="true" style="background-image: url('/preset/background.jpg');"></div>
+            <div class="page-header-image" data-parallax="true" style="background-image: url('/preset/backgroundMoreDarken.jpg');"></div>
             <div class="container">
                 <div class="col-md-4 content-center" style="margin-top: 35px;">
                     <div class="card card-login card-plain">
@@ -27,20 +27,20 @@
                             <div class="content">
                                 <div class="input-group form-group-no-border input-lg{{ $errors->has('email') ? ' has-error' : '' }}">
                                     <input id="email" name="email" type="text" class="form-control" placeholder="Your E-Mail">
-                                    @if ($errors->has('email'))
-                                        <span class="form-control form-control-danger">
-                                {{ $errors->first('email') }}
-                            </span>
-                                    @endif
                                 </div>
+                                @if ($errors->has('email'))
+                                    <span class="badge badge-danger">
+                                        {{ $errors->first('email') }}
+                                    </span>
+                                @endif
                                 <div class="input-group form-group-no-border input-lg{{ $errors->has('password') ? ' has-error' : '' }}">
                                     <input id="password" name="password" type="password" class="form-control" placeholder="Your Password">
-                                    @if ($errors->has('password'))
-                                        <span class="form-control form-control-danger">
-                                {{ $errors->first('password') }}
-                            </span>
-                                    @endif
                                 </div>
+                                @if ($errors->has('password'))
+                                    <span class="badge badge-danger">
+                                        {{ $errors->first('password') }}
+                                    </span>
+                                @endif
                                 <div class="checkbox checkbox-primary">
                                     <input id="remember" type="checkbox" name="remember">
                                     <label for="remember">

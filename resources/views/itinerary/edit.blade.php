@@ -11,7 +11,7 @@
     }
 
     body {
-        background: url('/preset/backgroundDarken.jpg') no-repeat center center fixed;
+        background: url('/preset/backgroundItineraryMoreDarken.png') no-repeat center center fixed;
         -webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;
@@ -54,7 +54,7 @@
                                         @foreach($itinerary->medias as $media)
                                             @if($i == 0)
                                                 <div class="carousel-item active">
-                                                    <img src="{{ $media->path }}" alt="" width="460" height="345">
+                                                    <img src="{{ $media->path }}" alt="" width="500" height="300">
                                                 </div>
                                                 {{--<div class="carousel-caption d-none d-md-block">--}}
                                                 {{--<h5>Nature, United States</h5>--}}
@@ -91,20 +91,20 @@
                         <div class="content">
                             <div class="input-group form-group-no-border input-lg{{ $errors->has('name') ? ' has-error' : '' }}">
                                 <input id="name" name="name" type="text" class="form-control" placeholder="Name" style="color: white" value="{{$itinerary->name}}">
-                                @if ($errors->has('name'))
-                                    <span class="form-control form-control-danger" style="color: white;">
+                            </div>
+                            @if ($errors->has('name'))
+                                <span class="badge badge-danger" style="color: white;">
                                         {{ $errors->first('name') }}
                                      </span>
-                                @endif
-                            </div>
+                            @endif
                             <div class="input-group form-group-no-border input-lg{{ $errors->has('description') ? ' has-error' : '' }}">
                                 <textarea id="description" name="description" type="text" class="form-control" rows="4" placeholder="Description of the activity" style="color: white;">{{$itinerary->description}}</textarea>
-                                @if ($errors->has('description'))
-                                    <span class="form-control form-control-danger" style="color: white;">
+                            </div>
+                            @if ($errors->has('description'))
+                                <span class="badge badge-danger" style="color: white;">
                                         {{ $errors->first('description') }}
                                     </span>
-                                @endif
-                            </div>
+                            @endif
                             <div class="input-group form-group-no-border input-lg{{ $errors->has('duration') ? ' has-error' : '' }}">
                                 <input id="duration" name="duration" type="text" class="form-control" onkeypress="return isNumber(event)" placeholder="Duration in hours" style="color: white" value="{{$itinerary->duration}}">
                                 <script type="text/javascript">
@@ -117,12 +117,12 @@
                                         return true;
                                     }
                                 </script>
-                                @if ($errors->has('duration'))
-                                    <span class="form-control form-control-danger" style="color: white;">
+                            </div>
+                            @if ($errors->has('duration'))
+                                <span class="badge badge-danger" style="color: white;">
                                         {{ $errors->first('duration') }}
                                     </span>
-                                @endif
-                            </div>
+                            @endif
                             <div>
                                 <br>
                                 {!! Form::label('option1_pickup_label', 'Pick up option 1', ['style'=>'color: white;']) !!}
@@ -130,30 +130,30 @@
                             <div class="row">
                                 <div class="col-sm-8 input-group form-group-no-border input-lg{{ $errors->has('option1_pickup_place') ? ' has-error' : '' }}">
                                     <input id="option1_pickup_place" name="option1_pickup_place" type="text" class="form-control" placeholder="Pickup place" style="color: white" value="{{$itinerary->option1_pickup_place}}">
-                                    @if ($errors->has('option1_pickup_place'))
-                                        <span class="form-control form-control-danger" style="color: white;">
+                                </div>
+                                @if ($errors->has('option1_pickup_place'))
+                                    <span class="badge badge-danger" style="color: white;">
                                             {{ $errors->first('option1_pickup_place') }}
                                         </span>
-                                    @endif
-                                </div>
+                                @endif
                                 <div class="col-sm-4 form-group form-group-no-border input-lg{{ $errors->has('option1_pickup_time') ? ' has-error' : '' }}">
                                     <input id="option1_pickup_time" name="option1_pickup_time" type="time" class="form-control" style="color: white" value="{{$itinerary->option1_pickup_time}}">
-                                    @if ($errors->has('option1_pickup_time'))
-                                        <span class="form-control form-control-danger" style="color: white;">
+                                </div>
+                                @if ($errors->has('option1_pickup_time'))
+                                    <span class="badge badge-danger" style="color: white;">
                                             {{ $errors->first('option1_pickup_time') }}
                                         </span>
-                                    @endif
-                                </div>
+                                @endif
                             </div>
                             <p style="color:white;">Drop off time will be calculated based on pickup time and activity duration</p>
                             <div class="input-group input-group form-group-no-border input-lg{{ $errors->has('option1_dropoff_place') ? ' has-error' : '' }}">
                                 <input id="option1_dropoff_place" name="option1_dropoff_place" type="text" class="form-control" placeholder="Drop off place" style="color: white" value="{{$itinerary->option1_dropoff_place}}">
-                                @if ($errors->has('option1_dropoff_place'))
-                                    <span class="form-control form-control-danger" style="color: white;">
+                            </div>
+                            @if ($errors->has('option1_dropoff_place'))
+                                <span class="badge badge-danger" style="color: white;">
                                         {{ $errors->first('option1_dropoff_place') }}
                                     </span>
-                                @endif
-                            </div>
+                            @endif
                             <div>
                                 <br>
                                 {!! Form::label('option1_pickup_label', 'Pick up option 2 (optional)', ['style'=>'color: white;']) !!}
@@ -161,30 +161,30 @@
                             <div class="row">
                                 <div class="col-sm-8 input-group form-group-no-border input-lg{{ $errors->has('option2_pickup_place') ? ' has-error' : '' }}">
                                     <input id="option2_pickup_place" name="option2_pickup_place" type="text" class="form-control" placeholder="Pickup place" style="color: white" value="{{$itinerary->option2_pickup_place}}">
-                                    @if ($errors->has('option2_pickup_place'))
-                                        <span class="form-control form-control-danger" style="color: white;">
+                                </div>
+                                @if ($errors->has('option2_pickup_place'))
+                                    <span class="badge badge-danger" style="color: white;">
                                             {{ $errors->first('option2_pickup_place') }}
                                         </span>
-                                    @endif
-                                </div>
+                                @endif
                                 <div class="col-sm-4 form-group form-group-no-border input-lg{{ $errors->has('option2_pickup_time') ? ' has-error' : '' }}">
                                     <input id="option2_pickup_time" name="option2_pickup_time" type="time" class="form-control" style="color: white" value="{{$itinerary->option2_pickup_time}}">
-                                    @if ($errors->has('option2_pickup_time'))
-                                        <span class="form-control form-control-danger" style="color: white;">
+                                </div>
+                                @if ($errors->has('option2_pickup_time'))
+                                    <span class="badge badge-danger" style="color: white;">
                                             {{ $errors->first('option2_pickup_time') }}
                                         </span>
-                                    @endif
-                                </div>
+                                @endif
                             </div>
                             <p style="color:white;">Drop off time will be calculated based on pickup time and activity duration</p>
                             <div class="input-group input-group form-group-no-border input-lg{{ $errors->has('option2_dropoff_place') ? ' has-error' : '' }}">
                                 <input id="option2_dropoff_place" name="option2_dropoff_place" type="text" class="form-control" placeholder="Drop off place" style="color: white" value="{{$itinerary->option2_dropoff_place}}">
-                                @if ($errors->has('option2_dropoff_place'))
-                                    <span class="form-control form-control-danger" style="color: white;">
+                            </div>
+                            @if ($errors->has('option2_dropoff_place'))
+                                <span class="badge badge-danger" style="color: white;">
                                         {{ $errors->first('option2_dropoff_place') }}
                                     </span>
-                                @endif
-                            </div>
+                            @endif
                             <div>
                                 <br>
                                 {!! Form::label('placetourism_typevacation', 'Place of tourism and type of vacation', ['style'=>'color: white;']) !!}
@@ -198,12 +198,12 @@
                                                 color: black;
                                             }
                                         </style>
-                                        @if ($errors->has('place_tourism'))
-                                            <span class="form-control form-control-danger" style="color: white;">
+                                    </div>
+                                    @if ($errors->has('place_tourism'))
+                                        <span class="badge badge-danger" style="color: white;">
                                             {{ $errors->first('place_tourism') }}
                                         </span>
-                                        @endif
-                                    </div>
+                                    @endif
                                 @endforeach
                                 @foreach($itinerary->types as $type)
                                     <div class="col-sm-6 input-group form-group-no-border input-lg{{ $errors->has('type_vacation') ? ' has-error' : '' }}">
@@ -213,12 +213,12 @@
                                                 color: black;
                                             }
                                         </style>
-                                        @if ($errors->has('type_vacation'))
-                                            <span class="form-control form-control-danger" style="color: white;">
-                                            {{ $errors->first('type_vacation') }}
-                                        </span>
-                                        @endif
                                     </div>
+                                    @if ($errors->has('type_vacation'))
+                                        <span class="badge badge-danger" style="color: white;">
+                                        {{ $errors->first('type_vacation') }}
+                                    </span>
+                                    @endif
                                 @endforeach
                             </div>
                             <div>
@@ -227,47 +227,47 @@
                             @foreach($itinerary->prices as $price)
                                 <div class="input-group input-group form-group-no-border input-lg{{ $errors->has('personal') ? ' has-error' : '' }}">
                                     <input id="personal" name="personal" type="number" class="form-control" placeholder="Personal price" style="color: white" value="{{$price->personal}}">
-                                    @if ($errors->has('personal'))
-                                        <span class="form-control form-control-danger" style="color: white;">
+                                </div>
+                                @if ($errors->has('personal'))
+                                    <span class="badge badge-danger" style="color: white;">
                                             {{ $errors->first('personal') }}
                                         </span>
-                                    @endif
-                                </div>
+                                @endif
                                 <div class="row">
                                     <div class="col-sm-6 input-group form-group-no-border input-lg{{ $errors->has('private_group_adult') ? ' has-error' : '' }}">
                                         <input id="private_group_adult" name="private_group_adult" type="number" class="form-control" placeholder="Private Group Adult Price" style="color: white" value="{{$price->private_group_adult}}">
-                                        @if ($errors->has('private_group_adult'))
-                                            <span class="form-control form-control-danger" style="color: white;">
+                                    </div>
+                                    @if ($errors->has('private_group_adult'))
+                                        <span class="badge badge-danger" style="color: white;">
                                                 {{ $errors->first('private_group_adult') }}
                                             </span>
-                                        @endif
-                                    </div>
+                                    @endif
                                     <div class="col-sm-6 input-group form-group-no-border input-lg{{ $errors->has('private_group_children') ? ' has-error' : '' }}">
                                         <input id="private_group_children" name="private_group_children" type="number" class="form-control" placeholder="Private Group Children Price" style="color: white" value="{{$price->private_group_children}}">
-                                        @if ($errors->has('private_group_children'))
-                                            <span class="form-control form-control-danger" style="color: white;">
+                                    </div>
+                                    @if ($errors->has('private_group_children'))
+                                        <span class="badge badge-danger" style="color: white;">
                                                 {{ $errors->first('private_group_children') }}
                                             </span>
-                                        @endif
-                                    </div>
+                                    @endif
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6 input-group form-group-no-border input-lg{{ $errors->has('public_group_adult') ? ' has-error' : '' }}">
                                         <input id="public_group_adult" name="public_group_adult" type="number" class="form-control" placeholder="Public Group Adult Price" style="color: white" value="{{$price->public_group_adult}}">
-                                        @if ($errors->has('public_group_adult'))
-                                            <span class="form-control form-control-danger" style="color: white;">
+                                    </div>
+                                    @if ($errors->has('public_group_adult'))
+                                        <span class="badge badge-danger" style="color: white;">
                                                 {{ $errors->first('public_group_adult') }}
                                             </span>
-                                        @endif
-                                    </div>
+                                    @endif
                                     <div class="col-sm-6 input-group form-group-no-border input-lg{{ $errors->has('public_group_children') ? ' has-error' : '' }}">
                                         <input id="public_group_children" name="public_group_children" type="number" class="form-control" placeholder="Public Group Children Price" style="color: white" value="{{$price->public_group_children}}">
-                                        @if ($errors->has('public_group_children'))
-                                            <span class="form-control form-control-danger" style="color: white;">
+                                    </div>
+                                    @if ($errors->has('public_group_children'))
+                                        <span class="badge badge-danger" style="color: white;">
                                                 {{ $errors->first('public_group_children') }}
                                             </span>
-                                        @endif
-                                    </div>
+                                    @endif
                                 @endforeach
                             </div>
                             <div>

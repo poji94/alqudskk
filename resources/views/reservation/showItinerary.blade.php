@@ -6,7 +6,7 @@
 
 @section('style')
     body {
-    background: url('/preset/backgroundDarken.jpg') no-repeat center center fixed;
+    background: url('/preset/backgroundViewReservationMoreDarken.jpg') no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -38,6 +38,12 @@
                             {!! Form::label('user_email', 'Email: ', ['style'=>'color: white;']) !!} <p style="color: white; display: inline;">{{$reservation->reserveUser->email}}</p><br>
                             {!! Form::label('user_phone_number', 'Phone Number: ', ['style'=>'color: white;']) !!}  <p style="color: white; display: inline">{{$reservation->reserveUser->phone_number}}</p>
                         </div>
+                        <br>
+                        <div class="form-group">
+                            {!! Form::label('reservation_status_label', 'Status:  ', ['style'=>'color: white;']) !!}
+                            <p style="color:white;">{{$reservation->reserveStatus->name}}</p>
+                        </div>
+                        <br>
                         <div>
                             {!! Form::label('itinerary_label', 'Itinerary', ['style'=>'color:white;']) !!}
                         </div>
@@ -94,8 +100,8 @@
                         @endif
                         @if($reservation->reservation_status_id == 4)
                             @if($reservation->chosen_date == 1)
-                                {!! Form::label('chosen_date_label', 'Chosen Date: Main', ['style'=>'color:white;']) !!}
                                 <br>
+                                {!! Form::label('chosen_date_label', 'Chosen Date: Main', ['style'=>'color:white;']) !!}
                                 <br>
                                 <div class="row">
                                     <div class="col-sm-6 form-group form-group-no-border input-lg">
@@ -112,8 +118,8 @@
                                     </div>
                                 </div>
                             @elseif($reservation->chosen_date == 2)
-                                {!! Form::label('chosen_date_label', 'Chosen Date: Alternative') !!}
                                 <br>
+                                {!! Form::label('chosen_date_label', 'Chosen Date: Alternative') !!}
                                 <br>
                                 <div class="row">
                                     <div class="col-sm-6 form-group form-group-no-border input-lg">
@@ -164,6 +170,7 @@
                                 </div>
                             </div>
                         @endif
+                        <br>
                         <div class="form-group form-group-no-border">
                             {!! Form::label('price', 'Price: ', ['style'=>'color:white;']) !!}
                             <p style="color: white; display: inline;">{{$reservation->price}}</p>
@@ -183,7 +190,7 @@
                             <p style="color: white;">{{$reservation->remarks}}</p>
                         </div>
                         <div class="footer text-center">
-                            <button type="button" class="col-sm-6 btn btn-primary btn-round" onclick="location.href='{{url()->previous()}}'">Back</button>
+                            <button type="button" class="col-sm-6 btn btn-primary btn-round" onclick="location.href='{{route('reservation.index')}}'">Back</button>
                         </div>
                     </div>
                 </div>

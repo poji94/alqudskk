@@ -36,7 +36,7 @@
                         <div class="content">
 
                             @if($errors->has('packagetour_id'))
-                                <div class="alert alert-danger">
+                                <div class="badge badge-danger">
                                     <ul>
                                         <strong>{{ $errors->first('packagetour_id') }}</strong>
                                     </ul>
@@ -81,7 +81,7 @@
                                     <p style="color: white">Public Group</p>
                                 </label>
                                 @if ($errors->has('price_type'))
-                                    <span class="form-group form-group-no-border input-group">
+                                    <span class="badge badge-danger">
                                         <strong>{{ $errors->first('price_type') }}</strong>
                                     </span>
                                 @endif
@@ -108,7 +108,7 @@
                                 <div class="col-sm-6 input-group form-group-no-border input-lg{{ $errors->has('adult_no') ? ' has-error' : '' }}">
                                     <input id="adult_no" name="adult_no" type="number" class="form-control" placeholder="Number of Adult" value="1" style="color: white">
                                     @if ($errors->has('adult_no'))
-                                        <span class="form-control form-control-danger" style="color: white;">
+                                        <span class="badge badge-danger">
                                             {{ $errors->first('adult_no') }}
                                         </span>
                                     @endif
@@ -116,7 +116,7 @@
                                 <div class="col-sm-6 input-group form-group-no-border input-lg{{ $errors->has('children_no') ? ' has-error' : '' }}">
                                     <input id="children_no" name="children_no" type="number" class="form-control" placeholder="Number of Children" value="0" style="color: white">
                                     @if ($errors->has('children_no'))
-                                        <span class="form-control form-control-danger" style="color: white;">
+                                        <span class="badge badge-danger">
                                             {{ $errors->first('children_no') }}
                                         </span>
                                     @endif
@@ -129,7 +129,7 @@
                                     </div>
                                     {!! Form::date('main_reservation_start', null, ['class'=>'form-control', 'min'=>\Carbon\Carbon::today()->toDateString(), 'onkeydown'=>'return false', 'style'=>'color:white;']) !!}
                                     @if ($errors->has('main_reservation_start'))
-                                        <span class="form-control form-control-danger" style="color: white;">
+                                        <span class="badge badge-danger">
                                             {{ $errors->first('main_reservation_start') }}
                                         </span>
                                     @endif
@@ -140,7 +140,7 @@
                                     </div>
                                     {!! Form::date('alternate_reservation_start', null, ['class'=>'form-control', 'min'=>\Carbon\Carbon::today()->toDateString(), 'onkeydown'=>'return false', 'style'=>'color:white;']) !!}
                                     @if ($errors->has('alternate_reservation_start'))
-                                        <span class="form-control form-control-danger" style="color: white;">
+                                        <span class="badge badge-danger">
                                             {{ $errors->first('alternate_reservation_start') }}
                                         </span>
                                     @endif
@@ -149,7 +149,7 @@
                             <div class="input-group form-group-no-border input-lg{{ $errors->has('other_details') ? ' has-error' : '' }}">
                                 <textarea id="other_details" name="other_details" type="text" class="form-control" rows="4" placeholder="Other details for the reservation" style="color: white"></textarea>
                                 @if ($errors->has('other_details'))
-                                    <span class="form-control form-control-danger" style="color: white;">
+                                    <span class="badge badge-danger">
                                         {{ $errors->first('other_details') }}
                                     </span>
                                 @endif
@@ -157,7 +157,7 @@
                         </div>
                         <div class="row footer text-center">
                             <button type="submit" class="col-sm-6 btn btn-primary btn-round btn-lg btn-block">Create Reservation</button>
-                            <button type="button" class="col-sm-6 btn btn-warning btn-round" onclick="location.href='{{url()->previous()}}'">Cancel</button>
+                            <button type="button" class="col-sm-6 btn btn-warning btn-round" onclick="location.href='{{route('reservation.getUserReservation')}}'">Cancel</button>
                         </div>
                     </form>
                 </div>

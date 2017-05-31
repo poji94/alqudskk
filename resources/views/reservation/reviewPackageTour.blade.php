@@ -6,7 +6,7 @@
 
 @section('style')
     body {
-    background: url('/preset/backgroundDarken.jpg') no-repeat center center fixed;
+    background: url('/preset/backgroundViewReservationMoreDarken.jpg') no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -105,7 +105,7 @@
                                     <div id="adult_no" class="col-sm-6 input-group form-group-no-border input-lg{{ $errors->has('adult_no') ? ' has-error' : '' }}">
                                         {!! Form::number('adult_no', $reservation->adult_no, ['class'=>'form-control', 'disabled']) !!}
                                         @if ($errors->has('adult_no'))
-                                            <span class="form-control form-control-danger" style="color: white;">
+                                            <span class="badge badge-danger">
                                                 <strong>{{ $errors->first('adult_no') }}</strong>
                                             </span>
                                         @endif
@@ -116,7 +116,7 @@
                                     <div id="adult_no" class="col-sm-6 form-group{{ $errors->has('adult_no') ? ' has-error' : '' }}">
                                         {!! Form::number('adult_no', $reservation->adult_no, ['class'=>'form-control', 'disabled']) !!}
                                         @if ($errors->has('adult_no'))
-                                            <span class="form-control form-control-danger" style="color: white;">
+                                            <span class="badge badge-danger">
                                                 <strong>{{ $errors->first('adult_no') }}</strong>
                                             </span>
                                         @endif
@@ -124,7 +124,7 @@
                                     <div id="children_no" class="col-sm-6 form-group{{ $errors->has('children_no') ? ' has-error' : '' }}">
                                         {!! Form::number('children_no', $reservation->children_no, ['class'=>'form-control', 'disabled']) !!}
                                         @if ($errors->has('children_no'))
-                                            <span class="form-control form-control-danger" style="color: white;">
+                                            <span class="badge badge-danger">
                                                 <strong>{{ $errors->first('children_no') }}</strong>
                                             </span>
                                         @endif
@@ -138,7 +138,7 @@
                                     </div>
                                     {!! Form::date('main_reservation_start', $reservation->main_reservation_start, ['class'=>'form-control', 'min'=>\Carbon\Carbon::today()->toDateString(), 'disabled', 'onkeydown'=>'return false', 'style'=>'color:white;']) !!}
                                     @if ($errors->has('main_reservation_start'))
-                                        <span class="form-control form-control-danger" style="color: white;">
+                                        <span class="badge badge-danger">
                                             {{ $errors->first('main_reservation_start') }}
                                         </span>
                                     @endif
@@ -157,7 +157,7 @@
                                     </div>
                                     {!! Form::date('alternate_reservation_start', $reservation->alternate_reservation_start, ['class'=>'form-control', 'min'=>\Carbon\Carbon::today()->toDateString(), 'disabled', 'onkeydown'=>'return false', 'style'=>'color:white;']) !!}
                                     @if ($errors->has('alternate_reservation_start'))
-                                        <span class="form-control form-control-danger" style="color: white;">
+                                        <span class="badge badge-danger">
                                             {{ $errors->first('alternate_reservation_start') }}
                                         </span>
                                     @endif
@@ -187,7 +187,7 @@
                                     }
                                 </style>
                                 @if ($errors->has('reservation_status_id'))
-                                    <span class="help-block">
+                                    <span class="badge badge-danger">
                                         <strong>{{ $errors->first('reservation_status_id') }}</strong>
                                     </span>
                                 @endif
@@ -237,15 +237,15 @@
                             </div>
                             <div class="input-group form-group-no-border input-lg{{ $errors->has('remarks') ? ' has-error' : '' }}">
                                 <textarea id="remarks" name="remarks" type="text" class="form-control" rows="4" placeholder="Other details like flight ticket, no plat of car, etc." style="color: white">{{$reservation->remarks}}</textarea>
-                                @if ($errors->has('remarks'))
-                                    <span class="form-control form-control-danger" style="color: white;">
+                            </div>
+                            @if ($errors->has('remarks'))
+                                <span class="badge badge-danger">
                                         {{ $errors->first('remarks') }}
                                     </span>
-                                @endif
-                            </div>
+                            @endif
                             <div class="row footer text-center">
                                 <button type="submit" class="col-sm-6 btn btn-primary btn-round btn-lg btn-block">Review Reservation</button>
-                                <button type="button" class="col-sm-6 btn btn-warning btn-round" onclick="location.href='{{url()->previous()}}'">Cancel</button>
+                                <button type="button" class="col-sm-6 btn btn-warning btn-round" onclick="location.href='{{route('reservation.index')}}'">Cancel</button>
                             </div>
                         </div>
                     </form>

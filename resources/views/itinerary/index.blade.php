@@ -19,7 +19,7 @@
 @endsection
 
 @section('content')
-    <div class="section" id="backgroundUser" data-parallax="true" style="background-image:url('/preset/backgroundDarken.jpg'); background-size: 100% 100%; background-repeat: no-repeat; height: 100vh;">
+    <div class="section" id="backgroundUser" data-parallax="true" style="background-image:url('/preset/backgroundItineraryDarken.png'); background-size: 100% 100%; background-repeat: no-repeat; height: 100vh;">
         <div class="container" style="margin-top: 30px;">
             <div class="row">
                 <div class="col-md-8 offset-md-2 ">
