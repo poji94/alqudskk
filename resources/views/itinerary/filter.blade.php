@@ -54,7 +54,7 @@
                         <p class="category" style="color: black; text-align: center;">List of activites found</p>
                         <br>
                         <div class="card-block" style="height: 70vh; overflow:auto;">
-                            <div class="container">>
+                            <div class="container">
                                 <div class="row" >
                                     @if($selectedItineraries)
                                         @foreach($selectedItineraries as $selectedItinerary)
@@ -65,6 +65,7 @@
                                                     @if($i == 0)
                                                         <div class="col-sm-4">
                                                             <img src="{{$media->path}}" class="img-responsive img-rounded img-raised" alt="" style="height: 150px; width: 230px;">
+                                                            <br><br>
                                                         </div>
                                                     @endif
                                                     @php
@@ -78,7 +79,7 @@
                                                         <button type="button" class="btn btn-info btn-round" onclick="location.href='{{url('/login')}}'">Book Now</button>
                                                     @else
                                                         <button type="button" class="btn btn-info btn-round" data-toggle="modal" data-target="#option{{$selectedItinerary->id}}">Book Now</button>
-                                                        <div class="modal fade" id="option{{$selectedItinerary->id  }}" role="dialog">
+                                                        <div class="modal fade" id="option{{$selectedItinerary->id}}" role="dialog">
                                                             <div class="modal-dialog">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
@@ -98,14 +99,13 @@
                                                                     <div class="modal-footer justify-content-center">
                                                                         {!! Form::submit('Book Now', ['class'=>'btn btn-info btn-round']) !!}
                                                                         {!! Form::close() !!}
-                                                                        <button type="button" class="btn btn-primary btn-round" data-dismiss="modal">Cancel</button>
+                                                                        <button type="button" class="btn btn-warning btn-round" data-dismiss="modal">Cancel</button>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     @endif
                                                 </div>
-                                                <br>
                                         @endforeach
                                     @endif
                                 </div>

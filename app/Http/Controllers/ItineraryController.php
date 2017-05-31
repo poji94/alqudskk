@@ -315,7 +315,7 @@ class ItineraryController extends Controller
         }
         $itinerary->medias()->delete();
 
-        Session::flash('deleted_itinerary', 'Activity ' . $itinerary->name . ' successfully updated');
+        Session::flash('deleted_itinerary', 'Activity ' . $itinerary->name . ' successfully deleted');
         return redirect(route('itinerary.index'));
     }
 }

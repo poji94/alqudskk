@@ -74,7 +74,7 @@
                                                 <td>{{$reservation->id}}</td>
                                                 <td>{{$reservation->reserveUser->name}}</td>
                                                 <td>{{$reservation->reserveType->name}}</td>
-                                                <td>{{currency($reservation->price, currency()->config('default'), $currency['code'])}}</td>>
+                                                <td>{{currency($reservation->price, currency()->config('default'), $currency['code'])}}</td>
                                                 <td>{{$reservation->reserveStatus->name}}</td>
                                                 <td>{{$reservation->main_reservation_start}}</td>
                                                 <td>{{$reservation->main_reservation_end}}</td>
