@@ -75,7 +75,7 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="reservationDropDown">
                                 <a class="dropdown-item" href="{{ url('/reservation') }}">Manage Booking</a>
-                                <a class="dropdown-item" href="{{ url('/packagetour') }}">My Own Booking</a>
+                                <a class="dropdown-item" href="{{ route('reservation.getUserReservation') }}">My Own Booking</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{{route('reservation.cartItinerary')}}">Plan My Own Cart</a>
                                 <a class="dropdown-item" href="{{route('reservation.cartPackageTour')}}">Tour Package Cart</a>
@@ -108,7 +108,7 @@
                                 My Booking
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="reservationDropdown">
-                                <a class="dropdown-item" href="{{ url('/packagetour') }}">My Own Booking</a>
+                                <a class="dropdown-item" href="{{ route('reservation.getUserReservation') }}">My Own Booking</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{{route('reservation.cartItinerary')}}">Plan My Own Cart</a>
                                 <a class="dropdown-item" href="{{route('reservation.cartPackageTour')}}">Tour Package Cart</a>

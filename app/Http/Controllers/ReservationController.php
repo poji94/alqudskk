@@ -222,6 +222,7 @@ class ReservationController extends Controller
                 }
                 $i++;
             }
+
         }
         $request->session()->push('dayItineraries', $dayItineraries);
         $sessionDayItineraries = session()->get('dayItineraries');
@@ -405,7 +406,7 @@ class ReservationController extends Controller
 
         $i=0;
         foreach($input['itinerary_id'] as $itinerary_id) {
-            $reservation->itineraries()->attach($itinerary_id, ['day'=>$reservedDayItineraries[$i] ,'option'=>$reservedItinerariesOption[$i]]);                  //since package tour only receive string instead of array, must create an array bracket
+            $reservation->itineraries()->attach($itinerary_id, ['day'=>$reservedDayItineraries[$i], 'option'=>$reservedItinerariesOption[$i]]);                  //since package tour only receive string instead of array, must create an array bracket
             $i++;
         }
 

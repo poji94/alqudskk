@@ -88,8 +88,9 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="footer text-center">
-                                <button type="submit" class="btn btn-primary btn-round btn-lg btn-block">Add User</button>
+                            <div class="row footer text-center">
+                                <button type="submit" class="col-sm-6 btn btn-primary btn-round btn-lg btn-block">Add User</button>
+                                <button type="button" class="col-sm-6 btn btn-warning btn-round" onclick="location.href='{{route('user.index')}}'">Cancel</button>
                             </div>
                         </form>
                     </div>

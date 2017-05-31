@@ -1842,7 +1842,7 @@ textarea.form-control {
 .radio input[type="radio"]:checked + label::after {
   width: 4px;
   height: 4px;
-  background-color: #555555;
+  background-color: #FFFFFF;
   border-color: #555555;
   top: 11px;
   left: 11px;

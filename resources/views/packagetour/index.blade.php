@@ -83,8 +83,6 @@
             </div>
         </div>
     </div>
-    </div>
-
 
     @if(Session::has('created_packagetour'))
         <script type="text/javascript">
