@@ -62,7 +62,7 @@
                                     @if($i == 0)
                                     <div class="col-sm-3" style="margin-top: 15px;">
                                         <a href="{{route('itinerary.show', $itinerary->id)}}">
-                                            <img src="{{$media->path}}" class="img-responsive img-rounded" alt="" style="width: 100vw; height: 35vh;">
+                                            <img src="{{$media->path}}" class="img-responsive img-rounded img-raised" alt="" style="width: 100vw; height: 35vh;">
                                             <p class="category text-center" style="color: white;">{{$itinerary->name}}</p>
                                         </a>
                                     </div>
@@ -94,7 +94,7 @@
                                     @if($i == 0)
                                         <div class="col-sm-3" style="margin-top: 15px;">
                                             <a href="{{route('packagetour.show', $packageTour->id)}}">
-                                                <img src="{{$media->path}}" class="img-responsive img-rounded" alt="" style="width: 100vw; height: 35vh;">
+                                                <img src="{{$media->path}}" class="img-responsive img-rounded img-raised" alt="" style="width: 100vw; height: 35vh;">
                                                 <p class="category text-center" style="color: white;">{{$packageTour->name}}</p>
                                             </a>
                                         </div>
