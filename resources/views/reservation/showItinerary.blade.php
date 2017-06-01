@@ -183,14 +183,20 @@
                             </div>
                         @endif
                         <br>
-                        <div>
-                            {!! Form::label('remarks', 'Remarks: ', ['style'=>'color:white;']) !!}
-                        </div>
-                        <div class="input-group form-group-no-border input-lg{{ $errors->has('remarks') ? ' has-error' : '' }}">
-                            <p style="color: white;">{{$reservation->remarks}}</p>
-                        </div>
+                        @if($reservation->remarks)
+                            <div>
+                                {!! Form::label('remarks', 'Remarks: ', ['style'=>'color:white;']) !!}
+                            </div>
+                            <div class="input-group form-group-no-border input-lg{{ $errors->has('remarks') ? ' has-error' : '' }}">
+                                <p style="color: white;">{{$reservation->remarks}}</p>
+                            </div>
+                        @endif
                         <div class="footer text-center">
-                            <button type="button" class="col-sm-6 btn btn-primary btn-round" onclick="location.href='{{route('reservation.index')}}'">Back</button>
+                            @if(Auth::user()->role_user_id == 3)
+                                <button type="button" class="col-sm-6 btn btn-primary btn-round" onclick="location.href='{{route('reservation.getUserReservation')}}'">Back</button>
+                            @else
+                                <button type="button" class="col-sm-6 btn btn-primary btn-round" onclick="location.href='{{route('reservation.index')}}'">Back</button>
+                            @endif
                         </div>
                     </div>
                 </div>

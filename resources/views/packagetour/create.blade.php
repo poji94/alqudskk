@@ -145,7 +145,7 @@
                                     {!! Form::select('itinerary_id[]', $itineraries, null, ['class'=>'col-sm-8 form-control', 'multiple'=>'multiple']) !!}
                                     <style>
                                         option {
-                                            color: white;
+                                            color: black;
                                         }
                                     </style>
                                     <input type="button" class="btn btn-danger btn-round" id="remove-itinerary" value="Remove">

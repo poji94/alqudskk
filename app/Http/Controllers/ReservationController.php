@@ -319,7 +319,6 @@ class ReservationController extends Controller
                 }
             }
         }
-
         return view('reservation.createItinerary', compact('reservedItineraries', 'reservedItinerariesOption', 'reservedDayItineraries'));
     }
 

@@ -26,8 +26,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $itineraries = Itinerary::all();
-        $packageTours = PackageTour::all();
+        $itineraries = Itinerary::inRandomOrder()->limit(4)->get();
+        $packageTours = PackageTour::inRandomOrder()->limit(4)->get();
         return view('welcome', compact('itineraries', 'packageTours'));
     }
 }

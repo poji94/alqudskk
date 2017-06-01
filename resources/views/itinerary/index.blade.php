@@ -23,12 +23,12 @@
         <div class="container" style="margin-top: 30px;">
             <div class="row">
                 <div class="col-md-8 offset-md-2 ">
-                    <div class="card ">
+                    <div class="card " style="height: 75vh;">
                         <br>
                         <h3 class="category" style="color: black; text-align: center;">Activities Management</h3>
                         <p class="category" style="color: black; text-align: center;">List of stored activities.</p>
                         <br>
-                        <div class="card-block">
+                        <div class="card-block" style="height: 55vh; overflow:scroll;">
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead style="background-color: #9c27b0; color:white;">

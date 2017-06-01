@@ -42,6 +42,7 @@ class ItineraryController extends Controller
     public function filterSelection(Request $request)
     {
         $selectedItineraries = array();
+        $filtered1Itineraries = array();
         $input = $request->all();
         $itineraries = Itinerary::all();
         if($input['place_tourism'] == null && $input['type_vacation'] == null) {
@@ -77,6 +78,7 @@ class ItineraryController extends Controller
                 foreach($filtered1Itinerary->types as $type) {
                     if($type->pivot->type_vacation_id == $input['type_vacation']) {
                         $selectedItineraries = Itinerary::findOrFail($type->pivot->typeable_id);
+                        $selectedItineraries = array($selectedItineraries);
                     }
                 }
             }

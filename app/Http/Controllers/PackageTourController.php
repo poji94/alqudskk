@@ -76,6 +76,7 @@ class PackageTourController extends Controller
                 foreach($filtered1PackageTour->types as $type) {
                     if($type->pivot->type_vacation_id == $input['type_vacation']) {
                         $selectedPackageTours = PackageTour::findOrFail($type->pivot->typeable_id);
+                        $selectedPackageTours = array($selectedPackageTours);
                     }
                 }
             }

@@ -90,7 +90,7 @@
                                                                             {!! Form::open(['method'=>'POST', 'action'=> 'ReservationController@createItinerary']) !!}
                                                                             {!! Form::hidden('id', $selectedItinerary->id) !!}
                                                                             @if($selectedItinerary->option2_pickup_place != null)
-                                                                                {!! Form::select('option', [''=>'Choose Options', '1'=>'Option 1 ('. $selectedItinerary->option1_pickup_time . ' -> ' . $selectedItinerary->option1_dropoff_time .')', '2'=>'Option 2 ('. $itinerary->option2_pickup_time . ' -> ' . $itinerary->option2_dropoff_time .')'], null, [ 'class'=>'form-control']) !!}
+                                                                                {!! Form::select('option', [''=>'Choose Options', '1'=>'Option 1 ('. $selectedItinerary->option1_pickup_time . ' -> ' . $selectedItinerary->option1_dropoff_time .')', '2'=>'Option 2 ('. $selectedItinerary->option2_pickup_time . ' -> ' . $selectedItinerary->option2_dropoff_time .')'], null, [ 'class'=>'form-control']) !!}
                                                                             @else
                                                                                 {!! Form::select('option', [''=>'Choose Options', '1'=>'Option 1 ('. $selectedItinerary->option1_pickup_time . ' -> ' . $selectedItinerary->option1_dropoff_time .')'], null, [ 'class'=>'form-control']) !!}
                                                                             @endif

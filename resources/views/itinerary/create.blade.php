@@ -144,7 +144,7 @@
                                     </span>
                                 @endif
                                 <div class="col-sm-6 input-group form-group-no-border input-lg{{ $errors->has('type_vacation') ? ' has-error' : '' }}">
-                                    {!! Form::select('type_vacation', [''=>'Choose Tourism Place'] + $typevacation, null, ['class'=>'form-control', 'style'=>'color: white;']) !!}
+                                    {!! Form::select('type_vacation', [''=>'Choose Vacation Type'] + $typevacation, null, ['class'=>'form-control', 'style'=>'color: white;']) !!}
                                     <style>
                                         option {
                                             color: black;

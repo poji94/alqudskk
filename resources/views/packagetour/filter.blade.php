@@ -73,7 +73,6 @@
                                             @endforeach
                                             <div class="col-sm-6">
                                                 Name: {{ $selectedPackageTour->name }} <br>
-                                                Duration: {{ $selectedPackageTour->duration }} <br>
                                                 <button type="button" class="btn btn-primary btn-round" onclick="location.href='{{route('packagetour.show', $selectedPackageTour->id)}}'">View</button>
                                                 @if(Auth::guest())
                                                     <button type="button" class="btn btn-info btn-round" onclick="location.href='{{url('/login')}}'">Book Now</button>

@@ -61,7 +61,7 @@
                                     <div class="row form-group form-group-no-border" id="itinerary-form{{$i}}">
                                         <div class="col-sm-8">
                                             <input name="itinerary_id[]" id="itinerary_id" type="hidden" mutltiple="multiple" value="{{$reservedItinerary['id']}}">
-                                            <input class="form-control" disabled="disabled" mutltiple="multiple" name="itinerary_name[]" type="text" value="{{$reservedItinerary['name']}}" style="color: white;">
+                                            <input class="form-control" disabled="disabled" mutltiple="multiple" name="itinerary_name" type="text" value="{{$reservedItinerary['name']}}" style="color: white;">
                                         </div>
                                         <button type="button" class="btn btn-primary btn-round" onclick="location.href='{{route('itinerary.show', $reservedItinerary['id'])}}'">View</button>
                                         <button type="button" class="btn btn-danger btn-round" onclick="location.href='{{route('reservation.removeItineraryFromSession', $i)}}'">Remove</button>

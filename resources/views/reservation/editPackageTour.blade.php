@@ -173,6 +173,10 @@
                                     {!! Form::date('main_reservation_start', $reservation->alternate_reservation_end, ['class'=>'form-control', 'min'=>\Carbon\Carbon::today()->toDateString(), 'disabled','onkeydown'=>'return false', 'style'=>'color:white;']) !!}
                                 </div>
                             </div>
+                            <div class="form-group form-group-no-border">
+                                {!! Form::label('price', 'Price', ['style'=>'color: white;']) !!}
+                                {!! Form::text('price', currency($reservation->price, 'MYR', $currency['code']), ['class'=>'form-control', 'disabled', 'style'=>'color:white;']) !!}
+                            </div>
                             <div class="input-group form-group-no-border input-lg{{ $errors->has('other_details') ? ' has-error' : '' }}">
                                 <textarea id="other_details" name="other_details" type="text" class="form-control" rows="4" placeholder="Other details for the reservation" style="color: white">{{$reservation->other_details}}</textarea>
                                 @if ($errors->has('other_details'))
