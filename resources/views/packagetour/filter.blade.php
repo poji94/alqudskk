@@ -35,7 +35,7 @@
                                     {!! Form::select('place_tourism', [''=>'Choose Options'] + $placetourism, null,['class'=>'form-control']) !!}
                                 </div>
                                 <div class="col-sm-6 form-group">
-                                    {!! Form::label('type_vacation','Type of vacation') !!}
+                                    {!! Form::label('type_vacation','Theme') !!}
                                     {!! Form::select('type_vacation', [''=>'Choose Options'] + $typevacation, null, ['class'=>'form-control']) !!}
                                 </div>
                             </div>
