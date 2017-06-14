@@ -25,3 +25,13 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+
+
+## AlQudsKK source code
+
+Setup:
+1- Download the source code or git clone
+2- Setup xampp or any related software tools
+3- setup the env based on .env.example
+4- generate app key
+5- migrate data using artisan command
